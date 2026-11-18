@@ -1,0 +1,37 @@
+{
+    "admins": [
+      {
+        "id": "admin-001",
+        "username": "admin",
+        "password": "cards2026"
+      }
+    ],
+    "players": [],
+    "cards": [
+      {
+        "id": "card-001",
+        "name": "Pikachu",
+        "type": "Electric",
+        "image": "/images/cards/pikachu.webp",
+        "description": "Ratón eléctrico veloz y ágil.",
+        "hp": 250,
+        "attacks": [
+          { "id": "atk-1", "name": "Impactrueno", "baseDamage": 20 },
+          { "id": "atk-2", "name": "Ataque Rápido", "baseDamage": 30 },
+          { "id": "atk-3", "name": "Bola Voltio", "baseDamage": 40 },
+          { "id": "atk-4", "name": "Rayo", "baseDamage": 50 }
+        ],
+        "defense": { "name": "Refugio Eléctrico", "damageReduction": 0.5 },
+        "special": { "name": "Trueno Total", "baseDamage": 65, "unlockTurn": 2, "cooldown": 3 },
+        "sounds": {
+          "attack": "/sounds/attack-electric.mp3",
+          "defense": "/sounds/defense-electric.mp3",
+          "special": "/sounds/special-electric.mp3",
+          "defeated": "/sounds/defeated.mp3"
+        },
+        "active": true,
+        "createdAt": "2026-08-18T00:00:00.000Z"
+      }
+    ],
+    "battles": []
+  }
