@@ -58,6 +58,12 @@ export class PlayerRegister extends HTMLElement {
       };
 
       await postPlayer(newPlayer);
+      this.dispatchEvent(
+        new CustomEvent("player-registered", {
+          detail: newPlayer,
+          bubbles: true,
+        })
+      );
       msg.textContent = `¡Bienvenido, ${nickname}! Registro guardado.`;
       input.value = "";
     });

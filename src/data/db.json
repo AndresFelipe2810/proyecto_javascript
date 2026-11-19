@@ -15,6 +15,42 @@
       "losses": 0,
       "gamesPlayed": 0,
       "createdAt": "2026-11-19T20:28:05.490Z"
+    },
+    {
+      "id": "WggOXoi7Mkg",
+      "nickname": "AndrexxFP1",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T20:36:22.898Z"
+    },
+    {
+      "id": "EbFQjgy0nTU",
+      "nickname": "AndrexxFP2",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T20:41:23.971Z"
+    },
+    {
+      "id": "7-oQzZYlP7c",
+      "nickname": "AndrexxFP3",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T20:53:52.829Z"
+    },
+    {
+      "id": "HbRN_eLzxXA",
+      "nickname": "AndrexxFP4",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T20:57:39.237Z"
     }
   ],
   "cards": [
@@ -61,6 +97,150 @@
         "attack": "/sounds/attack-electric.mp3",
         "defense": "/sounds/defense-electric.mp3",
         "special": "/sounds/special-electric.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-002",
+      "name": "Charizard",
+      "type": "Fire",
+      "image": "/images/cards/charizard.webp",
+      "description": "Dragón de fuego con ataques devastadores.",
+      "hp": 280,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Arañazo",
+          "baseDamage": 22
+        },
+        {
+          "id": "atk-2",
+          "name": "Ascuas",
+          "baseDamage": 32
+        },
+        {
+          "id": "atk-3",
+          "name": "Cuchillada",
+          "baseDamage": 42
+        },
+        {
+          "id": "atk-4",
+          "name": "Lanzallamas",
+          "baseDamage": 55
+        }
+      ],
+      "defense": {
+        "name": "Escudo Ígneo",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Sofoco",
+        "baseDamage": 70,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-fire.mp3",
+        "defense": "/sounds/defense-fire.mp3",
+        "special": "/sounds/special-fire.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-003",
+      "name": "Blastoise",
+      "type": "Water",
+      "image": "/images/cards/blastoise.webp",
+      "description": "Caparazón pesado y chorros de alta presión.",
+      "hp": 300,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Placaje",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Pistola Agua",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Hidropulso",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Hidrobomba",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Caparazón",
+        "damageReduction": 0.6
+      },
+      "special": {
+        "name": "Torrente",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-water.mp3",
+        "defense": "/sounds/defense-water.mp3",
+        "special": "/sounds/special-water.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-004",
+      "name": "Bulbasaur",
+      "type": "Grass",
+      "image": "/images/cards/bulbasaur.webp",
+      "description": "Ágil en combate y resistente con su liana.",
+      "hp": 270,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Látigo Cepa",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Hoja Afilada",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Drenadoras",
+          "baseDamage": 38
+        },
+        {
+          "id": "atk-4",
+          "name": "Rayo Solar",
+          "baseDamage": 52
+        }
+      ],
+      "defense": {
+        "name": "Barrera Verde",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Tormenta Floral",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-grass.mp3",
+        "defense": "/sounds/defense-grass.mp3",
+        "special": "/sounds/special-grass.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
