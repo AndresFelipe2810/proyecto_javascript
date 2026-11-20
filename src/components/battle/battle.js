@@ -1,4 +1,5 @@
 import { getCards } from "../../api/cardsApi.js";
+import { renderTcgCard, activarFallbackImagenes } from "../cards/tcgCard.js";
 import {
   DECK_SIZE,
   MIN_ACTIVE_CARDS,
@@ -218,21 +219,21 @@ export class BattleArena extends HTMLElement {
         <p>Ronda ${this.round} · <strong>${myTurn ? "Tu turno" : "Turno de la máquina"}</strong></p>
         <p class="battle-status">${escapar(this.statusMessage)}</p>
 
-        <div style="display: flex; justify-content: space-between; gap: 2rem;">
-          <article class="fighter">
-            <h3>Tu carta (${this.playerIndex + 1}/${DECK_SIZE}): ${escapar(pCard.name)}</h3>
-            <p>HP: ${pCard.currentHp} / ${pCard.hp}</p>
-            ${pCard.isDefending ? "<p>🛡️ Defendiendo</p>" : ""}
-          </article>
+        <div class="fighters">
+          <div class="fighter">
+            <p class="fighter-label">Tu carta (${this.playerIndex + 1}/${DECK_SIZE})</p>
+            ${renderTcgCard(pCard, { compact: true, currentHp: pCard.currentHp })}
+            ${pCard.isDefending ? `<p class="fighter-status">🛡️ Defendiendo</p>` : ""}
+          </div>
 
-          <article class="fighter">
-            <h3>Rival (${this.enemyIndex + 1}/${DECK_SIZE}): ${escapar(eCard.name)}</h3>
-            <p>HP: ${eCard.currentHp} / ${eCard.hp}</p>
-            ${eCard.isDefending ? "<p>🛡️ Defendiendo</p>" : ""}
-          </article>
+          <div class="fighter">
+            <p class="fighter-label">Rival (${this.enemyIndex + 1}/${DECK_SIZE})</p>
+            ${renderTcgCard(eCard, { compact: true, currentHp: eCard.currentHp })}
+            ${eCard.isDefending ? `<p class="fighter-status">🛡️ Defendiendo</p>` : ""}
+          </div>
         </div>
 
-        <div class="battle-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <div class="battle-actions">
           ${actions
             .map((a, idx) => {
               const disabled = !myTurn || !a.enabled ? "disabled" : "";
@@ -243,6 +244,7 @@ export class BattleArena extends HTMLElement {
         </div>
       </section>
     `;
+    activarFallbackImagenes(this);
   }
 }
 

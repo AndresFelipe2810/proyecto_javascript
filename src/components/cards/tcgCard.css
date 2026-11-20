@@ -1,0 +1,240 @@
+.tcg-card {
+  --c1: #c9c9c9;
+  --c2: #8f8f8f;
+  --ink: #4a4639;
+  --plate: rgba(255, 255, 255, 0.92);
+  --text: #1c1c1c;
+  --fs: clamp(10.5px, 8cqw, 14px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  aspect-ratio: 63 / 88;
+  container-type: inline-size;
+  padding: clamp(5px, 1.4vw, 9px);
+  border: clamp(4px, 1vw, 7px) solid #f2c230;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #fff8dc, color-mix(in srgb, var(--c1) 38%, #f6e7a3));
+  color: var(--text);
+  box-shadow: 0 6px 16px rgba(61, 140, 106, 0.25);
+  line-height: 1.3;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.tcg-card > * { font-size: var(--fs); }
+
+.tcg-card[data-type="fire"] { --c1: #ff9d5c; --c2: #e4572e; --ink: #9a2f10; }
+.tcg-card[data-type="water"] { --c1: #7fc8ff; --c2: #2f7fd6; --ink: #1b5fa8; }
+.tcg-card[data-type="grass"] { --c1: #9be37d; --c2: #3f9e4a; --ink: #2a7034; }
+.tcg-card[data-type="electric"] { --c1: #ffe96a; --c2: #e6b800; --ink: #735400; }
+.tcg-card[data-type="psychic"] { --c1: #f59be0; --c2: #a14cc4; --ink: #7d2f9e; }
+.tcg-card[data-type="ghost"] { --c1: #a58ad6; --c2: #54397f; --ink: #54397f; }
+.tcg-card[data-type="dragon"] { --c1: #8fa4ff; --c2: #c8742c; --ink: #8a4a10; }
+.tcg-card[data-type="normal"] { --c1: #e0dccf; --c2: #a8a395; --ink: #4a4639; }
+.tcg-card[data-type="fighting"] { --c1: #e89a7a; --c2: #a8442a; --ink: #8a3320; }
+.tcg-card[data-type="dark"] { --c1: #8b8b9c; --c2: #33333f; --ink: #2e2e3a; }
+.tcg-card[data-type="fairy"] { --c1: #ffc2e4; --c2: #e06fb5; --ink: #a3377c; }
+
+.tcg-card:hover { transform: translateY(-3px); }
+
+.tcg-card:focus-visible {
+  outline: 3px solid var(--accent-dark, #4aa57b);
+  outline-offset: 2px;
+}
+
+.tcg-card.is-selected {
+  box-shadow: 0 0 0 4px var(--accent, #66c094), 0 10px 22px rgba(61, 140, 106, 0.4);
+  transform: translateY(-4px);
+}
+
+.tcg-card .tcg-order {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: var(--accent-dark, #4aa57b);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.tcg-card .tcg-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "stage hp type" "name name name";
+  align-items: center;
+  column-gap: 6px;
+  row-gap: 1px;
+  min-width: 0;
+  padding: 3px 6px 4px;
+  border-radius: 8px;
+  background: var(--plate);
+}
+
+.tcg-card .tcg-stage {
+  grid-area: stage;
+  justify-self: start;
+  padding: 0 5px;
+  border-radius: 4px;
+  background: #2b2b2b;
+  color: #fff;
+  font-size: 0.62em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+.tcg-card .tcg-name {
+  grid-area: name;
+  min-width: 0;
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #111;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tcg-card .tcg-hp {
+  grid-area: hp;
+  font-weight: 800;
+  color: #a11d12;
+  white-space: nowrap;
+}
+
+.tcg-card .tcg-hp small { font-size: 0.65em; margin: 0 1px; }
+
+.tcg-card .tcg-type {
+  grid-area: type;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  font-size: 12px;
+  line-height: 1;
+}
+
+.tcg-card .tcg-art {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 11;
+  border: 3px solid #d9b73a;
+  border-radius: 8px;
+  background: radial-gradient(circle at 50% 35%, var(--c1), var(--c2));
+  overflow: hidden;
+}
+
+.tcg-card .tcg-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 6%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+}
+
+.tcg-card .tcg-fallback { display: none; font-size: 2.6em; line-height: 1; }
+.tcg-card .tcg-art.no-image img { display: none; }
+.tcg-card .tcg-art.no-image .tcg-fallback,
+.tcg-card .tcg-art:not(:has(img)) .tcg-fallback { display: block; }
+
+.tcg-card .tcg-body {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding: 5px 7px;
+  border-radius: 8px;
+  background: var(--plate);
+  color: var(--text);
+}
+
+.tcg-card .tcg-attacks { margin: 0; padding: 0; list-style: none; }
+
+.tcg-card .tcg-attacks li {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+  padding: 1px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.tcg-card .tcg-attacks li:last-child { border-bottom: 0; }
+.tcg-card .tcg-attacks span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tcg-card .tcg-attacks b { flex: none; color: var(--ink); font-weight: 800; }
+
+.tcg-card .tcg-extra {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin: 0;
+  min-width: 0;
+  padding-top: 2px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.tcg-card .tcg-extra-icon { flex: none; color: var(--ink); }
+
+.tcg-card .tcg-extra-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 800;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tcg-card .tcg-extra-val {
+  flex: none;
+  padding-left: 4px;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.tcg-card .tcg-desc {
+  margin: auto 0 0;
+  padding-top: 2px;
+  font-size: 0.9em;
+  font-style: italic;
+  color: #3a3a3a;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tcg-card.is-compact { --fs: clamp(10px, 7.2cqw, 13px); gap: 4px; }
+.tcg-card.is-compact .tcg-desc,
+.tcg-card.is-compact .tcg-extra { display: none; }
+.tcg-card.is-compact .tcg-art { aspect-ratio: 16 / 11; }
+.tcg-card.is-compact .tcg-fallback { font-size: 2.2em; }

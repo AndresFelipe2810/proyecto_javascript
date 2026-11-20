@@ -1,4 +1,6 @@
 import { getCards } from "../../api/cardsApi.js";
+import { obtenerArtwork } from "../../api/pokeApi.js";
+import { renderTcgCard, activarFallbackImagenes } from "./tcgCard.js";
 import { crearCarta, formularioCarta, leerFormulario } from "./createCards.js";
 import { cambiarEstadoCarta, editarCartaCompleta } from "./editCards.js";
 import { eliminarCarta } from "./deleteCards.js";
@@ -72,6 +74,7 @@ export class AdminCards extends HTMLElement {
       .map(
         (c) => /* html */ `
         <article class="admin-card" data-id="${escapar(c.id)}">
+          <div class="admin-card-preview">${renderTcgCard(c, { compact: true })}</div>
           <h3>${escapar(c.name)}</h3>
           <p>${escapar(c.type)} · ${c.active === false ? "Inactiva" : "Activa"} · ID ${escapar(c.id)}</p>
           <button type="button" data-action="editar" data-id="${escapar(c.id)}">Editar (PUT)</button>
@@ -82,6 +85,7 @@ export class AdminCards extends HTMLElement {
         </article>`
       )
       .join("");
+    activarFallbackImagenes(this.querySelector("#adminList"));
   }
 
   abrirFormulario(carta) {
@@ -104,6 +108,10 @@ export class AdminCards extends HTMLElement {
   async guardarFormulario(form) {
     const base = this.editando ?? {};
     const datos = leerFormulario(form, base);
+    if (!datos.image && datos.name) {
+      this.setEstado("Buscando imagen...");
+      datos.image = await obtenerArtwork(datos.name);
+    }
     const errores = validarCarta(datos, this.cartas);
     if (errores.length) {
       this.setEstado(errores.join(" "));

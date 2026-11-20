@@ -1,5 +1,6 @@
 import { getCards } from "../../api/cardsApi.js";
 import { escapar } from "../../utils/validators.js";
+import { renderTcgCard, activarFallbackImagenes } from "../cards/tcgCard.js";
 import { DECK_SIZE, MIN_ACTIVE_CARDS } from "../../utils/battleEngine.js";
 
 export class DeckSelection extends HTMLElement {
@@ -16,14 +17,17 @@ export class DeckSelection extends HTMLElement {
   render() {
     this.innerHTML = /* html */ `
       <section class="deck-section">
-        <h2>Selecciona tu equipo (<span id="count">0</span>/${this.maxCards})</h2>
+        <h2>Selecciona tu equipo</h2>
+        <div class="deck-bar">
+          <span class="deck-counter">Mazo: <span id="count">0</span>/${this.maxCards}</span>
+        </div>
         <p id="deckMessage"></p>
-        <div id="cardsGrid" style="display: flex; flex-wrap: wrap; gap: 1rem;"></div>
+        <div id="cardsGrid"></div>
         <h3>Orden de combate</h3>
         <ol id="orderList"></ol>
-        <button id="startBattleBtn" disabled style="margin-top: 1rem;">
-          ¡Ir a la Batalla!
-        </button>
+        <div class="deck-actions">
+          <button id="startBattleBtn" disabled>¡Ir a la Batalla!</button>
+        </div>
       </section>
     `;
   }
@@ -68,38 +72,47 @@ export class DeckSelection extends HTMLElement {
     }
 
     const grid = this.querySelector("#cardsGrid");
-    grid.innerHTML = this.activeCards
-      .map(
-        (card) => /* html */ `
-        <article class="card-item" data-id="${escapar(card.id)}" style="border: 1px solid #ccc; padding: 10px; cursor: pointer; width: 150px;">
-          <h3>${escapar(card.name)}</h3>
-          <p>Tipo: ${escapar(card.type)}</p>
-          <p>HP: ${card.hp} | Ataques: ${card.attacks?.length ?? 0}</p>
-        </article>
-      `
-      )
-      .join("");
+    grid.innerHTML = this.activeCards.map((card) => renderTcgCard(card)).join("");
+    activarFallbackImagenes(grid);
 
-    grid.querySelectorAll(".card-item").forEach((el) => {
-      el.addEventListener("click", () => {
+    grid.querySelectorAll(".tcg-card").forEach((el) => {
+      el.setAttribute("tabindex", "0");
+      el.setAttribute("role", "button");
+      el.setAttribute("aria-pressed", "false");
+      const alternar = () => {
         const card = this.activeCards.find((c) => String(c.id) === el.dataset.id);
-        this.toggleCard(card, el);
+        this.toggleCard(card);
+      };
+      el.addEventListener("click", alternar);
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          alternar();
+        }
       });
     });
   }
 
-  toggleCard(card, element) {
+  toggleCard(card) {
     const index = this.selectedCards.findIndex((c) => c.id === card.id);
 
     if (index > -1) {
       this.selectedCards.splice(index, 1);
-      element.style.borderColor = "#ccc";
     } else if (this.selectedCards.length < this.maxCards) {
       this.selectedCards.push(card);
-      element.style.borderColor = "green";
     }
 
     this.actualizarVista();
+  }
+
+  marcarSeleccion() {
+    this.querySelectorAll("#cardsGrid .tcg-card").forEach((el) => {
+      const i = this.selectedCards.findIndex((c) => String(c.id) === el.dataset.id);
+      el.classList.toggle("is-selected", i > -1);
+      el.setAttribute("aria-pressed", String(i > -1));
+      el.querySelector(".tcg-order")?.remove();
+      if (i > -1) el.querySelector(".tcg-art")?.insertAdjacentHTML("afterbegin",`<span class="tcg-order">${i + 1}</span>`);
+    });
   }
 
   moverCarta(index, delta) {
@@ -133,6 +146,7 @@ export class DeckSelection extends HTMLElement {
       )
       .join("");
 
+    this.marcarSeleccion();
     this.querySelector("#startBattleBtn").disabled = !this.puedeIniciar();
   }
 

@@ -1,0 +1,36 @@
+battle-arena { display: block; min-width: 0; }
+
+battle-arena .fighters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 3vw, 32px);
+  justify-items: center;
+}
+
+battle-arena .fighter {
+  width: 100%;
+  max-width: 240px;
+  min-width: 0;
+}
+
+battle-arena .fighter-label,
+battle-arena .fighter-status { overflow-wrap: anywhere; }
+
+@media (max-width: 430px) {
+  battle-arena .fighters { gap: 8px; }
+  battle-arena .action-btn { width: 100%; white-space: normal; }
+}
+
+battle-arena .fighter .tcg-card { cursor: default; }
+battle-arena .fighter .tcg-card:hover { transform: none; }
+battle-arena .fighter-label { margin: 0 0 6px; font-size: 0.85rem; font-weight: 700; }
+battle-arena .fighter-status { margin: 6px 0 0; font-size: 0.85rem; }
+
+battle-arena .battle-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+battle-arena .action-btn { min-height: 44px; max-width: 100%; }

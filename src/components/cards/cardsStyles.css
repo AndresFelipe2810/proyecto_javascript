@@ -157,7 +157,17 @@ admin-cards .admin-card {
   align-content: flex-start;
 }
 
-admin-cards .admin-card h3 {
+admin-cards .admin-card-preview {
+  flex-basis: 100%;
+  width: 100%;
+  min-width: 0;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+admin-cards .admin-card .tcg-card { cursor: default; }
+
+admin-cards .admin-card > h3 {
   flex-basis: 100%;
   margin: 0;
   font-size: 1.1rem;
@@ -166,7 +176,7 @@ admin-cards .admin-card h3 {
   overflow-wrap: anywhere;
 }
 
-admin-cards .admin-card p {
+admin-cards .admin-card > p {
   flex-basis: 100%;
   margin: 0 0 6px;
   font-size: 0.8rem;

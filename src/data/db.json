@@ -46,7 +46,7 @@
       "id": "card-001",
       "name": "Pikachu",
       "type": "Electric",
-      "image": "https://i.pinimg.com/736x/bb/1b/61/bb1b619fc229531b3d87600ea3bec8cb.jpg",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
       "description": "Ratón eléctrico veloz y ágil.",
       "hp": 250,
       "attacks": [
@@ -94,7 +94,7 @@
       "id": "card-002",
       "name": "Charizard",
       "type": "Fire",
-      "image": "/images/cards/charizard.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
       "description": "Dragón de fuego con ataques devastadores.",
       "hp": 250,
       "attacks": [
@@ -142,7 +142,7 @@
       "id": "card-003",
       "name": "Blastoise",
       "type": "Water",
-      "image": "/images/cards/blastoise.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
       "description": "Caparazón pesado y chorros de alta presión.",
       "hp": 250,
       "attacks": [
@@ -190,7 +190,7 @@
       "id": "card-004",
       "name": "Bulbasaur",
       "type": "Grass",
-      "image": "/images/cards/bulbasaur.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
       "description": "Ágil en combate y resistente con su liana.",
       "hp": 250,
       "attacks": [
@@ -238,7 +238,7 @@
       "id": "card-005",
       "name": "Mewtwo",
       "type": "Psychic",
-      "image": "/images/cards/mewtwo.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png",
       "description": "Pokémon legendario creado en laboratorio, de poder psíquico abrumador.",
       "hp": 250,
       "attacks": [
@@ -286,7 +286,7 @@
       "id": "card-006",
       "name": "Gengar",
       "type": "Ghost",
-      "image": "/images/cards/gengar.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
       "description": "Pokémon fantasmal que acecha en las sombras.",
       "hp": 250,
       "attacks": [
@@ -334,7 +334,7 @@
       "id": "card-007",
       "name": "Gyarados",
       "type": "Water",
-      "image": "/images/cards/gyarados.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png",
       "description": "Serpiente feroz que puede arrasar ciudades enteras.",
       "hp": 250,
       "attacks": [
@@ -382,7 +382,7 @@
       "id": "card-008",
       "name": "Dragonite",
       "type": "Dragon",
-      "image": "/images/cards/dragonite.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
       "description": "Dragón amable con un poder de vuelo impresionante.",
       "hp": 250,
       "attacks": [
@@ -430,7 +430,7 @@
       "id": "card-009",
       "name": "Snorlax",
       "type": "Normal",
-      "image": "/images/cards/snorlax.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
       "description": "Pokémon somnoliento de gran resistencia.",
       "hp": 250,
       "attacks": [
@@ -478,7 +478,7 @@
       "id": "card-010",
       "name": "Alakazam",
       "type": "Psychic",
-      "image": "/images/cards/alakazam.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png",
       "description": "Psíquico de inteligencia superior y reflejos rápidos.",
       "hp": 250,
       "attacks": [
@@ -526,7 +526,7 @@
       "id": "card-011",
       "name": "Machamp",
       "type": "Fighting",
-      "image": "/images/cards/machamp.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png",
       "description": "Luchador incansable con cuatro brazos.",
       "hp": 250,
       "attacks": [
@@ -574,7 +574,7 @@
       "id": "card-012",
       "name": "Lucario",
       "type": "Fighting",
-      "image": "/images/cards/lucario.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png",
       "description": "Pokémon que percibe las auras de sus rivales.",
       "hp": 250,
       "attacks": [
@@ -622,7 +622,7 @@
       "id": "card-013",
       "name": "Eevee",
       "type": "Normal",
-      "image": "/images/cards/eevee.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
       "description": "Pokémon adaptable con gran capacidad de evolución.",
       "hp": 250,
       "attacks": [
@@ -670,7 +670,7 @@
       "id": "card-014",
       "name": "Umbreon",
       "type": "Dark",
-      "image": "/images/cards/umbreon.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png",
       "description": "Evolución nocturna de Eevee, sigiloso y defensivo.",
       "hp": 250,
       "attacks": [
@@ -718,7 +718,7 @@
       "id": "card-015",
       "name": "Garchomp",
       "type": "Dragon",
-      "image": "/images/cards/garchomp.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png",
       "description": "Dragón terrestre de velocidad vertiginosa.",
       "hp": 250,
       "attacks": [
@@ -766,7 +766,7 @@
       "id": "card-016",
       "name": "Arcanine",
       "type": "Fire",
-      "image": "/images/cards/arcanine.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
       "description": "Pokémon de fuego legendario por su velocidad.",
       "hp": 250,
       "attacks": [
@@ -814,7 +814,7 @@
       "id": "card-017",
       "name": "Venusaur",
       "type": "Grass",
-      "image": "/images/cards/venusaur.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
       "description": "Planta gigante con una flor que emana aroma.",
       "hp": 250,
       "attacks": [
@@ -862,7 +862,7 @@
       "id": "card-018",
       "name": "Jolteon",
       "type": "Electric",
-      "image": "/images/cards/jolteon.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
       "description": "Eevee eléctrico de movimientos veloces.",
       "hp": 250,
       "attacks": [
@@ -910,7 +910,7 @@
       "id": "card-019",
       "name": "Starmie",
       "type": "Water",
-      "image": "/images/cards/starmie.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png",
       "description": "Estrella acuática con núcleo luminoso.",
       "hp": 250,
       "attacks": [
@@ -958,7 +958,7 @@
       "id": "card-020",
       "name": "Gardevoir",
       "type": "Fairy",
-      "image": "/images/cards/gardevoir.webp",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png",
       "description": "Protectora que canaliza energía psíquica y mágica.",
       "hp": 250,
       "attacks": [

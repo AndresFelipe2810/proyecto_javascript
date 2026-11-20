@@ -23,7 +23,7 @@ export function formularioCarta(carta = {}) {
   return /* html */ `
     <input name="name" placeholder="Nombre" value="${escapar(carta.name)}" required />
     <input name="type" placeholder="Tipo" value="${escapar(carta.type)}" required />
-    <input name="image" placeholder="Ruta de imagen" value="${escapar(carta.image)}" />
+    <input name="image" placeholder="URL de imagen (vacío = autocompletar)" value="${escapar(carta.image)}" />
     <textarea name="description" placeholder="Descripción" required>${escapar(carta.description)}</textarea>
     ${ataques}
     <input name="defenseName" placeholder="Nombre de defensa" value="${escapar(carta.defense?.name)}" required />

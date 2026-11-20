@@ -1,0 +1,107 @@
+deck-selection { display: block; }
+
+deck-selection h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.3rem, 4.5vw, 2rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+deck-selection #deckMessage { margin: 0 0 12px; font-size: 0.88rem; }
+deck-selection #deckMessage:empty { display: none; }
+
+deck-selection .deck-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--white);
+  box-shadow: 0 4px 14px rgba(61, 140, 106, 0.18);
+}
+
+deck-selection .deck-counter { font-weight: 800; color: var(--accent-dark); white-space: nowrap; }
+
+deck-selection #cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
+  gap: clamp(10px, 2vw, 18px);
+  padding: 12px 10px 16px;
+}
+
+deck-selection #cardsGrid > * { min-width: 0; }
+
+deck-selection .deck-section > h3 { margin: 12px 0 8px; color: var(--accent-dark); }
+
+deck-selection #orderList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+deck-selection #orderList li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 14px;
+  border-radius: 999px;
+  background: var(--white);
+  font-weight: 700;
+  font-size: 0.85rem;
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+deck-selection button {
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--white);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+deck-selection #orderList button { min-width: 36px; min-height: 36px; }
+deck-selection button:hover:not(:disabled) { background: var(--accent-dark); }
+deck-selection button:disabled { opacity: 0.45; cursor: not-allowed; }
+deck-selection button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+
+deck-selection #startBattleBtn {
+  min-height: 48px;
+  padding: 12px 28px;
+  font-size: 1rem;
+}
+
+@media (max-width: 720px) {
+  deck-selection #cardsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 10px;
+    padding: 12px 8px 16px;
+  }
+
+  deck-selection .deck-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding: 10px 0 calc(4px + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, var(--card) 70%, transparent);
+  }
+
+  deck-selection #startBattleBtn { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  deck-selection .tcg-card .tcg-desc,
+  deck-selection .tcg-card .tcg-extra { display: none; }
+}
