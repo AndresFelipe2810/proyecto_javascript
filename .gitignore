@@ -4,3 +4,5 @@ dist/
 .claude/
 ESTADO_ACTUAL.md
 CLAUDE.local.md
+.claudeignore
+CLAUDE.md
