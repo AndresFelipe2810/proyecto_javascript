@@ -1,3 +1,4 @@
+import { escapar } from "../../utils/validators.js";
 import { getPlayers } from "../../api/playersApi.js";
 
 export class GameLeaderboard extends HTMLElement {
@@ -21,7 +22,9 @@ export class GameLeaderboard extends HTMLElement {
   async cargar() {
     const status = this.querySelector("#lbStatus");
     try {
-      const players = (await getPlayers()).sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
+      const players = (await getPlayers()).sort(
+        (a, b) => (b.points ?? 0) - (a.points ?? 0) || (b.wins ?? 0) - (a.wins ?? 0) || (a.gamesPlayed ?? 0) - (b.gamesPlayed ?? 0)
+      );
       status.textContent = players.length ? "" : "Aún no hay jugadores.";
 
       const medallas = ["1.er lugar", "2.º lugar", "3.er lugar"];
@@ -31,7 +34,7 @@ export class GameLeaderboard extends HTMLElement {
           (p, i) => /* html */ `
           <article class="podium-place place-${i + 1}">
             <span>${medallas[i]}</span>
-            <h3>${p.nickname}</h3>
+            <h3>${escapar(p.nickname)}</h3>
             <p>Puntaje: ${p.points ?? 0}</p>
             <p>Victorias: ${p.wins ?? 0} · Partidas: ${p.gamesPlayed ?? 0}</p>
           </article>
@@ -42,12 +45,12 @@ export class GameLeaderboard extends HTMLElement {
       this.querySelector("#lbList").innerHTML = players
         .map(
           (p) => /* html */ `
-          <li>${p.nickname} — ${p.points ?? 0} pts · ${p.wins ?? 0} victorias · ${p.gamesPlayed ?? 0} partidas</li>
+          <li>${escapar(p.nickname)} — ${p.points ?? 0} pts · ${p.wins ?? 0} victorias · ${p.gamesPlayed ?? 0} partidas</li>
         `
         )
         .join("");
-    } catch {
-      status.textContent = "No se pudo cargar el ranking.";
+    } catch (err) {
+      status.textContent = `No se pudo cargar el ranking. ${err.message}`;
     }
   }
 }

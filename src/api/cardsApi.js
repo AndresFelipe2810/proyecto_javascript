@@ -1,43 +1,22 @@
 import API_URL from "./apiConfig.js";
+import { request } from "./http.js";
 
-async function parseOrThrow(response, mensaje) {
-  if (!response.ok) throw new Error(`${mensaje} (${response.status})`);
-  return response.status === 204 ? null : await response.json();
+export function getCards() {
+  return request(`${API_URL}/cards`, "No se pudieron obtener las cartas");
 }
 
-export async function getCards() {
-  const response = await fetch(`${API_URL}/cards`);
-  return parseOrThrow(response, "No se pudieron obtener las cartas");
+export function postCard(card) {
+  return request(`${API_URL}/cards`, "No se pudo crear la carta", { method: "POST", body: card });
 }
 
-export async function postCard(card) {
-  const response = await fetch(`${API_URL}/cards`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(card),
-  });
-  return parseOrThrow(response, "No se pudo crear la carta");
+export function putCard(id, card) {
+  return request(`${API_URL}/cards/${id}`, "No se pudo reemplazar la carta", { method: "PUT", body: card });
 }
 
-export async function putCard(id, card) {
-  const response = await fetch(`${API_URL}/cards/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(card),
-  });
-  return parseOrThrow(response, "No se pudo reemplazar la carta");
+export function patchCard(id, data) {
+  return request(`${API_URL}/cards/${id}`, "No se pudo actualizar la carta", { method: "PATCH", body: data });
 }
 
-export async function patchCard(id, data) {
-  const response = await fetch(`${API_URL}/cards/${id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return parseOrThrow(response, "No se pudo actualizar la carta");
-}
-
-export async function deleteCard(id) {
-  const response = await fetch(`${API_URL}/cards/${id}`, { method: "DELETE" });
-  return parseOrThrow(response, "No se pudo eliminar la carta");
+export function deleteCard(id) {
+  return request(`${API_URL}/cards/${id}`, "No se pudo eliminar la carta", { method: "DELETE" });
 }

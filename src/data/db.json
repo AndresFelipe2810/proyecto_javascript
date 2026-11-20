@@ -8,22 +8,13 @@
   ],
   "players": [
     {
-      "id": "kAJzOvZIZ9w",
       "nickname": "AndrexxFP",
-      "points": 0,
+      "points": 10,
       "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-11-19T20:28:05.490Z"
-    },
-    {
-      "id": "s4qZTRKBNLk",
-      "nickname": "AndrexxFP1",
-      "points": 0,
-      "wins": 0,
-      "losses": 0,
-      "gamesPlayed": 0,
-      "createdAt": "2026-11-20T04:08:03.751Z"
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-11-20T04:58:26.916Z",
+      "id": "RSwkT4ULlm8"
     }
   ],
   "cards": [
@@ -154,7 +145,7 @@
       ],
       "defense": {
         "name": "Caparazón",
-        "damageReduction": 0.6
+        "damageReduction": 0.5
       },
       "special": {
         "name": "Torrente",
@@ -552,7 +543,7 @@
         "special": "/sounds/special-fighting.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -600,7 +591,7 @@
         "special": "/sounds/special-fighting.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -648,7 +639,7 @@
         "special": "/sounds/special-normal.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -696,7 +687,7 @@
         "special": "/sounds/special-dark.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -744,7 +735,7 @@
         "special": "/sounds/special-dragon.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -792,7 +783,7 @@
         "special": "/sounds/special-fire.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -840,7 +831,7 @@
         "special": "/sounds/special-grass.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -888,7 +879,7 @@
         "special": "/sounds/special-electric.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -936,7 +927,7 @@
         "special": "/sounds/special-water.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     },
     {
@@ -984,10 +975,34 @@
         "special": "/sounds/special-fairy.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
-      "active": false,
+      "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
     }
   ],
-  "battles": [],
+  "battles": [
+    {
+      "playerId": "RSwkT4ULlm8",
+      "playerNickname": "AndrexxFP",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-007",
+        "card-010",
+        "card-006",
+        "card-016",
+        "card-018"
+      ],
+      "startedAt": "2026-11-20T04:58:34.087Z",
+      "endedAt": "2026-11-20T05:00:19.378Z",
+      "id": "Sq6V7Fcdu-g"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

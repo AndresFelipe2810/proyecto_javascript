@@ -96,11 +96,12 @@ export function resolveAction(actor, target, action) {
     return { actor: nextActor, target, damage: 0, log: `${actor.name} se pone a la defensiva.` };
   }
 
-  const damage = calculateDamage(rollDamage(action.baseDamage), target.isDefending);
+  const reduction = target.defense?.damageReduction ?? DEFENSE_REDUCTION;
+  const damage = calculateDamage(rollDamage(action.baseDamage), target.isDefending, reduction);
   const nextTarget = applyDamage(target, damage);
 
   if (action.type === "special") {
-    nextActor.specialCooldown = SPECIAL_COOLDOWN;
+    nextActor.specialCooldown = actor.special?.cooldown ?? SPECIAL_COOLDOWN;
   }
 
   return {
@@ -111,10 +112,14 @@ export function resolveAction(actor, target, action) {
   };
 }
 
-// Elige una acción válida al azar (la máquina nunca usa acciones bloqueadas)
+// Elige una acción válida (nunca bloqueada). Prioriza el especial disponible y evita re-defenderse.
 export function chooseMachineAction(card) {
   const enabled = getActions(card).filter((a) => a.enabled);
-  return shuffle(enabled)[0];
+  const special = enabled.find((a) => a.type === "special");
+  if (special && Math.random() < 0.6) return special;
+
+  const candidates = enabled.filter((a) => a.type !== "defense" || (!card.isDefending && Math.random() < 0.25));
+  return shuffle(candidates.length ? candidates : enabled)[0];
 }
 
 // Puntos y resultado de una partida terminada

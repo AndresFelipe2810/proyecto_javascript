@@ -15,7 +15,7 @@ export function formularioCarta(carta = {}) {
       <fieldset>
         <legend>Ataque ${i + 1}</legend>
         <input name="atk${i}Name" placeholder="Nombre" value="${escapar(carta.attacks?.[i]?.name)}" required />
-        <input name="atk${i}Damage" type="number" min="1" value="${carta.attacks?.[i]?.baseDamage ?? 20 + i * 10}" required />
+        <input name="atk${i}Damage" type="number" min="10" max="60" value="${carta.attacks?.[i]?.baseDamage ?? 20 + i * 10}" required />
       </fieldset>`
     )
     .join("");

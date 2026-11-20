@@ -1,4 +1,5 @@
 import { getCards } from "../../api/cardsApi.js";
+import { escapar } from "../../utils/validators.js";
 import { DECK_SIZE, MIN_ACTIVE_CARDS } from "../../utils/battleEngine.js";
 
 export class DeckSelection extends HTMLElement {
@@ -48,8 +49,17 @@ export class DeckSelection extends HTMLElement {
   }
 
   async cargarCartas() {
-    const cards = await getCards();
+    const msg = this.querySelector("#deckMessage");
+    msg.textContent = "Cargando cartas...";
+    let cards;
+    try {
+      cards = await getCards();
+    } catch (err) {
+      msg.textContent = err.message;
+      return;
+    }
     this.activeCards = cards.filter((c) => c.active !== false);
+    msg.textContent = "";
 
     if (this.activeCards.length < MIN_ACTIVE_CARDS) {
       this.querySelector("#deckMessage").textContent =
@@ -61,9 +71,9 @@ export class DeckSelection extends HTMLElement {
     grid.innerHTML = this.activeCards
       .map(
         (card) => /* html */ `
-        <article class="card-item" data-id="${card.id}" style="border: 1px solid #ccc; padding: 10px; cursor: pointer; width: 150px;">
-          <h3>${card.name}</h3>
-          <p>Tipo: ${card.type}</p>
+        <article class="card-item" data-id="${escapar(card.id)}" style="border: 1px solid #ccc; padding: 10px; cursor: pointer; width: 150px;">
+          <h3>${escapar(card.name)}</h3>
+          <p>Tipo: ${escapar(card.type)}</p>
           <p>HP: ${card.hp} | Ataques: ${card.attacks?.length ?? 0}</p>
         </article>
       `
@@ -115,7 +125,7 @@ export class DeckSelection extends HTMLElement {
       .map(
         (card, i) => /* html */ `
         <li>
-          ${card.name}
+          ${escapar(card.name)}
           <button data-move="up" data-index="${i}" ${i === 0 ? "disabled" : ""}>↑</button>
           <button data-move="down" data-index="${i}" ${i === n - 1 ? "disabled" : ""}>↓</button>
         </li>

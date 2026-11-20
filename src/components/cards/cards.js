@@ -104,7 +104,7 @@ export class AdminCards extends HTMLElement {
   async guardarFormulario(form) {
     const base = this.editando ?? {};
     const datos = leerFormulario(form, base);
-    const errores = validarCarta(datos);
+    const errores = validarCarta(datos, this.cartas);
     if (errores.length) {
       this.setEstado(errores.join(" "));
       return;

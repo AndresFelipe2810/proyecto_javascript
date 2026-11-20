@@ -10,6 +10,7 @@ import {
   isCardDefeated,
 } from "../../utils/battleEngine.js";
 import { shuffle } from "../../utils/random.js";
+import { escapar } from "../../utils/validators.js";
 
 const MACHINE_DELAY_MS = 900;
 
@@ -28,12 +29,15 @@ export class BattleArena extends HTMLElement {
     this.finished = false;
     this.error = null;
     this.machineTimer = null;
+    this.startToken = 0;
+    this.firstSide = null;
 
     // Un solo listener delegado: sobrevive a los re-renders de innerHTML
     this.addEventListener("click", (e) => this.handleClick(e));
   }
 
   disconnectedCallback() {
+    this.startToken++;
     clearTimeout(this.machineTimer);
   }
 
@@ -43,6 +47,7 @@ export class BattleArena extends HTMLElement {
   }
 
   async start() {
+    const token = ++this.startToken;
     clearTimeout(this.machineTimer);
     this.finished = false;
     this.error = null;
@@ -50,6 +55,7 @@ export class BattleArena extends HTMLElement {
 
     try {
       const allCards = await getCards();
+      if (token !== this.startToken) return;
       const activeCards = allCards.filter((c) => c.active !== false);
       if (activeCards.length < MIN_ACTIVE_CARDS) {
         throw new Error(`Se necesitan al menos ${MIN_ACTIVE_CARDS} cartas activas (hay ${activeCards.length}).`);
@@ -71,8 +77,10 @@ export class BattleArena extends HTMLElement {
 
       const playerStarts = Math.random() < 0.5;
       this.statusMessage = `${playerStarts ? "Tú" : "La máquina"} inicia la batalla.`;
-      this.setTurn(playerStarts ? "player" : "machine");
+      this.firstSide = playerStarts ? "player" : "machine";
+      this.setTurn(this.firstSide);
     } catch (err) {
+      if (token !== this.startToken) return;
       this.error = err.message;
       this.render();
     }
@@ -144,8 +152,8 @@ export class BattleArena extends HTMLElement {
       return;
     }
 
-    // Una ronda completa = ambos participantes actuaron
-    if (!isPlayer) this.round += 1;
+    // Una ronda se completa cuando actúa el segundo participante del sorteo
+    if (side !== this.firstSide) this.round += 1;
     this.setTurn(isPlayer ? "machine" : "player");
   }
 
@@ -175,7 +183,7 @@ export class BattleArena extends HTMLElement {
     if (this.error) {
       this.innerHTML = /* html */ `
         <section class="battle-end">
-          <p class="error">${this.error}</p>
+          <p class="error">${escapar(this.error)}</p>
           <button id="restartBtn">Volver a seleccionar mazo</button>
         </section>
       `;
@@ -187,7 +195,7 @@ export class BattleArena extends HTMLElement {
       this.innerHTML = /* html */ `
         <section class="battle-end">
           <h2>${won ? "¡Ganaste la batalla!" : "La CPU ganó la batalla."}</h2>
-          <p class="battle-status">${this.statusMessage}</p>
+          <p class="battle-status">${escapar(this.statusMessage)}</p>
           <button id="restartBtn">Volver a seleccionar mazo</button>
         </section>
       `;
@@ -208,17 +216,17 @@ export class BattleArena extends HTMLElement {
     this.innerHTML = /* html */ `
       <section class="battle-arena">
         <p>Ronda ${this.round} · <strong>${myTurn ? "Tu turno" : "Turno de la máquina"}</strong></p>
-        <p class="battle-status">${this.statusMessage}</p>
+        <p class="battle-status">${escapar(this.statusMessage)}</p>
 
         <div style="display: flex; justify-content: space-between; gap: 2rem;">
           <article class="fighter">
-            <h3>Tu carta (${this.playerIndex + 1}/${DECK_SIZE}): ${pCard.name}</h3>
+            <h3>Tu carta (${this.playerIndex + 1}/${DECK_SIZE}): ${escapar(pCard.name)}</h3>
             <p>HP: ${pCard.currentHp} / ${pCard.hp}</p>
             ${pCard.isDefending ? "<p>🛡️ Defendiendo</p>" : ""}
           </article>
 
           <article class="fighter">
-            <h3>Rival (${this.enemyIndex + 1}/${DECK_SIZE}): ${eCard.name}</h3>
+            <h3>Rival (${this.enemyIndex + 1}/${DECK_SIZE}): ${escapar(eCard.name)}</h3>
             <p>HP: ${eCard.currentHp} / ${eCard.hp}</p>
             ${eCard.isDefending ? "<p>🛡️ Defendiendo</p>" : ""}
           </article>
@@ -229,7 +237,7 @@ export class BattleArena extends HTMLElement {
             .map((a, idx) => {
               const disabled = !myTurn || !a.enabled ? "disabled" : "";
               const note = a.enabled ? "" : ` — ${a.reason}`;
-              return `<button class="action-btn action-${a.type}" data-action="${idx}" ${disabled}>${label(a)}${note}</button>`;
+              return `<button class="action-btn action-${a.type}" data-action="${idx}" ${disabled}>${escapar(label(a))}${escapar(note)}</button>`;
             })
             .join("")}
         </div>

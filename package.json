@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
       "dev": "vite",
+      "test": "node --test tests/battleEngine.test.js",
       "server": "json-server --watch src/data/db.json --port 3000"
     },
     "devDependencies": {

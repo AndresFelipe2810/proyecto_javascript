@@ -1,31 +1,23 @@
 import API_URL from "./apiConfig.js";
+import { request } from "./http.js";
 
-export async function getPlayers() {
-  const response = await fetch(`${API_URL}/players`);
-  return await response.json();
+export function getPlayers() {
+  return request(`${API_URL}/players`, "No se pudieron obtener los jugadores");
 }
 
-export async function getPlayer(id) {
-  const response = await fetch(`${API_URL}/players/${id}`);
-  if (!response.ok) throw new Error(`No se pudo obtener el jugador (${response.status})`);
-  return await response.json();
+export function getPlayer(id) {
+  return request(`${API_URL}/players/${id}`, "No se pudo obtener el jugador");
 }
 
-export async function postPlayer(playerData) {
-  const response = await fetch(`${API_URL}/players`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(playerData),
-  });
-  return await response.json();
+export async function getPlayerByNickname(nickname) {
+  const players = await getPlayers();
+  return players.find((p) => p.nickname.toLowerCase() === nickname.toLowerCase()) ?? null;
 }
 
-export async function patchPlayer(id, data) {
-  const response = await fetch(`${API_URL}/players/${id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  if (!response.ok) throw new Error(`No se pudo actualizar el jugador (${response.status})`);
-  return await response.json();
+export function postPlayer(playerData) {
+  return request(`${API_URL}/players`, "No se pudo registrar el jugador", { method: "POST", body: playerData });
+}
+
+export function patchPlayer(id, data) {
+  return request(`${API_URL}/players/${id}`, "No se pudo actualizar el jugador", { method: "PATCH", body: data });
 }

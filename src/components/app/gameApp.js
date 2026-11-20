@@ -4,12 +4,31 @@ import "../battle/battle.js";
 import "../leaderboard/leaderboard.js";
 import "../auth/adminLogin.js";
 import "../cards/cards.js";
-import { getBattles, patchBattle, postBattle } from "../../api/battlesApi.js";
+import { getBattles, postBattle } from "../../api/battlesApi.js";
 import { getPlayer, patchPlayer } from "../../api/playersApi.js";
 import { scoreBattle } from "../../utils/battleEngine.js";
+import { escapar } from "../../utils/validators.js";
 
 const REINTENTOS = 3;
+const SESSION_KEY = "cardBattle.playerId";
 const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const leerSesion = () => {
+  try {
+    return localStorage.getItem(SESSION_KEY);
+  } catch {
+    return null;
+  }
+};
+
+const guardarSesion = (id) => {
+  try {
+    if (id) localStorage.setItem(SESSION_KEY, id);
+    else localStorage.removeItem(SESSION_KEY);
+  } catch {
+    // Sin almacenamiento: la sesión solo dura mientras la pestaña esté abierta
+  }
+};
 
 export class GameApp extends HTMLElement {
   constructor() {
@@ -17,14 +36,14 @@ export class GameApp extends HTMLElement {
     this.currentPlayer = null;
     this.selectedDeck = [];
     this.batallaActiva = false;
-    this.pendientes = new Map();
+    this.sincronizando = null;
     this.adminLogged = false;
     this.render();
     this.configurarEventos();
   }
 
   connectedCallback() {
-    this.reconciliarPendientes();
+    this.restaurarSesion();
   }
 
   render() {
@@ -36,6 +55,7 @@ export class GameApp extends HTMLElement {
           <button id="navRanking">Ranking</button>
           <button id="navAdmin">Administración</button>
           <button id="navLogout" hidden>Salir de admin</button>
+          <button id="navSwitchPlayer" hidden>Cambiar jugador</button>
         </nav>
         <p id="playerInfo"></p>
         <p id="saveStatus" role="status"></p>
@@ -47,14 +67,13 @@ export class GameApp extends HTMLElement {
   }
 
   configurarEventos() {
-    this.addEventListener("player-registered", (e) => {
-      this.currentPlayer = e.detail;
-      this.actualizarEncabezado();
-      this.mostrarSeleccionMazo();
-    });
+    this.addEventListener("player-registered", (e) => this.iniciarSesion(e.detail));
 
-    // Escuchar selección de mazo y montar la arena de batalla
     this.addEventListener("deck-selected", (e) => {
+      if (!this.currentPlayer) {
+        this.mostrarRegistro();
+        return;
+      }
       this.selectedDeck = e.detail.deck;
       this.batallaActiva = true;
       const container = this.querySelector("#app-content");
@@ -66,7 +85,17 @@ export class GameApp extends HTMLElement {
       this.batallaActiva = false;
       this.guardarPartida(e.detail);
     });
-    this.addEventListener("battle-restart", () => this.mostrarSeleccionMazo());
+
+    this.addEventListener("battle-restart", () => {
+      this.batallaActiva = false;
+      this.mostrarSeleccionMazo();
+    });
+
+    this.addEventListener("admin-logged-in", () => {
+      this.adminLogged = true;
+      this.actualizarNavAdmin();
+      this.mostrarAdmin();
+    });
 
     this.querySelector("#navPlay").addEventListener("click", () => {
       if (!this.confirmarSalida()) return;
@@ -79,12 +108,6 @@ export class GameApp extends HTMLElement {
       this.querySelector("#app-content").innerHTML = `<game-leaderboard></game-leaderboard>`;
     });
 
-    this.addEventListener("admin-logged-in", () => {
-      this.adminLogged = true;
-      this.actualizarNavAdmin();
-      this.mostrarAdmin();
-    });
-
     this.querySelector("#navAdmin").addEventListener("click", () => {
       if (!this.confirmarSalida()) return;
       if (this.adminLogged) this.mostrarAdmin();
@@ -92,10 +115,49 @@ export class GameApp extends HTMLElement {
     });
 
     this.querySelector("#navLogout").addEventListener("click", () => {
+      if (!this.confirmarSalida()) return;
       this.adminLogged = false;
       this.actualizarNavAdmin();
       this.querySelector("#app-content").innerHTML = `<admin-login></admin-login>`;
     });
+
+    this.querySelector("#navSwitchPlayer").addEventListener("click", () => {
+      if (!this.confirmarSalida()) return;
+      this.cerrarSesion();
+    });
+
+    window.addEventListener("beforeunload", (e) => {
+      if (!this.batallaActiva) return;
+      e.preventDefault();
+      e.returnValue = "";
+    });
+  }
+
+  async restaurarSesion() {
+    const id = leerSesion();
+    if (!id) return;
+    try {
+      this.iniciarSesion(await getPlayer(id), false);
+      this.sincronizarJugador(id);
+    } catch {
+      guardarSesion(null);
+    }
+  }
+
+  iniciarSesion(player, irAMazo = true) {
+    this.currentPlayer = player;
+    guardarSesion(player.id);
+    this.actualizarEncabezado();
+    if (!this.batallaActiva && (irAMazo || this.querySelector("player-register"))) this.mostrarSeleccionMazo();
+  }
+
+  cerrarSesion() {
+    this.currentPlayer = null;
+    this.selectedDeck = [];
+    guardarSesion(null);
+    this.actualizarEncabezado();
+    this.querySelector("#saveStatus").textContent = "";
+    this.mostrarRegistro();
   }
 
   actualizarNavAdmin() {
@@ -115,9 +177,10 @@ export class GameApp extends HTMLElement {
 
   actualizarEncabezado() {
     const p = this.currentPlayer;
-    if (!p) return;
-    this.querySelector("#playerInfo").textContent =
-      `Entrenador: ${p.nickname} · ${p.points ?? 0} pts · ${p.wins ?? 0}V ${p.losses ?? 0}D`;
+    this.querySelector("#navSwitchPlayer").hidden = !p;
+    this.querySelector("#playerInfo").innerHTML = p
+      ? `Entrenador: ${escapar(p.nickname)} · ${p.points ?? 0} pts · ${p.wins ?? 0}V ${p.losses ?? 0}D`
+      : "";
   }
 
   mostrarSeleccionMazo() {
@@ -138,7 +201,6 @@ export class GameApp extends HTMLElement {
     let battle;
     try {
       battle = await postBattle({
-        id: `battle-${Date.now()}`,
         playerId: this.currentPlayer.id,
         playerNickname: this.currentPlayer.nickname,
         result,
@@ -147,75 +209,66 @@ export class GameApp extends HTMLElement {
         machineDeck,
         startedAt,
         endedAt,
-        statsApplied: false,
       });
     } catch (err) {
       status.textContent = `No se pudo guardar la partida. ${err.message}`;
       return;
     }
 
-    await this.aplicarEstadisticas(battle);
+    const ok = await this.sincronizarJugador(this.currentPlayer.id);
+    if (ok) status.textContent = `Partida guardada (+${battle.pointsAwarded} pts).`;
   }
 
-  // Acumula puntos y contadores del jugador; si falla, deja la partida pendiente con reintento
-  async aplicarEstadisticas(battle) {
-    const estado = this.pendientes.get(battle.id) ?? { battle, jugadorActualizado: false };
-    this.pendientes.set(battle.id, estado);
-    const status = this.querySelector("#saveStatus");
-    let ultimoError;
+  // Idempotente: los totales del jugador se recalculan desde su historial de partidas
+  sincronizarJugador(playerId) {
+    if (this.sincronizando) return this.sincronizando.then(() => this.sincronizarJugador(playerId));
+    this.sincronizando = this.sincronizarConReintentos(playerId).finally(() => {
+      this.sincronizando = null;
+    });
+    return this.sincronizando;
+  }
 
+  async sincronizarConReintentos(playerId) {
+    let ultimoError;
     for (let intento = 1; intento <= REINTENTOS; intento++) {
       try {
-        if (!estado.jugadorActualizado) {
-          await this.actualizarJugador(battle);
-          estado.jugadorActualizado = true;
+        const [actual, partidas] = await Promise.all([
+          getPlayer(playerId),
+          getBattles(`?playerId=${encodeURIComponent(playerId)}`),
+        ]);
+        const wins = partidas.filter((b) => b.result === "win").length;
+        const totales = {
+          points: partidas.reduce((sum, b) => sum + (b.pointsAwarded ?? 0), 0),
+          wins,
+          losses: partidas.length - wins,
+          gamesPlayed: partidas.length,
+        };
+        const cambia = Object.keys(totales).some((k) => actual[k] !== totales[k]);
+        const jugador = cambia ? await patchPlayer(playerId, totales) : actual;
+        if (this.currentPlayer?.id === jugador.id) {
+          this.currentPlayer = jugador;
+          this.actualizarEncabezado();
         }
-        await patchBattle(battle.id, { statsApplied: true });
-        this.pendientes.delete(battle.id);
-        this.actualizarEncabezado();
-        status.textContent = `Partida guardada (+${battle.pointsAwarded} pts).`;
         return true;
       } catch (err) {
         ultimoError = err;
         await esperar(400 * intento);
       }
     }
-
-    this.mostrarReintento(battle, ultimoError);
+    this.mostrarReintento(playerId, ultimoError);
     return false;
   }
 
-  async actualizarJugador(battle) {
-    const won = battle.result === "win";
-    const actual = await getPlayer(battle.playerId);
-    const actualizado = await patchPlayer(actual.id, {
-      points: (actual.points ?? 0) + battle.pointsAwarded,
-      wins: (actual.wins ?? 0) + (won ? 1 : 0),
-      losses: (actual.losses ?? 0) + (won ? 0 : 1),
-      gamesPlayed: (actual.gamesPlayed ?? 0) + 1,
-    });
-    if (this.currentPlayer?.id === actualizado.id) this.currentPlayer = actualizado;
-  }
-
-  mostrarReintento(battle, err) {
+  mostrarReintento(playerId, err) {
     const status = this.querySelector("#saveStatus");
     status.textContent = `La partida se registró, pero no se actualizaron tus estadísticas. ${err?.message ?? ""} `;
     const boton = document.createElement("button");
     boton.textContent = "Reintentar";
-    boton.addEventListener("click", () => this.aplicarEstadisticas(battle));
+    boton.addEventListener("click", async () => {
+      status.textContent = "Reintentando...";
+      if (await this.sincronizarJugador(playerId)) status.textContent = "Estadísticas actualizadas.";
+    });
     status.append(boton);
-  }
-
-  // Aplica estadísticas de partidas guardadas que quedaron sin aplicar (p. ej. tras recargar)
-  async reconciliarPendientes() {
-    try {
-      const pendientes = await getBattles("?statsApplied=false");
-      for (const battle of pendientes) {
-        if (!this.pendientes.has(battle.id)) await this.aplicarEstadisticas(battle);
-      }
-    } catch {
-      // Se reintentará al volver a cargar la aplicación
-    }
   }
 }
 
