@@ -51,6 +51,60 @@
       "losses": 0,
       "gamesPlayed": 0,
       "createdAt": "2026-11-19T20:57:39.237Z"
+    },
+    {
+      "id": "QhOmkD6OkLA",
+      "nickname": "AndrexxFP5",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T21:07:07.894Z"
+    },
+    {
+      "id": "dyQG7mKHdT4",
+      "nickname": "AndrexxFP6",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T21:12:38.461Z"
+    },
+    {
+      "id": "hpBfbsExUsc",
+      "nickname": "AndrexxFP7",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T21:17:54.040Z"
+    },
+    {
+      "id": "XyPEg0ZL2ak",
+      "nickname": "AndrexxFP8",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T21:28:00.878Z"
+    },
+    {
+      "id": "rXB56DtMWEE",
+      "nickname": "AndrexxFP9",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-19T21:30:49.647Z"
+    },
+    {
+      "id": "6VNRw3i9cbY",
+      "nickname": "AndrexxFP10",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-20T03:45:52.834Z"
     }
   ],
   "cards": [
@@ -108,7 +162,7 @@
       "type": "Fire",
       "image": "/images/cards/charizard.webp",
       "description": "Dragón de fuego con ataques devastadores.",
-      "hp": 280,
+      "hp": 250,
       "attacks": [
         {
           "id": "atk-1",
@@ -156,7 +210,7 @@
       "type": "Water",
       "image": "/images/cards/blastoise.webp",
       "description": "Caparazón pesado y chorros de alta presión.",
-      "hp": 300,
+      "hp": 250,
       "attacks": [
         {
           "id": "atk-1",
@@ -204,7 +258,7 @@
       "type": "Grass",
       "image": "/images/cards/bulbasaur.webp",
       "description": "Ágil en combate y resistente con su liana.",
-      "hp": 270,
+      "hp": 250,
       "attacks": [
         {
           "id": "atk-1",
@@ -241,6 +295,774 @@
         "attack": "/sounds/attack-grass.mp3",
         "defense": "/sounds/defense-grass.mp3",
         "special": "/sounds/special-grass.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-005",
+      "name": "Mewtwo",
+      "type": "Psychic",
+      "image": "/images/cards/mewtwo.webp",
+      "description": "Pokémon legendario creado en laboratorio, de poder psíquico abrumador.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Presión Psíquica",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Recuperación Mental",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Psicoonda",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Mewtwo Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Mewtwo",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Recuperación Mental",
+        "baseDamage": 70,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-psychic.mp3",
+        "defense": "/sounds/defense-psychic.mp3",
+        "special": "/sounds/special-psychic.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-006",
+      "name": "Gengar",
+      "type": "Ghost",
+      "image": "/images/cards/gengar.webp",
+      "description": "Pokémon fantasmal que acecha en las sombras.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Bola Sombra",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Lengua Fantasma",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Maldición Oscura",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Gengar Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Gengar",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Lengua Fantasma",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-ghost.mp3",
+        "defense": "/sounds/defense-ghost.mp3",
+        "special": "/sounds/special-ghost.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-007",
+      "name": "Gyarados",
+      "type": "Water",
+      "image": "/images/cards/gyarados.webp",
+      "description": "Serpiente feroz que puede arrasar ciudades enteras.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Hidrobomba",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Mordisco Tormenta",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Furia Marina",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Gyarados Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Gyarados",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Mordisco Tormenta",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-water.mp3",
+        "defense": "/sounds/defense-water.mp3",
+        "special": "/sounds/special-water.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-008",
+      "name": "Dragonite",
+      "type": "Dragon",
+      "image": "/images/cards/dragonite.webp",
+      "description": "Dragón amable con un poder de vuelo impresionante.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Cola Dragón",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Garra Dragón",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Hiperrayo Dragón",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Dragonite Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Dragonite",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Garra Dragón",
+        "baseDamage": 70,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-dragon.mp3",
+        "defense": "/sounds/defense-dragon.mp3",
+        "special": "/sounds/special-dragon.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-009",
+      "name": "Snorlax",
+      "type": "Normal",
+      "image": "/images/cards/snorlax.webp",
+      "description": "Pokémon somnoliento de gran resistencia.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Golpe Cuerpo",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Patada Gigante",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Explosión Ancestral",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Snorlax Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Snorlax",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Patada Gigante",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-normal.mp3",
+        "defense": "/sounds/defense-normal.mp3",
+        "special": "/sounds/special-normal.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-010",
+      "name": "Alakazam",
+      "type": "Psychic",
+      "image": "/images/cards/alakazam.webp",
+      "description": "Psíquico de inteligencia superior y reflejos rápidos.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Confusión",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Psíquico",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Mente Maestra",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Alakazam Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Alakazam",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Psíquico",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-psychic.mp3",
+        "defense": "/sounds/defense-psychic.mp3",
+        "special": "/sounds/special-psychic.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-011",
+      "name": "Machamp",
+      "type": "Fighting",
+      "image": "/images/cards/machamp.webp",
+      "description": "Luchador incansable con cuatro brazos.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Golpe Karate",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Llave Cruzada",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Puño Dinámico",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Machamp Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Machamp",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Llave Cruzada",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-fighting.mp3",
+        "defense": "/sounds/defense-fighting.mp3",
+        "special": "/sounds/special-fighting.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-012",
+      "name": "Lucario",
+      "type": "Fighting",
+      "image": "/images/cards/lucario.webp",
+      "description": "Pokémon que percibe las auras de sus rivales.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Esfera Aural",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Puño Certero",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Aura Sagrada",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Lucario Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Lucario",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Puño Certero",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-fighting.mp3",
+        "defense": "/sounds/defense-fighting.mp3",
+        "special": "/sounds/special-fighting.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-013",
+      "name": "Eevee",
+      "type": "Normal",
+      "image": "/images/cards/eevee.webp",
+      "description": "Pokémon adaptable con gran capacidad de evolución.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Placaje",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Mordisco",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Ataque Rápido Eevee",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Eevee Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Eevee",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Mordisco",
+        "baseDamage": 55,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-normal.mp3",
+        "defense": "/sounds/defense-normal.mp3",
+        "special": "/sounds/special-normal.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-014",
+      "name": "Umbreon",
+      "type": "Dark",
+      "image": "/images/cards/umbreon.webp",
+      "description": "Evolución nocturna de Eevee, sigiloso y defensivo.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Mordisco Umbrío",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Ataque Oscuro",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Lunar Pulso",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Umbreon Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Umbreon",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Ataque Oscuro",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-dark.mp3",
+        "defense": "/sounds/defense-dark.mp3",
+        "special": "/sounds/special-dark.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-015",
+      "name": "Garchomp",
+      "type": "Dragon",
+      "image": "/images/cards/garchomp.webp",
+      "description": "Dragón terrestre de velocidad vertiginosa.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Garra Dragón",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Colmillo Dragón",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Terremoto Dragón",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Garchomp Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Garchomp",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Colmillo Dragón",
+        "baseDamage": 70,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-dragon.mp3",
+        "defense": "/sounds/defense-dragon.mp3",
+        "special": "/sounds/special-dragon.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-016",
+      "name": "Arcanine",
+      "type": "Fire",
+      "image": "/images/cards/arcanine.webp",
+      "description": "Pokémon de fuego legendario por su velocidad.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Llamarada",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Colmillo Ígneo",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Hipercolmillo Fuego",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Arcanine Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Arcanine",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Colmillo Ígneo",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-fire.mp3",
+        "defense": "/sounds/defense-fire.mp3",
+        "special": "/sounds/special-fire.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-017",
+      "name": "Venusaur",
+      "type": "Grass",
+      "image": "/images/cards/venusaur.webp",
+      "description": "Planta gigante con una flor que emana aroma.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Latigazo",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Hoja Afilada",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Rayo Solar",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Venusaur Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Venusaur",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Hoja Afilada",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-grass.mp3",
+        "defense": "/sounds/defense-grass.mp3",
+        "special": "/sounds/special-grass.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-018",
+      "name": "Jolteon",
+      "type": "Electric",
+      "image": "/images/cards/jolteon.webp",
+      "description": "Eevee eléctrico de movimientos veloces.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Impactrueno",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Patada Pin Misil",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Rayo Eléctrico",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Jolteon Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Jolteon",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Patada Pin Misil",
+        "baseDamage": 60,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-electric.mp3",
+        "defense": "/sounds/defense-electric.mp3",
+        "special": "/sounds/special-electric.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-019",
+      "name": "Starmie",
+      "type": "Water",
+      "image": "/images/cards/starmie.webp",
+      "description": "Estrella acuática con núcleo luminoso.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Burbuja",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Hidropulso",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Rayo Acuático",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Starmie Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Starmie",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Hidropulso",
+        "baseDamage": 55,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-water.mp3",
+        "defense": "/sounds/defense-water.mp3",
+        "special": "/sounds/special-water.mp3",
+        "defeated": "/sounds/defeated.mp3"
+      },
+      "active": true,
+      "createdAt": "2026-08-18T00:00:00.000Z"
+    },
+    {
+      "id": "card-020",
+      "name": "Gardevoir",
+      "type": "Fairy",
+      "image": "/images/cards/gardevoir.webp",
+      "description": "Protectora que canaliza energía psíquica y mágica.",
+      "hp": 250,
+      "attacks": [
+        {
+          "id": "atk-1",
+          "name": "Brillo Mágico",
+          "baseDamage": 20
+        },
+        {
+          "id": "atk-2",
+          "name": "Carantoña",
+          "baseDamage": 30
+        },
+        {
+          "id": "atk-3",
+          "name": "Hechizo Hada",
+          "baseDamage": 40
+        },
+        {
+          "id": "atk-4",
+          "name": "Gardevoir Final",
+          "baseDamage": 50
+        }
+      ],
+      "defense": {
+        "name": "Escudo de Gardevoir",
+        "damageReduction": 0.5
+      },
+      "special": {
+        "name": "Gran Carantoña",
+        "baseDamage": 65,
+        "unlockTurn": 2,
+        "cooldown": 3
+      },
+      "sounds": {
+        "attack": "/sounds/attack-fairy.mp3",
+        "defense": "/sounds/defense-fairy.mp3",
+        "special": "/sounds/special-fairy.mp3",
         "defeated": "/sounds/defeated.mp3"
       },
       "active": true,
