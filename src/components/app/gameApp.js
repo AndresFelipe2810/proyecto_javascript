@@ -11,6 +11,7 @@ export class GameApp extends HTMLElement {
     super();
     this.currentPlayer = null;
     this.selectedDeck = [];
+    this.batallaActiva = false;
     this.render();
     this.configurarEventos();
   }
@@ -42,22 +43,35 @@ export class GameApp extends HTMLElement {
     // Escuchar selección de mazo y montar la arena de batalla
     this.addEventListener("deck-selected", (e) => {
       this.selectedDeck = e.detail.deck;
+      this.batallaActiva = true;
       const container = this.querySelector("#app-content");
       container.innerHTML = `<battle-arena></battle-arena>`;
       container.querySelector("battle-arena").deck = this.selectedDeck;
     });
 
-    this.addEventListener("battle-finished", (e) => this.guardarPartida(e.detail));
+    this.addEventListener("battle-finished", (e) => {
+      this.batallaActiva = false;
+      this.guardarPartida(e.detail);
+    });
     this.addEventListener("battle-restart", () => this.mostrarSeleccionMazo());
 
     this.querySelector("#navPlay").addEventListener("click", () => {
+      if (!this.confirmarSalida()) return;
       if (this.currentPlayer) this.mostrarSeleccionMazo();
       else this.mostrarRegistro();
     });
 
     this.querySelector("#navRanking").addEventListener("click", () => {
+      if (!this.confirmarSalida()) return;
       this.querySelector("#app-content").innerHTML = `<game-leaderboard></game-leaderboard>`;
     });
+  }
+
+  confirmarSalida() {
+    if (!this.batallaActiva) return true;
+    if (!confirm("Hay una batalla en curso. Si sales, la partida se perderá. ¿Continuar?")) return false;
+    this.batallaActiva = false;
+    return true;
   }
 
   actualizarEncabezado() {
@@ -94,7 +108,12 @@ export class GameApp extends HTMLElement {
         startedAt,
         endedAt,
       });
+    } catch (err) {
+      status.textContent = `No se pudo guardar la partida. ${err.message}`;
+      return;
+    }
 
+    try {
       // Releer al jugador para no sobrescribir cambios hechos en otra pestaña
       const actual = await getPlayer(this.currentPlayer.id);
       this.currentPlayer = await patchPlayer(actual.id, {
@@ -107,7 +126,7 @@ export class GameApp extends HTMLElement {
       this.actualizarEncabezado();
       status.textContent = `Partida guardada (+${pointsAwarded} pts).`;
     } catch (err) {
-      status.textContent = `No se pudo guardar la partida. ${err.message}`;
+      status.textContent = `La partida se registró, pero no se actualizaron tus puntos ni estadísticas. ${err.message}`;
     }
   }
 }
