@@ -1,12 +1,30 @@
 import { getPlayerByNickname, postPlayer } from "../../api/playersApi.js";
 import { loginAdmin } from "../../api/adminsApi.js";
 import { ADMIN_NICKNAME } from "../../api/apiConfig.js";
-import { validarNickname } from "../../utils/validators.js";
+import { validarNickname, validarPassword } from "../../utils/validators.js";
+import { generarSalt, hashPassword, verificarPassword } from "../../utils/crypto.js";
+
+const MODOS = {
+  base: { boton: "Entrar a la arena", ayuda: "", auto: "current-password" },
+  admin: { boton: "Entrar como admin", ayuda: "", auto: "current-password" },
+  login: { boton: "Iniciar sesión", ayuda: "Nickname registrado. Ingresa tu contraseña.", auto: "current-password" },
+  registro: {
+    boton: "Crear cuenta",
+    ayuda: "Nickname disponible. Crea una contraseña (mínimo 6 caracteres).",
+    auto: "new-password",
+  },
+  legacy: { boton: "Entrar a la arena", ayuda: "Esta cuenta no tiene contraseña. Elige otro nickname.", auto: "current-password" },
+};
+
+const sinCredenciales = ({ passwordHash, salt, ...publico }) => publico;
 
 export class PlayerRegister extends HTMLElement {
   constructor() {
     super();
     this.enviando = false;
+    this.modo = "base";
+    this.jugadorExistente = null;
+    this.consulta = 0;
     this.render();
     this.configurarEventos();
   }
@@ -25,8 +43,8 @@ export class PlayerRegister extends HTMLElement {
           />
           <input
             type="password"
-            id="adminPassword"
-            placeholder="Contraseña de administrador"
+            id="passwordInput"
+            placeholder="Contraseña"
             autocomplete="current-password"
             hidden
           />
@@ -42,27 +60,74 @@ export class PlayerRegister extends HTMLElement {
     const input = this.querySelector("#nicknameInput");
     const msg = this.querySelector("#registerMessage");
     const boton = form.querySelector("button");
-    const pass = this.querySelector("#adminPassword");
+    const pass = this.querySelector("#passwordInput");
     const esAdmin = () => input.value.trim().toLowerCase() === ADMIN_NICKNAME;
+    let temporizador;
+
+    const aplicarModo = (modo) => {
+      this.modo = modo;
+      const cfg = MODOS[modo];
+      const conClave = modo !== "base" && modo !== "legacy";
+      pass.hidden = !conClave;
+      pass.required = conClave;
+      pass.autocomplete = cfg.auto;
+      if (!conClave) pass.value = "";
+      boton.textContent = cfg.boton;
+      boton.disabled = modo === "legacy" || this.enviando;
+      msg.textContent = cfg.ayuda;
+    };
+
+    const detectarModo = async () => {
+      const nickname = input.value.trim();
+      const id = ++this.consulta;
+      this.jugadorExistente = null;
+      if (esAdmin()) return aplicarModo("admin");
+      if (validarNickname(nickname)) return aplicarModo("base");
+      try {
+        const existente = await getPlayerByNickname(nickname);
+        if (id !== this.consulta) return;
+        this.jugadorExistente = existente;
+        if (!existente) aplicarModo("registro");
+        else if (!existente.passwordHash || !existente.salt) aplicarModo("legacy");
+        else aplicarModo("login");
+      } catch (err) {
+        if (id !== this.consulta) return;
+        aplicarModo("base");
+        msg.textContent = err.message;
+      }
+    };
 
     input.addEventListener("input", () => {
-      const admin = esAdmin();
-      pass.hidden = !admin;
-      pass.required = admin;
-      if (!admin) pass.value = "";
-      boton.textContent = admin ? "Entrar como admin" : "Entrar a la arena";
+      clearTimeout(temporizador);
+      this.consulta++;
+      if (esAdmin()) {
+        detectarModo();
+        return;
+      }
+      aplicarModo("base");
+      temporizador = setTimeout(detectarModo, 300);
     });
+
+    const iniciar = (mensaje) => {
+      this.enviando = true;
+      boton.disabled = true;
+      msg.textContent = mensaje;
+    };
+
+    const terminar = () => {
+      this.enviando = false;
+      boton.disabled = this.modo === "legacy";
+    };
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (this.enviando) return;
+      clearTimeout(temporizador);
 
       const nickname = input.value.trim();
 
       if (esAdmin()) {
-        this.enviando = true;
-        boton.disabled = true;
-        msg.textContent = "Validando credenciales...";
+        iniciar("Validando credenciales...");
         try {
           const admin = await loginAdmin(nickname, pass.value);
           if (!admin) {
@@ -74,8 +139,7 @@ export class PlayerRegister extends HTMLElement {
         } catch (err) {
           msg.textContent = err.message;
         } finally {
-          this.enviando = false;
-          boton.disabled = false;
+          terminar();
         }
         return;
       }
@@ -86,18 +150,55 @@ export class PlayerRegister extends HTMLElement {
         return;
       }
 
-      this.enviando = true;
-      boton.disabled = true;
-      msg.textContent = "Validando nickname...";
+      if (this.modo === "base") {
+        await detectarModo();
+        if (this.modo === "base") return;
+        msg.textContent = MODOS[this.modo].ayuda;
+        pass.focus();
+        return;
+      }
 
+      if (this.modo === "legacy") return;
+
+      iniciar("Validando...");
       try {
-        if (await getPlayerByNickname(nickname)) {
-          msg.textContent = "Ese nickname ya está ocupado. ¡Prueba otro!";
+        const existente = await getPlayerByNickname(nickname);
+
+        if (this.modo === "login") {
+          if (!existente) {
+            await detectarModo();
+            msg.textContent = "Esa cuenta ya no existe en el servidor. Puedes crearla de nuevo.";
+            return;
+          }
+          if (!existente.passwordHash || !(await verificarPassword(existente, pass.value))) {
+            msg.textContent = "Nickname o contraseña incorrectos.";
+            return;
+          }
+          pass.value = "";
+          msg.textContent = "";
+          this.dispatchEvent(
+            new CustomEvent("player-registered", { detail: sinCredenciales(existente), bubbles: true })
+          );
           return;
         }
 
+        if (existente) {
+          msg.textContent = "Ese nickname ya está ocupado. ¡Prueba otro!";
+          await detectarModo();
+          return;
+        }
+
+        const errorPass = validarPassword(pass.value);
+        if (errorPass) {
+          msg.textContent = errorPass;
+          return;
+        }
+
+        const salt = generarSalt();
         const player = await postPlayer({
           nickname,
+          passwordHash: await hashPassword(pass.value, salt),
+          salt,
           points: 0,
           wins: 0,
           losses: 0,
@@ -107,12 +208,12 @@ export class PlayerRegister extends HTMLElement {
 
         msg.textContent = `¡Bienvenido, ${nickname}! Registro guardado.`;
         input.value = "";
-        this.dispatchEvent(new CustomEvent("player-registered", { detail: player, bubbles: true }));
+        pass.value = "";
+        this.dispatchEvent(new CustomEvent("player-registered", { detail: sinCredenciales(player), bubbles: true }));
       } catch (err) {
         msg.textContent = err.message;
       } finally {
-        this.enviando = false;
-        boton.disabled = false;
+        terminar();
       }
     });
   }

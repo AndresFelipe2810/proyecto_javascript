@@ -2,7 +2,6 @@ import "../auth/playerRegister.js";
 import "../deck/deckSelector.js";
 import "../battle/battle.js";
 import "../leaderboard/leaderboard.js";
-import "../auth/adminLogin.js";
 import "../cards/cards.js";
 import { getBattles, postBattle } from "../../api/battlesApi.js";
 import { getPlayer, patchPlayer } from "../../api/playersApi.js";
@@ -53,7 +52,6 @@ export class GameApp extends HTMLElement {
         <nav>
           <button id="navPlay">Jugar</button>
           <button id="navRanking">Ranking</button>
-          <button id="navAdmin">Administración</button>
           <button id="navLogout" hidden>Salir de admin</button>
           <button id="navSwitchPlayer" hidden>Cambiar jugador</button>
         </nav>
@@ -109,17 +107,12 @@ export class GameApp extends HTMLElement {
       this.querySelector("#app-content").innerHTML = `<game-leaderboard></game-leaderboard>`;
     });
 
-    this.querySelector("#navAdmin").addEventListener("click", () => {
-      if (!this.confirmarSalida()) return;
-      if (this.adminLogged) this.mostrarAdmin();
-      else this.querySelector("#app-content").innerHTML = `<admin-login></admin-login>`;
-    });
-
     this.querySelector("#navLogout").addEventListener("click", () => {
       if (!this.confirmarSalida()) return;
       this.adminLogged = false;
       this.actualizarNavAdmin();
-      this.querySelector("#app-content").innerHTML = `<admin-login></admin-login>`;
+      if (this.currentPlayer) this.mostrarSeleccionMazo();
+      else this.mostrarRegistro();
     });
 
     this.querySelector("#navSwitchPlayer").addEventListener("click", () => {

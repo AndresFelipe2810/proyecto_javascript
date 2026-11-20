@@ -9,21 +9,36 @@
   "players": [
     {
       "nickname": "AndrexxFP",
-      "points": 10,
-      "wins": 0,
-      "losses": 1,
-      "gamesPlayed": 1,
-      "createdAt": "2026-11-20T04:58:26.916Z",
-      "id": "RSwkT4ULlm8"
-    },
-    {
-      "nickname": "AndrexxFP1",
+      "passwordHash": "01798450b14b72b6e739e098d77e9382e39eb5f94fa92720efb86bc3736b580e",
+      "salt": "bc2e2022dbc7d6a4b61929a9da686c01",
       "points": 0,
       "wins": 0,
       "losses": 0,
       "gamesPlayed": 0,
-      "createdAt": "2026-11-20T05:18:08.790Z",
-      "id": "W0hJICCZUcE"
+      "createdAt": "2026-11-20T15:29:48.067Z",
+      "id": "_PIzk9fU12M"
+    },
+    {
+      "nickname": "AndrexxFP1",
+      "passwordHash": "bd817907d06a11554959398f148ab67a68abe0da66d891f7ea5cfa5fe9e11995",
+      "salt": "1fc1ea6265b61df651b1310177c9ce14",
+      "points": 10,
+      "wins": 0,
+      "losses": 1,
+      "gamesPlayed": 1,
+      "createdAt": "2026-11-20T15:39:26.064Z",
+      "id": "0VeRoaOtum0"
+    },
+    {
+      "nickname": "PruebaX1",
+      "passwordHash": "29c0b5acfb4aa619ea9639da92c503f6b275698f3dfba2b2591f91d602035af5",
+      "salt": "892e78150ba2430b8b1705a46bcb8f3d",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-20T15:48:50.268Z",
+      "id": "gktbnl6Mpzs"
     }
   ],
   "cards": [
@@ -31,7 +46,7 @@
       "id": "card-001",
       "name": "Pikachu",
       "type": "Electric",
-      "image": "/images/cards/pikachu.webp",
+      "image": "https://i.pinimg.com/736x/bb/1b/61/bb1b619fc229531b3d87600ea3bec8cb.jpg",
       "description": "Ratón eléctrico veloz y ágil.",
       "hp": 250,
       "attacks": [
@@ -990,8 +1005,8 @@
   ],
   "battles": [
     {
-      "playerId": "RSwkT4ULlm8",
-      "playerNickname": "AndrexxFP",
+      "playerId": "0VeRoaOtum0",
+      "playerNickname": "AndrexxFP1",
       "result": "loss",
       "pointsAwarded": 10,
       "playerDeck": [
@@ -999,18 +1014,18 @@
         "card-002",
         "card-003",
         "card-004",
-        "card-005"
+        "card-015"
       ],
       "machineDeck": [
-        "card-007",
         "card-010",
+        "card-009",
         "card-006",
-        "card-016",
-        "card-018"
+        "card-014",
+        "card-017"
       ],
-      "startedAt": "2026-11-20T04:58:34.087Z",
-      "endedAt": "2026-11-20T05:00:19.378Z",
-      "id": "Sq6V7Fcdu-g"
+      "startedAt": "2026-11-20T15:39:33.494Z",
+      "endedAt": "2026-11-20T15:40:50.857Z",
+      "id": "Lxb08Ky7FWw"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

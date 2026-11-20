@@ -21,6 +21,12 @@ export function validarNickname(nickname) {
   return null;
 }
 
+export function validarPassword(password) {
+  if (!password) return "La contraseña es obligatoria.";
+  if (password.length < 6) return "La contraseña debe tener al menos 6 caracteres.";
+  return null;
+}
+
 export function validarCarta(carta, otras = []) {
   const errores = [];
   const nombre = (carta.name ?? "").trim().toLowerCase();
