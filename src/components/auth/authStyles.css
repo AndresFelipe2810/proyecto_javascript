@@ -69,7 +69,8 @@ player-register #registerForm {
   box-shadow: 0 8px 22px rgba(61, 140, 106, 0.18);
 }
 
-player-register #nicknameInput {
+player-register #nicknameInput,
+player-register #adminPassword {
   flex: 1;
   min-width: 0;
   border: 0;
@@ -82,8 +83,25 @@ player-register #nicknameInput {
   color: var(--text);
 }
 
-player-register #nicknameInput::placeholder {
+player-register #nicknameInput::placeholder,
+player-register #adminPassword::placeholder {
   color: #8aa39a;
+}
+
+player-register #adminPassword[hidden] {
+  display: none;
+}
+
+player-register #adminPassword:not([hidden]) {
+  border-left: 2px solid #e3f5ea;
+  animation: reveal 0.2s ease-out;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
 }
 
 player-register #registerForm:focus-within {
@@ -186,7 +204,12 @@ player-register #registerMessage {
     box-shadow: none;
   }
 
-  player-register #nicknameInput {
+  player-register #adminPassword:not([hidden]) {
+    border-left: 2px solid #f1fff6;
+  }
+
+  player-register #nicknameInput,
+  player-register #adminPassword {
     padding: 14px 18px;
     font-size: 16px;
     text-align: left;
@@ -196,7 +219,8 @@ player-register #registerMessage {
     box-shadow: 0 4px 12px rgba(61, 140, 106, 0.12);
   }
 
-  player-register #nicknameInput:focus {
+  player-register #nicknameInput:focus,
+  player-register #adminPassword:focus {
     border-color: var(--accent);
   }
 

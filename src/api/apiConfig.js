@@ -11,4 +11,6 @@ switch (import.meta.env.VITE_API_MODE) {
     break;
 }
 
+export const ADMIN_NICKNAME = (import.meta.env.VITE_ADMIN_NICKNAME ?? "admin").toLowerCase();
+
 export default API_URL;

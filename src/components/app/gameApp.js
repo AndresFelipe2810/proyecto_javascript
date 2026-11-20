@@ -93,6 +93,7 @@ export class GameApp extends HTMLElement {
 
     this.addEventListener("admin-logged-in", () => {
       this.adminLogged = true;
+      this.querySelector("#saveStatus").textContent = "";
       this.actualizarNavAdmin();
       this.mostrarAdmin();
     });

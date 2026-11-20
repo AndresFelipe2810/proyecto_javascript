@@ -13,7 +13,7 @@ export class GameLeaderboard extends HTMLElement {
       <section class="leaderboard">
         <h2>Ranking</h2>
         <p id="lbStatus">Cargando...</p>
-        <div id="podium" style="display: flex; gap: 1rem; flex-wrap: wrap;"></div>
+        <div id="podium"></div>
         <ol id="lbList"></ol>
       </section>
     `;

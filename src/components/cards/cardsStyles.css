@@ -1,0 +1,214 @@
+admin-cards {
+  display: block;
+}
+
+admin-cards h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 6px 14px rgba(61, 140, 106, 0.2);
+}
+
+admin-cards #adminStatus {
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+admin-cards #adminStatus:empty {
+  display: none;
+}
+
+admin-cards button,
+admin-cards input,
+admin-cards textarea {
+  font: inherit;
+  max-width: 100%;
+}
+
+admin-cards button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+admin-cards button:hover {
+  background: var(--accent-dark);
+}
+
+admin-cards button:active {
+  transform: scale(0.97);
+}
+
+admin-cards button:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 2px;
+}
+
+admin-cards input,
+admin-cards textarea {
+  min-width: 0;
+  width: 100%;
+  padding: 11px 16px;
+  border: 2px solid #f1fff6;
+  border-radius: 18px;
+  background: var(--white);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+admin-cards input:focus,
+admin-cards textarea:focus {
+  outline: 0;
+  border-color: var(--accent);
+}
+
+admin-cards textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+admin-cards #cardForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px;
+  padding: clamp(14px, 3vw, 24px);
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow: 0 8px 22px rgba(61, 140, 106, 0.14);
+}
+
+admin-cards #cardForm[hidden] {
+  display: none;
+}
+
+admin-cards #cardForm h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--accent-dark);
+}
+
+admin-cards #cardForm textarea,
+admin-cards #cardForm button {
+  grid-column: 1 / -1;
+}
+
+admin-cards #cardForm input {
+  background: #f4fcf7;
+}
+
+admin-cards fieldset {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 2px solid #e3f5ea;
+  border-radius: 18px;
+}
+
+admin-cards legend {
+  padding: 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+admin-cards #cancelarForm {
+  background: rgba(102, 192, 148, 0.2);
+  color: var(--text);
+}
+
+admin-cards #cancelarForm:hover {
+  background: rgba(102, 192, 148, 0.35);
+}
+
+admin-cards #nuevaCarta {
+  margin-bottom: 4px;
+}
+
+admin-cards #adminList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+admin-cards .admin-card {
+  min-width: 0;
+  padding: 16px;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(61, 140, 106, 0.12);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: flex-start;
+}
+
+admin-cards .admin-card h3 {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent-dark);
+  overflow-wrap: anywhere;
+}
+
+admin-cards .admin-card p {
+  flex-basis: 100%;
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  overflow-wrap: anywhere;
+}
+
+admin-cards .admin-card button {
+  flex: 1 1 auto;
+  padding: 8px 12px;
+  font-size: 0.74rem;
+}
+
+admin-cards .admin-card button[data-action="eliminar"] {
+  background: #e58f8f;
+}
+
+admin-cards .admin-card button[data-action="eliminar"]:hover {
+  background: #d17373;
+}
+
+@media (max-width: 720px) {
+  admin-cards #cardForm {
+    grid-template-columns: 1fr;
+  }
+
+  admin-cards input,
+  admin-cards textarea {
+    padding: 13px 16px;
+    font-size: 16px;
+  }
+
+  admin-cards button {
+    min-height: 44px;
+  }
+
+  admin-cards #nuevaCarta,
+  admin-cards #cardForm button {
+    width: 100%;
+  }
+
+  admin-cards #adminList {
+    grid-template-columns: 1fr;
+  }
+}
