@@ -105,6 +105,16 @@ card-game-app > header nav button[hidden] {
   display: none;
 }
 
+body:has(card-game-app.is-battle) { padding: clamp(6px, 2vw, 16px); }
+
+card-game-app.is-battle > header { display: none; }
+
+card-game-app.is-battle {
+  padding: clamp(8px, 2vw, 16px);
+}
+
+card-game-app.is-battle #app-content { margin-top: 0; }
+
 #playerInfo,
 #saveStatus {
   flex-basis: 100%;

@@ -83,19 +83,23 @@ deck-selection #startBattleBtn {
   font-size: 1rem;
 }
 
+deck-selection .deck-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 calc(4px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--card) 70%, transparent);
+}
+
+deck-selection .deck-actions[hidden] { display: none; }
+
 @media (max-width: 720px) {
   deck-selection #cardsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px 10px;
     padding: 12px 8px 16px;
-  }
-
-  deck-selection .deck-actions {
-    position: sticky;
-    bottom: 0;
-    z-index: 5;
-    padding: 10px 0 calc(4px + env(safe-area-inset-bottom));
-    background: linear-gradient(to top, var(--card) 70%, transparent);
   }
 
   deck-selection #startBattleBtn { width: 100%; }

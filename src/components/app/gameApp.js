@@ -73,19 +73,24 @@ export class GameApp extends HTMLElement {
         return;
       }
       this.selectedDeck = e.detail.deck;
-      this.batallaActiva = true;
+      this.setBatallaActiva(true);
       const container = this.querySelector("#app-content");
       container.innerHTML = `<battle-arena></battle-arena>`;
       container.querySelector("battle-arena").deck = this.selectedDeck;
     });
 
     this.addEventListener("battle-finished", (e) => {
-      this.batallaActiva = false;
+      this.setBatallaActiva(false);
       this.guardarPartida(e.detail);
     });
 
     this.addEventListener("battle-restart", () => {
-      this.batallaActiva = false;
+      this.setBatallaActiva(false);
+      this.mostrarSeleccionMazo();
+    });
+
+    this.addEventListener("battle-abandon", () => {
+      if (!this.confirmarSalida()) return;
       this.mostrarSeleccionMazo();
     });
 
@@ -165,8 +170,13 @@ export class GameApp extends HTMLElement {
   confirmarSalida() {
     if (!this.batallaActiva) return true;
     if (!confirm("Hay una batalla en curso. Si sales, la partida se perderá. ¿Continuar?")) return false;
-    this.batallaActiva = false;
+    this.setBatallaActiva(false);
     return true;
+  }
+
+  setBatallaActiva(activa) {
+    this.batallaActiva = activa;
+    this.classList.toggle("is-battle", activa);
   }
 
   actualizarEncabezado() {

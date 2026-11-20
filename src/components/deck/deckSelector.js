@@ -25,7 +25,7 @@ export class DeckSelection extends HTMLElement {
         <div id="cardsGrid"></div>
         <h3>Orden de combate</h3>
         <ol id="orderList"></ol>
-        <div class="deck-actions">
+        <div class="deck-actions" hidden>
           <button id="startBattleBtn" disabled>¡Ir a la Batalla!</button>
         </div>
       </section>
@@ -147,7 +147,9 @@ export class DeckSelection extends HTMLElement {
       .join("");
 
     this.marcarSeleccion();
-    this.querySelector("#startBattleBtn").disabled = !this.puedeIniciar();
+    const listo = this.puedeIniciar();
+    this.querySelector("#startBattleBtn").disabled = !listo;
+    this.querySelector(".deck-actions").hidden = !listo;
   }
 
   puedeIniciar() {

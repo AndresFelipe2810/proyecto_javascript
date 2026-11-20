@@ -111,6 +111,11 @@ export class BattleArena extends HTMLElement {
       return;
     }
 
+    if (e.target.closest("#abandonBtn")) {
+      this.dispatchEvent(new CustomEvent("battle-abandon", { bubbles: true }));
+      return;
+    }
+
     const btn = e.target.closest("[data-action]");
     if (!btn || this.finished || this.currentTurn !== "player") return;
 
@@ -185,7 +190,7 @@ export class BattleArena extends HTMLElement {
       this.innerHTML = /* html */ `
         <section class="battle-end">
           <p class="error">${escapar(this.error)}</p>
-          <button id="restartBtn">Volver a seleccionar mazo</button>
+          <button id="restartBtn" class="action-btn action-attack">Volver a seleccionar mazo</button>
         </section>
       `;
       return;
@@ -194,10 +199,10 @@ export class BattleArena extends HTMLElement {
     if (this.finished) {
       const won = this.enemyIndex >= DECK_SIZE;
       this.innerHTML = /* html */ `
-        <section class="battle-end">
+        <section class="battle-end ${won ? "is-win" : "is-loss"}">
           <h2>${won ? "¡Ganaste la batalla!" : "La CPU ganó la batalla."}</h2>
-          <p class="battle-status">${escapar(this.statusMessage)}</p>
-          <button id="restartBtn">Volver a seleccionar mazo</button>
+          <p class="battle-status" role="status">${escapar(this.statusMessage)}</p>
+          <button id="restartBtn" class="action-btn action-attack">Volver a seleccionar mazo</button>
         </section>
       `;
       return;
@@ -208,39 +213,44 @@ export class BattleArena extends HTMLElement {
     const myTurn = this.currentTurn === "player";
     const actions = getActions(pCard);
 
-    const label = (a) => {
-      if (a.type === "attack") return `${a.name} (${a.baseDamage} DMG)`;
-      if (a.type === "defense") return `Defensa: ${a.name}`;
-      return `Poder: ${a.name} (${a.baseDamage} DMG)`;
+    const btn = (a, idx) => {
+      const disabled = !myTurn || !a.enabled ? "disabled" : "";
+      const dmg = a.type === "defense"
+        ? `<span class="act-dmg">${Math.round((pCard.defense?.damageReduction ?? 0) * 100)}% menos</span>`
+        : `<span class="act-dmg">${escapar(a.baseDamage)} DMG</span>`;
+      const icon = a.type === "defense" ? "🛡️ " : a.type === "special" ? "★ " : "";
+      const note = a.enabled ? "" : `<span class="act-note">${escapar(a.reason)}</span>`;
+      return `<button class="action-btn action-${a.type}" data-action="${idx}" ${disabled}><span class="act-name">${icon}${escapar(a.name)}</span>${dmg}${note}</button>`;
     };
+    const indexed = actions.map((a, idx) => ({ a, idx }));
+    const group = (type) => indexed.filter((x) => x.a.type === type).map((x) => btn(x.a, x.idx)).join("");
 
     this.innerHTML = /* html */ `
       <section class="battle-arena">
-        <p>Ronda ${this.round} · <strong>${myTurn ? "Tu turno" : "Turno de la máquina"}</strong></p>
-        <p class="battle-status">${escapar(this.statusMessage)}</p>
+        <div class="battle-hud">
+          <span class="pill pill-round">Ronda ${this.round}</span>
+          <span class="pill pill-turn" data-turn="${myTurn ? "player" : "machine"}">${myTurn ? "Tu turno" : "Turno del rival"}</span>
+          <button id="abandonBtn" class="abandon-btn" type="button">Abandonar</button>
+        </div>
+        <p class="battle-status" role="status" aria-live="polite">${escapar(this.statusMessage)}</p>
 
         <div class="fighters">
           <div class="fighter">
-            <p class="fighter-label">Tu carta (${this.playerIndex + 1}/${DECK_SIZE})</p>
+            <p class="fighter-label">Tú ${this.playerIndex + 1}/${DECK_SIZE}</p>
             ${renderTcgCard(pCard, { compact: true, currentHp: pCard.currentHp })}
-            ${pCard.isDefending ? `<p class="fighter-status">🛡️ Defendiendo</p>` : ""}
+            <p class="fighter-status">${pCard.isDefending ? `<span class="pill pill-defending">🛡️ Defendiendo</span>` : ""}</p>
           </div>
 
           <div class="fighter">
-            <p class="fighter-label">Rival (${this.enemyIndex + 1}/${DECK_SIZE})</p>
+            <p class="fighter-label">Rival ${this.enemyIndex + 1}/${DECK_SIZE}</p>
             ${renderTcgCard(eCard, { compact: true, currentHp: eCard.currentHp })}
-            ${eCard.isDefending ? `<p class="fighter-status">🛡️ Defendiendo</p>` : ""}
+            <p class="fighter-status">${eCard.isDefending ? `<span class="pill pill-defending">🛡️ Defendiendo</span>` : ""}</p>
           </div>
         </div>
 
         <div class="battle-actions">
-          ${actions
-            .map((a, idx) => {
-              const disabled = !myTurn || !a.enabled ? "disabled" : "";
-              const note = a.enabled ? "" : ` — ${a.reason}`;
-              return `<button class="action-btn action-${a.type}" data-action="${idx}" ${disabled}>${escapar(label(a))}${escapar(note)}</button>`;
-            })
-            .join("")}
+          <div class="attack-grid">${group("attack")}</div>
+          <div class="utility-row">${group("defense")}${group("special")}</div>
         </div>
       </section>
     `;
