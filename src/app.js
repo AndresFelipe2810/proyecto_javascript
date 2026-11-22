@@ -6,4 +6,5 @@ import './components/cards/tcgCard.css';
 import './components/deck/deckStyles.css';
 import './components/battle/battleStyles.css';
 import './components/progress/progressStyles.css';
+import './components/online/onlineStyles.css';
 import './components/app/gameApp.js';

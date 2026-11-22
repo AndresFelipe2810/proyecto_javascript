@@ -11,10 +11,10 @@
       "nickname": "AndrexxFP",
       "passwordHash": "01798450b14b72b6e739e098d77e9382e39eb5f94fa92720efb86bc3736b580e",
       "salt": "bc2e2022dbc7d6a4b61929a9da686c01",
-      "points": 350,
+      "points": 370,
       "wins": 7,
-      "losses": 0,
-      "gamesPlayed": 7,
+      "losses": 2,
+      "gamesPlayed": 9,
       "createdAt": "2026-11-20T15:29:48.067Z",
       "id": "_PIzk9fU12M",
       "unlockedCards": [
@@ -50,12 +50,25 @@
       "nickname": "PruebaX1",
       "passwordHash": "29c0b5acfb4aa619ea9639da92c503f6b275698f3dfba2b2591f91d602035af5",
       "salt": "892e78150ba2430b8b1705a46bcb8f3d",
-      "points": 0,
-      "wins": 0,
+      "points": 50,
+      "wins": 1,
       "losses": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 1,
       "createdAt": "2026-11-20T15:48:50.268Z",
-      "id": "gktbnl6Mpzs"
+      "id": "gktbnl6Mpzs",
+      "unlockedCards": [
+        "card-016",
+        "card-005",
+        "card-018",
+        "card-020",
+        "card-013"
+      ],
+      "starterPackClaimed": true,
+      "spinsAvailable": 1,
+      "memoryDate": "",
+      "memoryPlaysToday": 0,
+      "memoryBonus": 0,
+      "memoryGamesCounted": 1
     },
     {
       "nickname": "PruebaX2",
@@ -1236,6 +1249,676 @@
       "startedAt": "2026-11-22T15:26:55.813Z",
       "endedAt": "2026-11-22T15:28:54.178Z",
       "id": "CQuPrzvYW9A"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-003",
+        "card-009",
+        "card-007",
+        "card-006",
+        "card-011"
+      ],
+      "machineDeck": [
+        "card-018",
+        "card-004",
+        "card-017",
+        "card-010",
+        "card-019"
+      ],
+      "startedAt": "2026-11-22T19:48:31.505Z",
+      "endedAt": "2026-11-22T19:49:35.443Z",
+      "mode": "cpu",
+      "id": "VAjaEWLeLT4"
+    },
+    {
+      "playerId": "gktbnl6Mpzs",
+      "playerNickname": "PruebaX1",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-005",
+        "card-013",
+        "card-016",
+        "card-020",
+        "card-018"
+      ],
+      "machineDeck": [
+        "card-006",
+        "card-011",
+        "card-009",
+        "card-015",
+        "card-013"
+      ],
+      "startedAt": "2026-11-22T20:55:28.841Z",
+      "endedAt": "2026-11-22T20:59:49.290Z",
+      "mode": "online",
+      "matchId": "CUE1eGrN6lI",
+      "id": "8m3vwcx_2pA"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-006",
+        "card-011",
+        "card-009",
+        "card-015",
+        "card-013"
+      ],
+      "machineDeck": [
+        "card-005",
+        "card-013",
+        "card-016",
+        "card-020",
+        "card-018"
+      ],
+      "startedAt": "2026-11-22T20:55:28.841Z",
+      "endedAt": "2026-11-22T20:59:49.862Z",
+      "mode": "online",
+      "matchId": "CUE1eGrN6lI",
+      "id": "dHTHc_DPkEQ"
+    }
+  ],
+  "matches": [
+    {
+      "p1Id": "_PIzk9fU12M",
+      "p1Nickname": "AndrexxFP",
+      "p2Id": "gktbnl6Mpzs",
+      "p2Nickname": "PruebaX1",
+      "status": "cancelled",
+      "selectionDeadline": null,
+      "p1Deck": [],
+      "p2Deck": [],
+      "battleState": null,
+      "winnerId": null,
+      "startedAt": null,
+      "createdAt": 1795380877227,
+      "updatedAt": 1795380887236,
+      "id": "kzGPPn1X7VU"
+    },
+    {
+      "p1Id": "_PIzk9fU12M",
+      "p1Nickname": "AndrexxFP",
+      "p2Id": "gktbnl6Mpzs",
+      "p2Nickname": "PruebaX1",
+      "status": "finished",
+      "selectionDeadline": 1795380927778,
+      "p1Deck": [
+        "card-006",
+        "card-011",
+        "card-009",
+        "card-015",
+        "card-013"
+      ],
+      "p2Deck": [
+        "card-005",
+        "card-013",
+        "card-016",
+        "card-020",
+        "card-018"
+      ],
+      "battleState": {
+        "seq": 66,
+        "turn": null,
+        "firstTurn": "p2",
+        "round": 33,
+        "turnDeadline": null,
+        "p1": {
+          "index": 5,
+          "cards": [
+            {
+              "id": "card-006",
+              "name": "Gengar",
+              "type": "Ghost",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
+              "description": "Pokémon fantasmal que acecha en las sombras.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Bola Sombra",
+                  "baseDamage": 24
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Lengua Fantasma",
+                  "baseDamage": 32
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Maldición Oscura",
+                  "baseDamage": 38
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Come Sueños",
+                  "baseDamage": 46
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Gengar",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Lengua Fantasma",
+                "baseDamage": 60,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 4,
+              "specialCooldown": 1
+            },
+            {
+              "id": "card-011",
+              "name": "Machamp",
+              "type": "Fighting",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png",
+              "description": "Luchador incansable con cuatro brazos.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Golpe Karate",
+                  "baseDamage": 18
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Llave Cruzada",
+                  "baseDamage": 28
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Puño Dinámico",
+                  "baseDamage": 40
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Corte Cuádruple",
+                  "baseDamage": 54
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Machamp",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Llave Cruzada",
+                "baseDamage": 60,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 6,
+              "specialCooldown": 3
+            },
+            {
+              "id": "card-009",
+              "name": "Snorlax",
+              "type": "Normal",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
+              "description": "Pokémon somnoliento de gran resistencia.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Golpe Cuerpo",
+                  "baseDamage": 16
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Patada Gigante",
+                  "baseDamage": 28
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Explosión Ancestral",
+                  "baseDamage": 42
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Aplastamiento",
+                  "baseDamage": 54
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Snorlax",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Patada Gigante",
+                "baseDamage": 58,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 5,
+              "specialCooldown": 3
+            },
+            {
+              "id": "card-015",
+              "name": "Garchomp",
+              "type": "Dragon",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png",
+              "description": "Dragón terrestre de velocidad vertiginosa.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Arañazo Arena",
+                  "baseDamage": 18
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Colmillo Dragón",
+                  "baseDamage": 28
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Terremoto Dragón",
+                  "baseDamage": 42
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Carga Dragón",
+                  "baseDamage": 52
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Garchomp",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Colmillo Dragón",
+                "baseDamage": 68,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 5,
+              "specialCooldown": 3
+            },
+            {
+              "id": "card-013",
+              "name": "Eevee",
+              "type": "Normal",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+              "description": "Pokémon adaptable con gran capacidad de evolución.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Arañazo Eevee",
+                  "baseDamage": 24
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Mordisco",
+                  "baseDamage": 30
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Ataque Rápido Eevee",
+                  "baseDamage": 36
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Carga Veloz",
+                  "baseDamage": 44
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Eevee",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Mordisco",
+                "baseDamage": 55,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 12,
+              "specialCooldown": 2
+            }
+          ]
+        },
+        "p2": {
+          "index": 4,
+          "cards": [
+            {
+              "id": "card-005",
+              "name": "Mewtwo",
+              "type": "Psychic",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png",
+              "description": "Pokémon legendario creado en laboratorio, de poder psíquico abrumador.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Presión Psíquica",
+                  "baseDamage": 20
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Recuperación Mental",
+                  "baseDamage": 28
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Psicoonda",
+                  "baseDamage": 40
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Onda Mental",
+                  "baseDamage": 52
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Mewtwo",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Recuperación Mental",
+                "baseDamage": 70,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 6,
+              "specialCooldown": 2
+            },
+            {
+              "id": "card-013",
+              "name": "Eevee",
+              "type": "Normal",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+              "description": "Pokémon adaptable con gran capacidad de evolución.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Arañazo Eevee",
+                  "baseDamage": 24
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Mordisco",
+                  "baseDamage": 30
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Ataque Rápido Eevee",
+                  "baseDamage": 36
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Carga Veloz",
+                  "baseDamage": 44
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Eevee",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Mordisco",
+                "baseDamage": 55,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 5,
+              "specialCooldown": 1
+            },
+            {
+              "id": "card-016",
+              "name": "Arcanine",
+              "type": "Fire",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
+              "description": "Pokémon de fuego legendario por su velocidad.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Llamarada",
+                  "baseDamage": 20
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Colmillo Ígneo",
+                  "baseDamage": 32
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Hipercolmillo Fuego",
+                  "baseDamage": 40
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Rueda Fuego",
+                  "baseDamage": 48
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Arcanine",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Colmillo Ígneo",
+                "baseDamage": 64,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 5,
+              "specialCooldown": 3
+            },
+            {
+              "id": "card-020",
+              "name": "Gardevoir",
+              "type": "Fairy",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png",
+              "description": "Protectora que canaliza energía psíquica y mágica.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Brillo Mágico",
+                  "baseDamage": 20
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Carantoña",
+                  "baseDamage": 30
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Hechizo Hada",
+                  "baseDamage": 38
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Rayo Lunar",
+                  "baseDamage": 50
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Gardevoir",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Carantoña",
+                "baseDamage": 66,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 0,
+              "isDefending": false,
+              "turnsPlayed": 5,
+              "specialCooldown": 3
+            },
+            {
+              "id": "card-018",
+              "name": "Jolteon",
+              "type": "Electric",
+              "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
+              "description": "Eevee eléctrico de movimientos veloces.",
+              "hp": 250,
+              "attacks": [
+                {
+                  "id": "atk-1",
+                  "name": "Chispazo",
+                  "baseDamage": 26
+                },
+                {
+                  "id": "atk-2",
+                  "name": "Patada Pin Misil",
+                  "baseDamage": 34
+                },
+                {
+                  "id": "atk-3",
+                  "name": "Rayo Eléctrico",
+                  "baseDamage": 38
+                },
+                {
+                  "id": "atk-4",
+                  "name": "Voltio Cruel",
+                  "baseDamage": 42
+                }
+              ],
+              "defense": {
+                "name": "Escudo de Jolteon",
+                "damageReduction": 0.5
+              },
+              "special": {
+                "name": "Gran Patada Pin Misil",
+                "baseDamage": 62,
+                "unlockTurn": 2,
+                "cooldown": 3
+              },
+              "sounds": {
+                "attack": "/sounds/ataque.mp3",
+                "defense": "/sounds/defensa.mp3",
+                "special": "/sounds/especial.mp3",
+                "defeated": "/sounds/derrotada.mp3"
+              },
+              "active": true,
+              "createdAt": "2026-08-18T00:00:00.000Z",
+              "currentHp": 22,
+              "isDefending": false,
+              "turnsPlayed": 11,
+              "specialCooldown": 2
+            }
+          ]
+        },
+        "timeouts": {
+          "p1": 0,
+          "p2": 0
+        },
+        "winner": "p2",
+        "lastEvent": {
+          "seq": 66,
+          "actor": "p2",
+          "type": "attack",
+          "actionName": "Voltio Cruel",
+          "damage": 47,
+          "defeated": true,
+          "log": "Jolteon usó Voltio Cruel e hizo 47 de daño. ¡Eevee fue derrotado!"
+        }
+      },
+      "winnerId": "gktbnl6Mpzs",
+      "startedAt": "2026-11-22T20:55:28.841Z",
+      "createdAt": 1795380901801,
+      "updatedAt": 1795381189286,
+      "id": "CUE1eGrN6lI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

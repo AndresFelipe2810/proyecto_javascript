@@ -1,5 +1,6 @@
 import { escapar } from "../../utils/validators.js";
 import { icon } from "../../utils/icons.js";
+import { rutaPublica } from "../../utils/assets.js";
 
 const TIPOS = new Set(["fire", "water", "grass", "electric", "psychic", "ghost", "dragon", "normal", "fighting", "dark", "fairy"]);
 
@@ -14,7 +15,7 @@ export function renderTcgCard(card, { selected = false, order = null, compact = 
   const hp = currentHp ?? card.hp;
   const hpMax = currentHp != null ? `<small>/${escapar(card.hp)}</small>` : "";
   const imagen = card.image
-    ? `<img src="${escapar(card.image)}" alt="${escapar(card.name)}" loading="lazy" data-tcg-img />`
+    ? `<img src="${escapar(rutaPublica(card.image))}" alt="${escapar(card.name)}" loading="lazy" data-tcg-img />`
     : "";
   const ataques = (card.attacks ?? [])
     .map(

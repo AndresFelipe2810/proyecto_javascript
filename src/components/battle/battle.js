@@ -1,5 +1,7 @@
 import { getCards } from "../../api/cardsApi.js";
-import { renderTcgCard, activarFallbackImagenes } from "../cards/tcgCard.js";
+import { activarFallbackImagenes } from "../cards/tcgCard.js";
+import { renderFighter } from "./battleCard.js";
+import { renderActionButtons } from "./battleControls.js";
 import {
   DECK_SIZE,
   MIN_ACTIVE_CARDS,
@@ -298,19 +300,6 @@ export class BattleArena extends HTMLElement {
     const pCard = this.playerDeck[this.playerIndex];
     const eCard = this.enemyDeck[this.enemyIndex];
     const myTurn = this.currentTurn === "player";
-    const actions = getActions(pCard);
-
-    const btn = (a, idx) => {
-      const disabled = !myTurn || !a.enabled ? "disabled" : "";
-      const dmg = a.type === "defense"
-        ? `<span class="act-dmg">${Math.round((pCard.defense?.damageReduction ?? 0) * 100)}% menos</span>`
-        : `<span class="act-dmg">${escapar(a.baseDamage)} DMG</span>`;
-      const glyph = a.type === "defense" ? `${icon("shield")} ` : a.type === "special" ? `${icon("star")} ` : "";
-      const note = a.enabled ? "" : `<span class="act-note">${escapar(a.reason)}</span>`;
-      return `<button class="action-btn action-${a.type}" data-action="${idx}" ${disabled}><span class="act-name">${glyph}${escapar(a.name)}</span>${dmg}${note}</button>`;
-    };
-    const indexed = actions.map((a, idx) => ({ a, idx }));
-    const group = (type) => indexed.filter((x) => x.a.type === type).map((x) => btn(x.a, x.idx)).join("");
 
     this.innerHTML = /* html */ `
       <section class="battle-arena">
@@ -323,23 +312,11 @@ export class BattleArena extends HTMLElement {
         <p class="battle-status" role="status" aria-live="polite">${escapar(this.statusMessage)}</p>
 
         <div class="fighters">
-          <div class="fighter" data-side="player">
-            <p class="fighter-label">Tú ${this.playerIndex + 1}/${DECK_SIZE}</p>
-            ${renderTcgCard(pCard, { compact: true, currentHp: pCard.currentHp })}
-            <p class="fighter-status">${pCard.isDefending ? `<span class="pill pill-defending">${icon("shield")} Defendiendo</span>` : ""}</p>
-          </div>
-
-          <div class="fighter" data-side="machine">
-            <p class="fighter-label">Rival ${this.enemyIndex + 1}/${DECK_SIZE}</p>
-            ${renderTcgCard(eCard, { compact: true, currentHp: eCard.currentHp })}
-            <p class="fighter-status">${eCard.isDefending ? `<span class="pill pill-defending">${icon("shield")} Defendiendo</span>` : ""}</p>
-          </div>
+          ${renderFighter("player", `Tú ${this.playerIndex + 1}/${DECK_SIZE}`, pCard)}
+          ${renderFighter("machine", `Rival ${this.enemyIndex + 1}/${DECK_SIZE}`, eCard)}
         </div>
 
-        <div class="battle-actions">
-          <div class="attack-grid">${group("attack")}</div>
-          <div class="utility-row">${group("defense")}${group("special")}</div>
-        </div>
+        ${renderActionButtons(pCard, myTurn)}
       </section>
     `;
     activarFallbackImagenes(this);

@@ -5,6 +5,13 @@ import "../leaderboard/leaderboard.js";
 import "../cards/cards.js";
 import "../progress/starterPacks.js";
 import "../progress/rewardsHub.js";
+import "../online/onlineLobby.js";
+import "../online/matchInvite.js";
+import "../online/onlineDeckSelect.js";
+import "../online/onlineBattle.js";
+import "./serverStatus.js";
+import { getMatches } from "../../api/matchesApi.js";
+import { invitacionVigente } from "../../utils/onlineMatch.js";
 import { getBattles, postBattle } from "../../api/battlesApi.js";
 import { getPlayer, patchPlayer } from "../../api/playersApi.js";
 import { scoreBattle } from "../../utils/battleEngine.js";
@@ -13,6 +20,7 @@ import { icon } from "../../utils/icons.js";
 import { bonoPorPartidas, necesitaProgresoInicial, normalizarProgreso } from "../../utils/progression.js";
 
 const REINTENTOS = 3;
+const INVITACIONES_MS = 4000;
 const SESSION_KEY = "cardBattle.playerId";
 const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -42,6 +50,8 @@ export class GameApp extends HTMLElement {
     this.sincronizando = null;
     this.adminLogged = false;
     this.vista = "registro";
+    this.invitacionTimer = null;
+    this.invitacionMostrada = null;
     this.render();
     this.configurarEventos();
   }
@@ -63,6 +73,7 @@ export class GameApp extends HTMLElement {
         </nav>
         <p id="playerInfo"></p>
         <p id="saveStatus" role="status"></p>
+        <server-status></server-status>
       </header>
       <main id="app-content">
         <player-register></player-register>
@@ -78,7 +89,24 @@ export class GameApp extends HTMLElement {
       this.actualizarEncabezado();
     });
 
-    this.addEventListener("progress-done", () => this.mostrarSeleccionMazo());
+    this.addEventListener("progress-done", () => this.mostrarMenuJugar());
+
+    this.addEventListener("play-cpu", () => this.mostrarSeleccionMazo());
+    this.addEventListener("match-ready", (e) => this.mostrarSeleccionOnline(e.detail.match));
+    this.addEventListener("match-accepted", (e) => this.mostrarSeleccionOnline(e.detail.match));
+    this.addEventListener("match-started", (e) => this.mostrarBatallaOnline(e.detail.match));
+    this.addEventListener("match-invite-closed", () => {
+      this.invitacionMostrada = null;
+    });
+    this.addEventListener("match-cancelled", (e) => {
+      this.setBatallaActiva(false);
+      this.mostrarMenuJugar();
+      this.querySelector("#saveStatus").textContent = e.detail.mensaje;
+    });
+    this.addEventListener("online-exit", () => this.mostrarMenuJugar());
+    window.addEventListener("api-reconnected", () => {
+      if (!this.currentPlayer) this.restaurarSesion();
+    });
 
     this.addEventListener("deck-selected", (e) => {
       if (!this.currentPlayer) {
@@ -171,8 +199,9 @@ export class GameApp extends HTMLElement {
     try {
       this.iniciarSesion(await getPlayer(id), false);
       this.sincronizarJugador(id);
-    } catch {
-      guardarSesion(null);
+    } catch (err) {
+      // Solo se borra la sesión si el jugador ya no existe; si el servidor duerme se reintenta al reconectar
+      if (err.message.includes("(404)")) guardarSesion(null);
     }
   }
 
@@ -180,6 +209,7 @@ export class GameApp extends HTMLElement {
     this.currentPlayer = normalizarProgreso(player);
     guardarSesion(player.id);
     this.actualizarEncabezado();
+    this.iniciarSondeoInvitaciones();
     const faltantes = necesitaProgresoInicial(player);
     if (Object.keys(faltantes).length) this.migrarProgreso(player.id, faltantes);
     if (!this.batallaActiva && (irAMazo || this.querySelector("player-register"))) this.mostrarVistaInicial();
@@ -200,7 +230,68 @@ export class GameApp extends HTMLElement {
   mostrarVistaInicial() {
     if (!this.currentPlayer) return this.mostrarRegistro();
     if (!this.currentPlayer.starterPackClaimed) return this.mostrarSobreInicial();
-    return this.mostrarSeleccionMazo();
+    return this.mostrarMenuJugar();
+  }
+
+  mostrarMenuJugar() {
+    this.setBatallaActiva(false);
+    const vista = document.createElement("online-lobby");
+    vista.player = this.currentPlayer;
+    this.querySelector("#app-content").replaceChildren(vista);
+    this.setVista("jugar");
+  }
+
+  mostrarSeleccionOnline(match) {
+    this.cerrarInvitacion();
+    this.setBatallaActiva(true);
+    const vista = document.createElement("online-deck-select");
+    vista.match = match;
+    vista.player = this.currentPlayer;
+    this.querySelector("#app-content").replaceChildren(vista);
+    this.setVista("online");
+  }
+
+  mostrarBatallaOnline(match) {
+    this.setBatallaActiva(true);
+    const vista = document.createElement("online-battle");
+    vista.match = match;
+    vista.player = this.currentPlayer;
+    this.querySelector("#app-content").replaceChildren(vista);
+    this.setVista("online");
+  }
+
+  iniciarSondeoInvitaciones() {
+    if (this.invitacionTimer) return;
+    this.invitacionTimer = setInterval(() => this.buscarInvitaciones(), INVITACIONES_MS);
+  }
+
+  detenerSondeoInvitaciones() {
+    clearInterval(this.invitacionTimer);
+    this.invitacionTimer = null;
+    this.cerrarInvitacion();
+  }
+
+  cerrarInvitacion() {
+    this.querySelector("match-invite")?.remove();
+    this.invitacionMostrada = null;
+  }
+
+  async buscarInvitaciones() {
+    const p = this.currentPlayer;
+    if (!p || this.batallaActiva || this.invitacionMostrada) return;
+    let pendientes;
+    try {
+      pendientes = await getMatches(`?p2Id=${encodeURIComponent(p.id)}&status=waiting`);
+    } catch {
+      return;
+    }
+    const invitacion = pendientes.find((m) => invitacionVigente(m, p.id));
+    if (!invitacion || this.batallaActiva || this.invitacionMostrada || this.currentPlayer?.id !== p.id) return;
+    this.invitacionMostrada = invitacion.id;
+    const aviso = document.createElement("match-invite");
+    aviso.match = invitacion;
+    aviso.player = p;
+    this.append(aviso);
   }
 
   mostrarPremios() {
@@ -227,6 +318,7 @@ export class GameApp extends HTMLElement {
   cerrarSesion() {
     this.currentPlayer = null;
     this.selectedDeck = [];
+    this.detenerSondeoInvitaciones();
     guardarSesion(null);
     this.actualizarEncabezado();
     this.querySelector("#saveStatus").textContent = "";
@@ -274,7 +366,7 @@ export class GameApp extends HTMLElement {
     this.setVista("registro");
   }
 
-  async guardarPartida({ won, playerDeck, machineDeck, startedAt, endedAt }) {
+  async guardarPartida({ won, playerDeck, machineDeck, startedAt, endedAt, mode = "cpu", matchId = null }) {
     if (!this.currentPlayer) return;
 
     const { result, pointsAwarded } = scoreBattle(won);
@@ -283,7 +375,11 @@ export class GameApp extends HTMLElement {
 
     let battle;
     try {
-      battle = await postBattle({
+      if (matchId) {
+        const query = `?matchId=${encodeURIComponent(matchId)}&playerId=${encodeURIComponent(this.currentPlayer.id)}`;
+        [battle] = await getBattles(query);
+      }
+      battle ??= await postBattle({
         playerId: this.currentPlayer.id,
         playerNickname: this.currentPlayer.nickname,
         result,
@@ -292,6 +388,8 @@ export class GameApp extends HTMLElement {
         machineDeck,
         startedAt,
         endedAt,
+        mode,
+        ...(matchId && { matchId }),
       });
     } catch (err) {
       status.textContent = `No se pudo guardar la partida. ${err.message}`;

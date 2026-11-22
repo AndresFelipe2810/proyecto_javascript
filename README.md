@@ -1,6 +1,6 @@
 # 🃏 Pokémon Card Battle Arena
 
-Juego web de batallas de cartas por turnos con temática **Pokémon**. Los jugadores se registran, desbloquean cartas con sobres, arman un mazo de 5 y combaten contra la máquina; un administrador gestiona el catálogo de cartas (CRUD).
+Juego web de batallas de cartas por turnos con temática **Pokémon**. Los jugadores se registran, desbloquean cartas con sobres, arman un mazo de 5 y combaten contra la máquina o contra otro jugador online; un administrador gestiona el catálogo de cartas (CRUD).
 
 **Integrantes**
 - Andrés Felipe — [@AndresFelipe2810](https://github.com/AndresFelipe2810)
@@ -36,10 +36,10 @@ En dos terminales:
 
 ```bash
 npm run server   # JSON Server → http://localhost:3000
-npm run dev      # Vite → http://localhost:5173
+npm run dev      # Vite → http://localhost:5173/proyecto_javascript/
 ```
 
-Pruebas: `npm test` (31 pruebas).
+Pruebas: `npm test` (48 pruebas).
 
 ### Variables de entorno (`.env` / `.env.example`)
 
@@ -47,8 +47,22 @@ Pruebas: `npm test` (31 pruebas).
 |---|---|---|
 | `VITE_API_MODE` | `development` | Selecciona la URL de la API (`development` / `production`) |
 | `VITE_API_DEV_URL` | `http://localhost:3000` | API en desarrollo |
-| `VITE_API_PROD_URL` | `https://api-produccion.example.com` | API en producción |
+| `VITE_API_PROD_URL` | `https://tu-servicio.onrender.com` | API en producción (Render) |
 | `VITE_ADMIN_NICKNAME` | `admin` | Nickname que activa el login de administrador |
+
+### ☁️ Despliegue
+
+**Backend (Render, plan gratuito)**
+1. En Render: *New → Web Service* conectado a este repositorio.
+2. Build command: `npm install` · Start command: `npm run start:api` (Render define `$PORT`).
+3. Copia la URL pública (`https://<servicio>.onrender.com`) y comprueba `…/cards`.
+4. Aviso: el disco del plan gratuito es efímero; los jugadores/partidas creados se reinician al redesplegar o reiniciar el servicio. Además el servicio se duerme tras ~15 min sin uso: la app muestra **“Despertando servidor…”** y el botón **“Conectar / Despertar servidor”** mientras arranca (~1 min).
+
+**Frontend (GitHub Pages)**
+1. *Settings → Pages → Source: GitHub Actions*.
+2. *Settings → Secrets and variables → Actions → Variables*: crea `VITE_API_URL` con la URL de Render.
+3. Cada push a `main` ejecuta `.github/workflows/deploy.yml` (`npm ci`, `npm test`, `npm run build`) y publica `dist/` en `https://andresfelipe2810.github.io/proyecto_javascript/`.
+4. `vite.config.js` usa `base: '/proyecto_javascript/'`; las rutas de `public/` (sonidos) se resuelven con `import.meta.env.BASE_URL`.
 
 ### 🔑 Credenciales de administrador (evaluación)
 
@@ -72,10 +86,11 @@ Pruebas: `npm test` (31 pruebas).
 │   │   ├── cards/            # Carta TCG y CRUD de admin
 │   │   ├── deck/             # Selector de mazo
 │   │   ├── leaderboard/      # Ranking
+│   │   ├── online/           # Lobby, invitaciones, selección y batalla online
 │   │   └── progress/         # Sobres, memoria y ruleta
-│   ├── utils/                # battleEngine, progression, audio, crypto, validators…
+│   ├── utils/                # battleEngine, onlineMatch, progression, audio, crypto, validators…
 │   ├── styles/               # Tema global
-│   └── data/db.json          # Cartas, jugadores, batallas y admin
+│   └── data/db.json          # Cartas, jugadores, batallas, salas (matches) y admin
 └── tests/                    # Pruebas con node:test
 ```
 
@@ -90,6 +105,13 @@ Pruebas: `npm test` (31 pruebas).
 - **Especial:** bloqueado en el turno 1; se desbloquea desde el turno 2 y tiene enfriamiento de 3 turnos.
 - El HP no se recupera. Inicia un jugador al azar; gana quien deja sin cartas al rival.
 - Victoria: **+50 puntos**. Derrota: **+10 puntos**.
+
+**Multijugador online**
+- En *Jugar* elige **Contra CPU** o **Contra otro jugador**: escribe el nickname del rival (debe existir y tener 5 cartas desbloqueadas).
+- El rival recibe un aviso para **Aceptar** o **Rechazar** (el reto expira a los 60 s).
+- Ambos eligen su mazo en **20 s** sincronizados; si el tiempo se agota, el mazo se completa al azar con cartas desbloqueadas.
+- Cada turno dura **25 s**. Si se agota, se pierde el turno; 3 turnos perdidos seguidos = derrota por inactividad. Abandonar = derrota.
+- Sincronización por **HTTP polling** sobre `/matches/:id` (sin WebSockets). Cada jugador registra su partida en `battles` y sus estadísticas se recalculan (puntos, victorias, bono de Memoria).
 
 **Sobres y progresión**
 - Cada jugador reclama un sobre inicial de 5 cartas.

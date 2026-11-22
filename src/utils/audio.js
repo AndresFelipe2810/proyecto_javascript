@@ -1,3 +1,5 @@
+import { rutaPublica } from "./assets.js";
+
 const STORAGE_KEY = "battle-muted";
 
 export const SOUNDS = {
@@ -49,7 +51,7 @@ function tryPlay(path) {
   if (!path || missing.has(path) || typeof Audio === "undefined") return Promise.reject(new Error("sin audio"));
   let base = cache.get(path);
   if (!base) {
-    base = new Audio(path);
+    base = new Audio(rutaPublica(path));
     base.preload = "auto";
     cache.set(path, base);
   }

@@ -1,0 +1,175 @@
+online-lobby, online-deck-select { display: block; }
+
+.online-lobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(16px, 4vw, 32px);
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.online-lobby h2 { margin: 0; color: var(--text); }
+
+.mode-choice {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 640px;
+}
+
+.mode-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 18px;
+  border: 3px solid var(--accent);
+  border-radius: 20px;
+  background: var(--white);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mode-btn strong { font-size: 1.15rem; }
+.mode-btn span { color: var(--text-soft); font-size: 0.9rem; }
+.mode-btn:hover, .mode-btn:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+.challenge-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+  text-align: left;
+}
+
+.challenge-form input {
+  padding: 12px 14px;
+  border: 2px solid var(--accent);
+  border-radius: 14px;
+  font: inherit;
+}
+
+.challenge-actions, .invite-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+.online-lobby button, .match-invite button, .wake-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--white);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.online-lobby button[data-mode="back"],
+.online-lobby button[data-mode="cancel"],
+.match-invite button[data-invite="reject"] { background: #c9d9d0; color: var(--text); }
+
+.online-lobby button:disabled { opacity: 0.6; cursor: wait; }
+
+.online-msg { margin: 0; min-height: 1.2em; color: var(--text); font-weight: 600; }
+.online-msg.error { color: #a11d12; }
+
+.online-spinner {
+  width: 44px;
+  height: 44px;
+  border: 5px solid var(--accent);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: online-spin 0.9s linear infinite;
+}
+
+@keyframes online-spin { to { transform: rotate(360deg); } }
+
+.match-invite {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(360px, calc(100vw - 32px));
+  padding: 16px 18px;
+  background: var(--white);
+  border: 3px solid #f2c230;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  color: var(--text);
+  animation: invite-in 0.35s ease-out;
+}
+
+.match-invite p { margin: 0; }
+
+@keyframes invite-in { from { transform: translateY(30px); opacity: 0; } }
+
+.online-select { display: flex; flex-direction: column; gap: 10px; }
+
+.online-timer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.online-timer .countdown { font-size: 1.4rem; }
+
+.timer-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(61, 140, 106, 0.18);
+  overflow: hidden;
+}
+
+.timer-bar span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #f2a330;
+  transition: width 0.25s linear;
+}
+
+.timer-bar.is-mine span, .online-select .timer-bar span { background: var(--accent); }
+
+server-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+}
+
+.server-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.server-dot { width: 9px; height: 9px; border-radius: 50%; background: #9aa; }
+.server-pill[data-state="online"] .server-dot { background: #2fb36d; }
+.server-pill[data-state="offline"] .server-dot { background: #d0402b; }
+.server-pill[data-state="waking"] .server-dot,
+.server-pill[data-state="checking"] .server-dot { background: #f2c230; animation: server-blink 1s ease-in-out infinite; }
+
+@keyframes server-blink { 50% { opacity: 0.3; } }
+
+.wake-btn { padding: 6px 12px; font-size: 0.85rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .online-spinner, .match-invite, .server-dot { animation: none !important; }
+}
