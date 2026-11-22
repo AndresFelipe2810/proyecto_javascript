@@ -105,6 +105,11 @@ deck-selection .deck-actions[hidden] { display: none; }
   }
 
   deck-selection #startBattleBtn { width: 100%; }
+
+  deck-selection .deck-actions {
+    bottom: calc(70px + env(safe-area-inset-bottom));
+    padding: 10px 0 8px;
+  }
 }
 
 @media (max-width: 480px) {

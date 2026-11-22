@@ -29,14 +29,15 @@ online-lobby, online-deck-select { display: block; }
   padding: 22px 18px;
   border: 3px solid var(--accent);
   border-radius: 20px;
-  background: var(--white);
-  color: var(--text);
+  background: #2f7d5b;
+  border-color: #2f7d5b;
+  color: var(--white);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.mode-btn strong { font-size: 1.15rem; }
-.mode-btn span { color: var(--text-soft); font-size: 0.9rem; }
+.mode-btn strong { font-size: 1.15rem; color: var(--white); }
+.mode-btn span { color: #eafff3; font-size: 0.9rem; font-weight: 500; }
 .mode-btn:hover, .mode-btn:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow); }
 
 .challenge-form {

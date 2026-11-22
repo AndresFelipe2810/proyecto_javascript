@@ -64,14 +64,16 @@ export class GameApp extends HTMLElement {
     this.innerHTML = /* html */ `
       <header>
         <h1>Pokémon Card Battle Arena</h1>
-        <nav>
-          <button id="navPlay">Jugar</button>
-          <button id="navRewards" hidden>Premios</button>
-          <button id="navRanking">Ranking</button>
+        <div class="header-actions">
           <button id="navLogout" hidden>Salir de admin</button>
           <button id="navSwitchPlayer" hidden>Cambiar jugador</button>
+        </div>
+        <nav aria-label="Navegación principal">
+          <button id="navPlay">${icon("fire")}<span>Jugar</span></button>
+          <button id="navRewards" hidden>${icon("star")}<span>Premios</span></button>
+          <button id="navRanking">${icon("shield")}<span>Ranking</span></button>
         </nav>
-        <p id="playerInfo"></p>
+        <div id="playerInfo"></div>
         <p id="saveStatus" role="status"></p>
         <server-status></server-status>
       </header>
@@ -350,7 +352,14 @@ export class GameApp extends HTMLElement {
     const p = this.currentPlayer;
     this.actualizarNav();
     this.querySelector("#playerInfo").innerHTML = p
-      ? `Entrenador: ${escapar(p.nickname)} · ${p.points ?? 0} pts · ${p.wins ?? 0}V ${p.losses ?? 0}D · ${icon("ticket")} ${p.spinsAvailable ?? 0}`
+      ? [
+          ["Entrenador", escapar(p.nickname), "is-name"],
+          ["Puntos", p.points ?? 0],
+          ["Victorias / Derrotas", `${p.wins ?? 0} / ${p.losses ?? 0}`],
+          ["Tickets", `${icon("ticket")} ${p.spinsAvailable ?? 0}`],
+        ]
+          .map(([k, v, c = ""]) => `<div class="stat ${c}"><span class="stat-label">${k}</span><strong class="stat-value">${v}</strong></div>`)
+          .join("")
       : "";
   }
 
