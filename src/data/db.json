@@ -11,10 +11,10 @@
       "nickname": "AndrexxFP",
       "passwordHash": "01798450b14b72b6e739e098d77e9382e39eb5f94fa92720efb86bc3736b580e",
       "salt": "bc2e2022dbc7d6a4b61929a9da686c01",
-      "points": 0,
-      "wins": 0,
+      "points": 250,
+      "wins": 5,
       "losses": 0,
-      "gamesPlayed": 0,
+      "gamesPlayed": 5,
       "createdAt": "2026-11-20T15:29:48.067Z",
       "id": "_PIzk9fU12M"
     },
@@ -1026,6 +1026,121 @@
       "startedAt": "2026-11-20T15:39:33.494Z",
       "endedAt": "2026-11-20T15:40:50.857Z",
       "id": "Lxb08Ky7FWw"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005",
+        "card-001"
+      ],
+      "machineDeck": [
+        "card-010",
+        "card-006",
+        "card-018",
+        "card-012",
+        "card-019"
+      ],
+      "startedAt": "2026-11-20T21:06:50.677Z",
+      "endedAt": "2026-11-20T21:07:25.328Z",
+      "id": "aRrJfnd36Uc"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-007",
+        "card-008",
+        "card-009",
+        "card-010"
+      ],
+      "machineDeck": [
+        "card-018",
+        "card-013",
+        "card-017",
+        "card-012",
+        "card-002"
+      ],
+      "startedAt": "2026-11-20T21:18:40.829Z",
+      "endedAt": "2026-11-20T21:20:18.251Z",
+      "id": "rODCROQup2E"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-003",
+        "card-002",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-014",
+        "card-011",
+        "card-013",
+        "card-009",
+        "card-010"
+      ],
+      "startedAt": "2026-11-20T21:24:01.270Z",
+      "endedAt": "2026-11-20T21:25:04.223Z",
+      "id": "Lt07iyNxIcw"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005",
+        "card-001"
+      ],
+      "machineDeck": [
+        "card-008",
+        "card-010",
+        "card-014",
+        "card-006",
+        "card-013"
+      ],
+      "startedAt": "2026-11-20T21:43:44.012Z",
+      "endedAt": "2026-11-20T21:45:56.845Z",
+      "id": "2l2FcK_7nhg"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-003",
+        "card-004",
+        "card-005"
+      ],
+      "machineDeck": [
+        "card-007",
+        "card-016",
+        "card-010",
+        "card-014",
+        "card-009"
+      ],
+      "startedAt": "2026-11-20T22:17:37.768Z",
+      "endedAt": "2026-11-20T22:20:17.905Z",
+      "id": "g1hRg_5b8eA"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

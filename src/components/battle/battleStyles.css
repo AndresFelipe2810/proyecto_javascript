@@ -40,8 +40,23 @@ battle-arena .pill-defending { background: #2f7fd6; color: var(--white); font-si
   battle-arena .pill-turn[data-turn="player"] { animation: none; }
 }
 
-battle-arena .abandon-btn {
+battle-arena .mute-btn {
   margin-left: auto;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+battle-arena .mute-btn:hover { background: rgba(102, 192, 148, 0.18); }
+battle-arena .mute-btn:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; }
+
+battle-arena .abandon-btn {
   min-height: 36px;
   padding: 4px 12px;
   border: 2px solid var(--accent);
@@ -199,3 +214,60 @@ battle-arena .battle-end.is-loss h2 { color: #a8442a; }
 battle-arena .battle-end .battle-status { width: 100%; }
 battle-arena .battle-end .error { margin: 0; color: #a11d12; font-weight: 700; }
 battle-arena .battle-end .action-btn { width: 100%; max-width: 320px; }
+
+/* Animaciones */
+battle-arena .fighter { --lunge: 22%; }
+battle-arena .fighter[data-side="machine"] { --lunge: -22%; }
+
+battle-arena .fighter.anim-attack { animation: fx-attack 0.45s ease-out; }
+battle-arena .fighter.anim-hit { animation: fx-hit 0.4s ease-out 0.18s; }
+battle-arena .fighter.anim-defend { animation: fx-defend 0.5s ease-out; }
+battle-arena .fighter.anim-special { animation: fx-special 0.65s ease-out; }
+battle-arena .fighter.anim-defeated { animation: fx-defeated 0.7s ease-in 0.18s forwards; }
+battle-arena .fighter.anim-enter { animation: fx-enter 0.5s ease-out; }
+battle-arena .battle-end.anim-win { animation: fx-win 0.8s ease-out; }
+battle-arena .battle-end.anim-loss { animation: fx-loss 0.8s ease-out; }
+
+@keyframes fx-attack {
+  40% { transform: translateX(var(--lunge)) scale(1.06); }
+}
+
+@keyframes fx-hit {
+  0%, 100% { transform: translateX(0); filter: none; }
+  20% { transform: translateX(-6px); filter: brightness(1.6); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); filter: brightness(1.3); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes fx-defend {
+  40% { transform: scale(1.06); filter: drop-shadow(0 0 10px #2f7fd6); }
+}
+
+@keyframes fx-special {
+  30% { transform: scale(1.1) translateY(-4%); filter: brightness(1.35) drop-shadow(0 0 14px #f2c230); }
+  60% { transform: translateX(var(--lunge)) scale(1.08); filter: brightness(1.2) drop-shadow(0 0 10px #f2c230); }
+}
+
+@keyframes fx-defeated {
+  to { transform: translateY(18%) rotate(8deg) scale(0.9); opacity: 0; filter: grayscale(1); }
+}
+
+@keyframes fx-enter {
+  from { transform: translateY(-14%) scale(0.85); opacity: 0; }
+}
+
+@keyframes fx-win {
+  0% { transform: scale(0.85); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; filter: brightness(1.15); }
+}
+
+@keyframes fx-loss {
+  from { opacity: 0; filter: grayscale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  battle-arena .fighter[class*="anim-"],
+  battle-arena .battle-end[class*="anim-"] { animation: none; }
+  battle-arena .fighter.anim-defeated { opacity: 0.4; filter: grayscale(1); }
+}
