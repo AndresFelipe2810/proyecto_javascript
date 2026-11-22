@@ -35,7 +35,9 @@ deck-selection #cardsGrid {
   padding: 12px 10px 16px;
 }
 
+deck-selection #cardsGrid { align-items: stretch; grid-auto-rows: auto; }
 deck-selection #cardsGrid > * { min-width: 0; }
+deck-selection #cardsGrid > .tcg-card { align-self: stretch; height: auto; }
 
 deck-selection .deck-section > h3 { margin: 12px 0 8px; color: var(--accent-dark); }
 
@@ -72,7 +74,7 @@ deck-selection button {
   cursor: pointer;
 }
 
-deck-selection #orderList button { min-width: 36px; min-height: 36px; }
+deck-selection #orderList button { display: inline-grid; place-items: center; min-width: 36px; min-height: 36px; }
 deck-selection button:hover:not(:disabled) { background: var(--accent-dark); }
 deck-selection button:disabled { opacity: 0.45; cursor: not-allowed; }
 deck-selection button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }

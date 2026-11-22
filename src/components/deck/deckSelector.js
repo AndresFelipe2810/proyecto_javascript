@@ -1,5 +1,6 @@
 import { getCards } from "../../api/cardsApi.js";
 import { escapar } from "../../utils/validators.js";
+import { icon } from "../../utils/icons.js";
 import { renderTcgCard, activarFallbackImagenes } from "../cards/tcgCard.js";
 import { DECK_SIZE, MIN_ACTIVE_CARDS } from "../../utils/battleEngine.js";
 
@@ -23,8 +24,10 @@ export class DeckSelection extends HTMLElement {
         </div>
         <p id="deckMessage"></p>
         <div id="cardsGrid"></div>
+        <!--
         <h3>Orden de combate</h3>
         <ol id="orderList"></ol>
+        -->
         <div class="deck-actions" hidden>
           <button id="startBattleBtn" disabled>¡Ir a la Batalla!</button>
         </div>
@@ -44,7 +47,7 @@ export class DeckSelection extends HTMLElement {
       );
     });
 
-    // Botones de orden (↑ / ↓) delegados en el componente
+    // Botones de orden (subir / bajar) delegados en el componente
     this.addEventListener("click", (e) => {
       const move = e.target.closest("[data-move]");
       if (!move) return;
@@ -134,13 +137,14 @@ export class DeckSelection extends HTMLElement {
     this.querySelector("#deckMessage").textContent =
       faltan > 0 ? `Te faltan ${faltan} carta(s) para completar el equipo.` : "";
 
-    this.querySelector("#orderList").innerHTML = this.selectedCards
+    const orderList = this.querySelector("#orderList");
+    if (orderList) orderList.innerHTML = this.selectedCards
       .map(
         (card, i) => /* html */ `
         <li>
           ${escapar(card.name)}
-          <button data-move="up" data-index="${i}" ${i === 0 ? "disabled" : ""}>↑</button>
-          <button data-move="down" data-index="${i}" ${i === n - 1 ? "disabled" : ""}>↓</button>
+          <button data-move="up" data-index="${i}" aria-label="Subir ${escapar(card.name)}" ${i === 0 ? "disabled" : ""}>${icon("arrow-up")}</button>
+          <button data-move="down" data-index="${i}" aria-label="Bajar ${escapar(card.name)}" ${i === n - 1 ? "disabled" : ""}>${icon("arrow-down")}</button>
         </li>
       `
       )

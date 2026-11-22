@@ -1,27 +1,16 @@
 import { escapar } from "../../utils/validators.js";
+import { icon } from "../../utils/icons.js";
 
-const TIPOS = {
-  fire: "🔥",
-  water: "💧",
-  grass: "🌿",
-  electric: "⚡",
-  psychic: "🔮",
-  ghost: "👻",
-  dragon: "🐉",
-  normal: "⭐",
-  fighting: "👊",
-  dark: "🌙",
-  fairy: "✨",
-};
+const TIPOS = new Set(["fire", "water", "grass", "electric", "psychic", "ghost", "dragon", "normal", "fighting", "dark", "fairy"]);
 
 export function claveTipo(tipo) {
   const k = String(tipo ?? "").trim().toLowerCase();
-  return TIPOS[k] ? k : "normal";
+  return TIPOS.has(k) ? k : "normal";
 }
 
 export function renderTcgCard(card, { selected = false, order = null, compact = false, currentHp = null } = {}) {
   const tipo = claveTipo(card.type);
-  const icono = TIPOS[tipo];
+  const icono = icon(tipo);
   const hp = currentHp ?? card.hp;
   const hpMax = currentHp != null ? `<small>/${escapar(card.hp)}</small>` : "";
   const imagen = card.image
@@ -52,12 +41,12 @@ export function renderTcgCard(card, { selected = false, order = null, compact = 
       <div class="tcg-body">
         <ul class="tcg-attacks">${ataques}</ul>
         <p class="tcg-extra">
-          <span class="tcg-extra-icon" aria-hidden="true">🛡</span>
+          <span class="tcg-extra-icon" aria-hidden="true">${icon("shield")}</span>
           <span class="tcg-extra-name" title="${escapar(card.defense?.name)}">${escapar(card.defense?.name)}</span>
           <span class="tcg-extra-val">−${Math.round((card.defense?.damageReduction ?? 0) * 100)}%</span>
         </p>
         <p class="tcg-extra">
-          <span class="tcg-extra-icon" aria-hidden="true">★</span>
+          <span class="tcg-extra-icon" aria-hidden="true">${icon("star")}</span>
           <span class="tcg-extra-name" title="${escapar(card.special?.name)}">${escapar(card.special?.name)}</span>
           <span class="tcg-extra-val">${escapar(card.special?.baseDamage)}</span>
         </p>

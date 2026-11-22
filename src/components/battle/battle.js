@@ -12,6 +12,7 @@ import {
 } from "../../utils/battleEngine.js";
 import { shuffle } from "../../utils/random.js";
 import { escapar } from "../../utils/validators.js";
+import { icon } from "../../utils/icons.js";
 import { SOUNDS, playSound, playCardSound, isMuted, toggleMute } from "../../utils/audio.js";
 
 const MACHINE_DELAY_MS = 900;
@@ -21,7 +22,7 @@ const HIT_SOUND_DELAY_MS = 180;
 const prefersReducedMotion = () =>
   typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const muteLabel = () => (isMuted() ? "🔇" : "🔊");
+const muteLabel = () => (isMuted() ? icon("volume-off") : icon("volume-on"));
 
 export class BattleArena extends HTMLElement {
   constructor() {
@@ -133,7 +134,7 @@ export class BattleArena extends HTMLElement {
     const muteBtn = e.target.closest("#muteBtn");
     if (muteBtn) {
       toggleMute();
-      muteBtn.textContent = muteLabel();
+      muteBtn.innerHTML = muteLabel();
       muteBtn.setAttribute("aria-pressed", String(isMuted()));
       muteBtn.setAttribute("aria-label", isMuted() ? "Activar sonido" : "Silenciar sonido");
       return;
@@ -304,9 +305,9 @@ export class BattleArena extends HTMLElement {
       const dmg = a.type === "defense"
         ? `<span class="act-dmg">${Math.round((pCard.defense?.damageReduction ?? 0) * 100)}% menos</span>`
         : `<span class="act-dmg">${escapar(a.baseDamage)} DMG</span>`;
-      const icon = a.type === "defense" ? "🛡️ " : a.type === "special" ? "★ " : "";
+      const glyph = a.type === "defense" ? `${icon("shield")} ` : a.type === "special" ? `${icon("star")} ` : "";
       const note = a.enabled ? "" : `<span class="act-note">${escapar(a.reason)}</span>`;
-      return `<button class="action-btn action-${a.type}" data-action="${idx}" ${disabled}><span class="act-name">${icon}${escapar(a.name)}</span>${dmg}${note}</button>`;
+      return `<button class="action-btn action-${a.type}" data-action="${idx}" ${disabled}><span class="act-name">${glyph}${escapar(a.name)}</span>${dmg}${note}</button>`;
     };
     const indexed = actions.map((a, idx) => ({ a, idx }));
     const group = (type) => indexed.filter((x) => x.a.type === type).map((x) => btn(x.a, x.idx)).join("");
@@ -325,13 +326,13 @@ export class BattleArena extends HTMLElement {
           <div class="fighter" data-side="player">
             <p class="fighter-label">Tú ${this.playerIndex + 1}/${DECK_SIZE}</p>
             ${renderTcgCard(pCard, { compact: true, currentHp: pCard.currentHp })}
-            <p class="fighter-status">${pCard.isDefending ? `<span class="pill pill-defending">🛡️ Defendiendo</span>` : ""}</p>
+            <p class="fighter-status">${pCard.isDefending ? `<span class="pill pill-defending">${icon("shield")} Defendiendo</span>` : ""}</p>
           </div>
 
           <div class="fighter" data-side="machine">
             <p class="fighter-label">Rival ${this.enemyIndex + 1}/${DECK_SIZE}</p>
             ${renderTcgCard(eCard, { compact: true, currentHp: eCard.currentHp })}
-            <p class="fighter-status">${eCard.isDefending ? `<span class="pill pill-defending">🛡️ Defendiendo</span>` : ""}</p>
+            <p class="fighter-status">${eCard.isDefending ? `<span class="pill pill-defending">${icon("shield")} Defendiendo</span>` : ""}</p>
           </div>
         </div>
 

@@ -11,10 +11,10 @@
       "nickname": "AndrexxFP",
       "passwordHash": "01798450b14b72b6e739e098d77e9382e39eb5f94fa92720efb86bc3736b580e",
       "salt": "bc2e2022dbc7d6a4b61929a9da686c01",
-      "points": 250,
-      "wins": 5,
+      "points": 300,
+      "wins": 6,
       "losses": 0,
-      "gamesPlayed": 5,
+      "gamesPlayed": 6,
       "createdAt": "2026-11-20T15:29:48.067Z",
       "id": "_PIzk9fU12M"
     },
@@ -39,6 +39,17 @@
       "gamesPlayed": 0,
       "createdAt": "2026-11-20T15:48:50.268Z",
       "id": "gktbnl6Mpzs"
+    },
+    {
+      "nickname": "PruebaX2",
+      "passwordHash": "4ecd0cb40b4231876b289f26641b80506cde8a844981f72424ad55e5099fe761",
+      "salt": "ad9abd09e5d49e198355f77e902c5b7a",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "createdAt": "2026-11-22T07:06:13.719Z",
+      "id": "TU24PbGn-Ts"
     }
   ],
   "cards": [
@@ -57,7 +68,7 @@
         },
         {
           "id": "atk-2",
-          "name": "Ataque Rápido",
+          "name": "Chispa",
           "baseDamage": 30
         },
         {
@@ -101,12 +112,12 @@
         {
           "id": "atk-1",
           "name": "Arañazo",
-          "baseDamage": 22
+          "baseDamage": 20
         },
         {
           "id": "atk-2",
           "name": "Ascuas",
-          "baseDamage": 32
+          "baseDamage": 30
         },
         {
           "id": "atk-3",
@@ -116,7 +127,7 @@
         {
           "id": "atk-4",
           "name": "Lanzallamas",
-          "baseDamage": 55
+          "baseDamage": 54
         }
       ],
       "defense": {
@@ -125,7 +136,7 @@
       },
       "special": {
         "name": "Sofoco",
-        "baseDamage": 70,
+        "baseDamage": 62,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -148,13 +159,13 @@
       "attacks": [
         {
           "id": "atk-1",
-          "name": "Placaje",
-          "baseDamage": 20
+          "name": "Golpe Coraza",
+          "baseDamage": 18
         },
         {
           "id": "atk-2",
           "name": "Pistola Agua",
-          "baseDamage": 30
+          "baseDamage": 28
         },
         {
           "id": "atk-3",
@@ -164,7 +175,7 @@
         {
           "id": "atk-4",
           "name": "Hidrobomba",
-          "baseDamage": 50
+          "baseDamage": 52
         }
       ],
       "defense": {
@@ -173,7 +184,7 @@
       },
       "special": {
         "name": "Torrente",
-        "baseDamage": 65,
+        "baseDamage": 66,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -197,7 +208,7 @@
         {
           "id": "atk-1",
           "name": "Látigo Cepa",
-          "baseDamage": 20
+          "baseDamage": 22
         },
         {
           "id": "atk-2",
@@ -212,7 +223,7 @@
         {
           "id": "atk-4",
           "name": "Rayo Solar",
-          "baseDamage": 52
+          "baseDamage": 48
         }
       ],
       "defense": {
@@ -250,7 +261,7 @@
         {
           "id": "atk-2",
           "name": "Recuperación Mental",
-          "baseDamage": 30
+          "baseDamage": 28
         },
         {
           "id": "atk-3",
@@ -259,8 +270,8 @@
         },
         {
           "id": "atk-4",
-          "name": "Mewtwo Final",
-          "baseDamage": 50
+          "name": "Onda Mental",
+          "baseDamage": 52
         }
       ],
       "defense": {
@@ -293,22 +304,22 @@
         {
           "id": "atk-1",
           "name": "Bola Sombra",
-          "baseDamage": 20
+          "baseDamage": 24
         },
         {
           "id": "atk-2",
           "name": "Lengua Fantasma",
-          "baseDamage": 30
+          "baseDamage": 32
         },
         {
           "id": "atk-3",
           "name": "Maldición Oscura",
-          "baseDamage": 40
+          "baseDamage": 38
         },
         {
           "id": "atk-4",
-          "name": "Gengar Final",
-          "baseDamage": 50
+          "name": "Come Sueños",
+          "baseDamage": 46
         }
       ],
       "defense": {
@@ -340,8 +351,8 @@
       "attacks": [
         {
           "id": "atk-1",
-          "name": "Hidrobomba",
-          "baseDamage": 20
+          "name": "Colmillo Marino",
+          "baseDamage": 18
         },
         {
           "id": "atk-2",
@@ -351,12 +362,12 @@
         {
           "id": "atk-3",
           "name": "Furia Marina",
-          "baseDamage": 40
+          "baseDamage": 42
         },
         {
           "id": "atk-4",
-          "name": "Gyarados Final",
-          "baseDamage": 50
+          "name": "Cola Torrencial",
+          "baseDamage": 52
         }
       ],
       "defense": {
@@ -365,7 +376,7 @@
       },
       "special": {
         "name": "Gran Mordisco Tormenta",
-        "baseDamage": 65,
+        "baseDamage": 62,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -389,12 +400,12 @@
         {
           "id": "atk-1",
           "name": "Cola Dragón",
-          "baseDamage": 20
+          "baseDamage": 22
         },
         {
           "id": "atk-2",
-          "name": "Garra Dragón",
-          "baseDamage": 30
+          "name": "Vuelo Celeste",
+          "baseDamage": 32
         },
         {
           "id": "atk-3",
@@ -403,8 +414,8 @@
         },
         {
           "id": "atk-4",
-          "name": "Dragonite Final",
-          "baseDamage": 50
+          "name": "Cometa Draco",
+          "baseDamage": 48
         }
       ],
       "defense": {
@@ -413,7 +424,7 @@
       },
       "special": {
         "name": "Gran Garra Dragón",
-        "baseDamage": 70,
+        "baseDamage": 68,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -437,22 +448,22 @@
         {
           "id": "atk-1",
           "name": "Golpe Cuerpo",
-          "baseDamage": 20
+          "baseDamage": 16
         },
         {
           "id": "atk-2",
           "name": "Patada Gigante",
-          "baseDamage": 30
+          "baseDamage": 28
         },
         {
           "id": "atk-3",
           "name": "Explosión Ancestral",
-          "baseDamage": 40
+          "baseDamage": 42
         },
         {
           "id": "atk-4",
-          "name": "Snorlax Final",
-          "baseDamage": 50
+          "name": "Aplastamiento",
+          "baseDamage": 54
         }
       ],
       "defense": {
@@ -461,7 +472,7 @@
       },
       "special": {
         "name": "Gran Patada Gigante",
-        "baseDamage": 60,
+        "baseDamage": 58,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -485,22 +496,22 @@
         {
           "id": "atk-1",
           "name": "Confusión",
-          "baseDamage": 20
+          "baseDamage": 26
         },
         {
           "id": "atk-2",
           "name": "Psíquico",
-          "baseDamage": 30
+          "baseDamage": 32
         },
         {
           "id": "atk-3",
           "name": "Mente Maestra",
-          "baseDamage": 40
+          "baseDamage": 38
         },
         {
           "id": "atk-4",
-          "name": "Alakazam Final",
-          "baseDamage": 50
+          "name": "Cucharas Dobles",
+          "baseDamage": 44
         }
       ],
       "defense": {
@@ -509,7 +520,7 @@
       },
       "special": {
         "name": "Gran Psíquico",
-        "baseDamage": 65,
+        "baseDamage": 66,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -533,12 +544,12 @@
         {
           "id": "atk-1",
           "name": "Golpe Karate",
-          "baseDamage": 20
+          "baseDamage": 18
         },
         {
           "id": "atk-2",
           "name": "Llave Cruzada",
-          "baseDamage": 30
+          "baseDamage": 28
         },
         {
           "id": "atk-3",
@@ -547,8 +558,8 @@
         },
         {
           "id": "atk-4",
-          "name": "Machamp Final",
-          "baseDamage": 50
+          "name": "Corte Cuádruple",
+          "baseDamage": 54
         }
       ],
       "defense": {
@@ -581,7 +592,7 @@
         {
           "id": "atk-1",
           "name": "Esfera Aural",
-          "baseDamage": 20
+          "baseDamage": 22
         },
         {
           "id": "atk-2",
@@ -595,7 +606,7 @@
         },
         {
           "id": "atk-4",
-          "name": "Lucario Final",
+          "name": "Onda Aural",
           "baseDamage": 50
         }
       ],
@@ -605,7 +616,7 @@
       },
       "special": {
         "name": "Gran Puño Certero",
-        "baseDamage": 65,
+        "baseDamage": 64,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -628,8 +639,8 @@
       "attacks": [
         {
           "id": "atk-1",
-          "name": "Placaje",
-          "baseDamage": 20
+          "name": "Arañazo Eevee",
+          "baseDamage": 24
         },
         {
           "id": "atk-2",
@@ -639,12 +650,12 @@
         {
           "id": "atk-3",
           "name": "Ataque Rápido Eevee",
-          "baseDamage": 40
+          "baseDamage": 36
         },
         {
           "id": "atk-4",
-          "name": "Eevee Final",
-          "baseDamage": 50
+          "name": "Carga Veloz",
+          "baseDamage": 44
         }
       ],
       "defense": {
@@ -682,17 +693,17 @@
         {
           "id": "atk-2",
           "name": "Ataque Oscuro",
-          "baseDamage": 30
+          "baseDamage": 28
         },
         {
           "id": "atk-3",
           "name": "Lunar Pulso",
-          "baseDamage": 40
+          "baseDamage": 38
         },
         {
           "id": "atk-4",
-          "name": "Umbreon Final",
-          "baseDamage": 50
+          "name": "Luz Lunar",
+          "baseDamage": 48
         }
       ],
       "defense": {
@@ -701,7 +712,7 @@
       },
       "special": {
         "name": "Gran Ataque Oscuro",
-        "baseDamage": 60,
+        "baseDamage": 58,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -724,23 +735,23 @@
       "attacks": [
         {
           "id": "atk-1",
-          "name": "Garra Dragón",
-          "baseDamage": 20
+          "name": "Arañazo Arena",
+          "baseDamage": 18
         },
         {
           "id": "atk-2",
           "name": "Colmillo Dragón",
-          "baseDamage": 30
+          "baseDamage": 28
         },
         {
           "id": "atk-3",
           "name": "Terremoto Dragón",
-          "baseDamage": 40
+          "baseDamage": 42
         },
         {
           "id": "atk-4",
-          "name": "Garchomp Final",
-          "baseDamage": 50
+          "name": "Carga Dragón",
+          "baseDamage": 52
         }
       ],
       "defense": {
@@ -749,7 +760,7 @@
       },
       "special": {
         "name": "Gran Colmillo Dragón",
-        "baseDamage": 70,
+        "baseDamage": 68,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -778,7 +789,7 @@
         {
           "id": "atk-2",
           "name": "Colmillo Ígneo",
-          "baseDamage": 30
+          "baseDamage": 32
         },
         {
           "id": "atk-3",
@@ -787,8 +798,8 @@
         },
         {
           "id": "atk-4",
-          "name": "Arcanine Final",
-          "baseDamage": 50
+          "name": "Rueda Fuego",
+          "baseDamage": 48
         }
       ],
       "defense": {
@@ -797,7 +808,7 @@
       },
       "special": {
         "name": "Gran Colmillo Ígneo",
-        "baseDamage": 65,
+        "baseDamage": 64,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -821,22 +832,22 @@
         {
           "id": "atk-1",
           "name": "Latigazo",
-          "baseDamage": 20
+          "baseDamage": 18
         },
         {
           "id": "atk-2",
-          "name": "Hoja Afilada",
+          "name": "Hoja Navaja",
           "baseDamage": 30
         },
         {
           "id": "atk-3",
-          "name": "Rayo Solar",
+          "name": "Rayo Floral",
           "baseDamage": 40
         },
         {
           "id": "atk-4",
-          "name": "Venusaur Final",
-          "baseDamage": 50
+          "name": "Planta Dura",
+          "baseDamage": 52
         }
       ],
       "defense": {
@@ -868,23 +879,23 @@
       "attacks": [
         {
           "id": "atk-1",
-          "name": "Impactrueno",
-          "baseDamage": 20
+          "name": "Chispazo",
+          "baseDamage": 26
         },
         {
           "id": "atk-2",
           "name": "Patada Pin Misil",
-          "baseDamage": 30
+          "baseDamage": 34
         },
         {
           "id": "atk-3",
           "name": "Rayo Eléctrico",
-          "baseDamage": 40
+          "baseDamage": 38
         },
         {
           "id": "atk-4",
-          "name": "Jolteon Final",
-          "baseDamage": 50
+          "name": "Voltio Cruel",
+          "baseDamage": 42
         }
       ],
       "defense": {
@@ -893,7 +904,7 @@
       },
       "special": {
         "name": "Gran Patada Pin Misil",
-        "baseDamage": 60,
+        "baseDamage": 62,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -917,22 +928,22 @@
         {
           "id": "atk-1",
           "name": "Burbuja",
-          "baseDamage": 20
+          "baseDamage": 22
         },
         {
           "id": "atk-2",
-          "name": "Hidropulso",
+          "name": "Chorro Cósmico",
           "baseDamage": 30
         },
         {
           "id": "atk-3",
           "name": "Rayo Acuático",
-          "baseDamage": 40
+          "baseDamage": 38
         },
         {
           "id": "atk-4",
-          "name": "Starmie Final",
-          "baseDamage": 50
+          "name": "Joya Estelar",
+          "baseDamage": 46
         }
       ],
       "defense": {
@@ -941,7 +952,7 @@
       },
       "special": {
         "name": "Gran Hidropulso",
-        "baseDamage": 55,
+        "baseDamage": 58,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -975,11 +986,11 @@
         {
           "id": "atk-3",
           "name": "Hechizo Hada",
-          "baseDamage": 40
+          "baseDamage": 38
         },
         {
           "id": "atk-4",
-          "name": "Gardevoir Final",
+          "name": "Rayo Lunar",
           "baseDamage": 50
         }
       ],
@@ -989,7 +1000,7 @@
       },
       "special": {
         "name": "Gran Carantoña",
-        "baseDamage": 65,
+        "baseDamage": 66,
         "unlockTurn": 2,
         "cooldown": 3
       },
@@ -1141,6 +1152,29 @@
       "startedAt": "2026-11-20T22:17:37.768Z",
       "endedAt": "2026-11-20T22:20:17.905Z",
       "id": "g1hRg_5b8eA"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-001",
+        "card-002",
+        "card-004",
+        "card-003",
+        "card-006"
+      ],
+      "machineDeck": [
+        "card-015",
+        "card-013",
+        "card-011",
+        "card-019",
+        "card-012"
+      ],
+      "startedAt": "2026-11-22T06:26:49.394Z",
+      "endedAt": "2026-11-22T06:29:27.338Z",
+      "id": "FKxKPW6dMwk"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -43,9 +43,14 @@ export class GameLeaderboard extends HTMLElement {
         .join("");
 
       this.querySelector("#lbList").innerHTML = players
+        .slice(3, 5)
         .map(
-          (p) => /* html */ `
-          <li>${escapar(p.nickname)} — ${p.points ?? 0} pts · ${p.wins ?? 0} victorias · ${p.gamesPlayed ?? 0} partidas</li>
+          (p, i) => /* html */ `
+          <li>
+            <span class="lb-pos">${i + 4}</span>
+            <span class="lb-name">${escapar(p.nickname)}</span>
+            <span class="lb-stats"><b>${p.points ?? 0}</b> pts · ${p.wins ?? 0} victorias · ${p.gamesPlayed ?? 0} partidas</span>
+          </li>
         `
         )
         .join("");

@@ -5,6 +5,7 @@ player-register {
 player-register .register-box {
   position: relative;
   isolation: isolate;
+  container-type: inline-size;
   min-height: clamp(360px, 52vw, 480px);
   padding: clamp(8px, 4vw, 48px) 0;
   display: flex;
@@ -19,11 +20,11 @@ player-register .register-box > * {
 player-register .register-box::before {
   content: "POKEMON";
   position: absolute;
-  top: -8%;
+  top: 0;
   right: 0;
   max-width: none;
   z-index: -2;
-  font-size: clamp(5rem, 16vw, 12rem);
+  font-size: min(clamp(5rem, 16vw, 12rem), 17cqw);
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -156,10 +157,14 @@ player-register #registerMessage {
   }
 
   player-register .register-box::before {
+    left: 0;
     right: 0;
     top: auto;
-    bottom: 10%;
-    font-size: clamp(2.6rem, 14vw, 5rem);
+    bottom: clamp(70px, 22vw, 110px);
+    text-align: center;
+    font-size: 18cqw;
+    transform: rotate(8deg);
+    opacity: 0.2;
   }
 
   player-register .register-box::after {
@@ -183,10 +188,6 @@ player-register #registerMessage {
 @media (max-width: 480px) {
   player-register .register-box {
     padding-bottom: clamp(220px, 60vw, 310px);
-  }
-
-  player-register .register-box::before {
-    display: none;
   }
 
   player-register h2 {

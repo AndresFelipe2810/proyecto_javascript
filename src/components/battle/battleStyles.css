@@ -48,7 +48,8 @@ battle-arena .mute-btn {
   border: 2px solid var(--accent);
   border-radius: 999px;
   background: transparent;
-  font-size: 1rem;
+  color: var(--accent-dark);
+  font-size: 1.1rem;
   line-height: 1;
   cursor: pointer;
 }
@@ -149,7 +150,8 @@ battle-arena .action-btn:hover:not(:disabled) { filter: brightness(1.06); }
 battle-arena .action-btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgba(61, 140, 106, 0.55); }
 battle-arena .action-btn:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; }
 
-battle-arena .act-name { font-weight: 800; line-height: 1.2; }
+battle-arena .act-name { display: inline-flex; align-items: center; gap: 0.3em; font-weight: 800; line-height: 1.2; }
+battle-arena .pill-defending .icon { margin-right: 2px; }
 
 battle-arena .act-dmg {
   padding: 1px 8px;
