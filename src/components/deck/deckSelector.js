@@ -10,6 +10,13 @@ export class DeckSelection extends HTMLElement {
     this.selectedCards = [];
     this.maxCards = DECK_SIZE;
     this.activeCards = [];
+    this.player = null;
+    this.iniciado = false;
+  }
+
+  connectedCallback() {
+    if (this.iniciado) return;
+    this.iniciado = true;
     this.render();
     this.configurarEventos();
     this.cargarCartas();
@@ -65,24 +72,38 @@ export class DeckSelection extends HTMLElement {
       msg.textContent = err.message;
       return;
     }
-    this.activeCards = cards.filter((c) => c.active !== false);
+    const activas = cards.filter((c) => c.active !== false);
     msg.textContent = "";
 
-    if (this.activeCards.length < MIN_ACTIVE_CARDS) {
+    if (activas.length < MIN_ACTIVE_CARDS) {
       this.querySelector("#deckMessage").textContent =
-        `Se necesitan al menos ${MIN_ACTIVE_CARDS} cartas activas para jugar (hay ${this.activeCards.length}).`;
+        `Se necesitan al menos ${MIN_ACTIVE_CARDS} cartas activas para jugar (hay ${activas.length}).`;
       return;
     }
 
+    const desbloqueadas = new Set((this.player?.unlockedCards ?? []).map(String));
+    this.activeCards = activas.filter((c) => desbloqueadas.has(String(c.id)));
+    const faltan = Math.max(0, this.maxCards - this.activeCards.length);
+    if (faltan > 0) {
+      msg.textContent = `Te faltan ${faltan} carta(s) desbloqueadas. Juega Memoria o la Ruleta para conseguir más.`;
+    }
+
     const grid = this.querySelector("#cardsGrid");
-    grid.innerHTML = this.activeCards.map((card) => renderTcgCard(card)).join("");
+    grid.innerHTML = activas.map((card) => renderTcgCard(card)).join("");
     activarFallbackImagenes(grid);
 
     grid.querySelectorAll(".tcg-card").forEach((el) => {
-      el.setAttribute("tabindex", "0");
+      const bloqueada = !desbloqueadas.has(el.dataset.id);
+      el.setAttribute("tabindex", bloqueada ? "-1" : "0");
       el.setAttribute("role", "button");
       el.setAttribute("aria-pressed", "false");
+      if (bloqueada) {
+        el.classList.add("is-locked");
+        el.setAttribute("aria-disabled", "true");
+        el.insertAdjacentHTML("afterbegin", `<span class="tcg-lock" title="Carta bloqueada">${icon("lock")}</span>`);
+      }
       const alternar = () => {
+        if (bloqueada) return;
         const card = this.activeCards.find((c) => String(c.id) === el.dataset.id);
         this.toggleCard(card);
       };
@@ -157,7 +178,7 @@ export class DeckSelection extends HTMLElement {
   }
 
   puedeIniciar() {
-    return this.selectedCards.length === this.maxCards && this.activeCards.length >= MIN_ACTIVE_CARDS;
+    return this.selectedCards.length === this.maxCards;
   }
 }
 

@@ -203,6 +203,9 @@ export class PlayerRegister extends HTMLElement {
           wins: 0,
           losses: 0,
           gamesPlayed: 0,
+          unlockedCards: [],
+          starterPackClaimed: false,
+          spinsAvailable: 0,
           createdAt: new Date().toISOString(),
         });
 

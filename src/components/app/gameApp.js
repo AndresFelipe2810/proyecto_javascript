@@ -3,10 +3,14 @@ import "../deck/deckSelector.js";
 import "../battle/battle.js";
 import "../leaderboard/leaderboard.js";
 import "../cards/cards.js";
+import "../progress/starterPacks.js";
+import "../progress/rewardsHub.js";
 import { getBattles, postBattle } from "../../api/battlesApi.js";
 import { getPlayer, patchPlayer } from "../../api/playersApi.js";
 import { scoreBattle } from "../../utils/battleEngine.js";
 import { escapar } from "../../utils/validators.js";
+import { icon } from "../../utils/icons.js";
+import { bonoPorPartidas, necesitaProgresoInicial, normalizarProgreso } from "../../utils/progression.js";
 
 const REINTENTOS = 3;
 const SESSION_KEY = "cardBattle.playerId";
@@ -37,6 +41,7 @@ export class GameApp extends HTMLElement {
     this.batallaActiva = false;
     this.sincronizando = null;
     this.adminLogged = false;
+    this.vista = "registro";
     this.render();
     this.configurarEventos();
   }
@@ -51,6 +56,7 @@ export class GameApp extends HTMLElement {
         <h1>Pokémon Card Battle Arena</h1>
         <nav>
           <button id="navPlay">Jugar</button>
+          <button id="navRewards" hidden>Premios</button>
           <button id="navRanking">Ranking</button>
           <button id="navLogout" hidden>Salir de admin</button>
           <button id="navSwitchPlayer" hidden>Cambiar jugador</button>
@@ -66,6 +72,13 @@ export class GameApp extends HTMLElement {
 
   configurarEventos() {
     this.addEventListener("player-registered", (e) => this.iniciarSesion(e.detail));
+
+    this.addEventListener("progress-updated", (e) => {
+      this.currentPlayer = normalizarProgreso(e.detail);
+      this.actualizarEncabezado();
+    });
+
+    this.addEventListener("progress-done", () => this.mostrarSeleccionMazo());
 
     this.addEventListener("deck-selected", (e) => {
       if (!this.currentPlayer) {
@@ -103,13 +116,17 @@ export class GameApp extends HTMLElement {
 
     this.querySelector("#navPlay").addEventListener("click", () => {
       if (!this.confirmarSalida()) return;
-      if (this.currentPlayer) this.mostrarSeleccionMazo();
-      else this.mostrarRegistro();
+      this.mostrarVistaInicial();
+    });
+
+    this.querySelector("#navRewards").addEventListener("click", () => {
+      if (!this.confirmarSalida()) return;
+      this.mostrarPremios();
     });
 
     this.querySelector("#navRanking").addEventListener("click", () => {
       if (!this.confirmarSalida()) return;
-      this.querySelector("#app-content").innerHTML = `<game-leaderboard></game-leaderboard>`;
+      this.mostrarRanking();
     });
 
     this.querySelector("#navLogout").addEventListener("click", () => {
@@ -130,6 +147,22 @@ export class GameApp extends HTMLElement {
       e.preventDefault();
       e.returnValue = "";
     });
+
+    this.actualizarNav();
+  }
+
+  setVista(vista) {
+    this.vista = vista;
+    this.actualizarNav();
+  }
+
+  actualizarNav() {
+    const p = this.currentPlayer;
+    this.querySelector("#navPlay").hidden = this.vista === "jugar" || this.vista === "registro";
+    this.querySelector("#navRewards").hidden = !p || this.vista === "premios";
+    this.querySelector("#navRanking").hidden = this.vista === "ranking";
+    this.querySelector("#navSwitchPlayer").hidden = !p;
+    this.querySelector("#navLogout").hidden = !this.adminLogged;
   }
 
   async restaurarSesion() {
@@ -144,10 +177,51 @@ export class GameApp extends HTMLElement {
   }
 
   iniciarSesion(player, irAMazo = true) {
-    this.currentPlayer = player;
+    this.currentPlayer = normalizarProgreso(player);
     guardarSesion(player.id);
     this.actualizarEncabezado();
-    if (!this.batallaActiva && (irAMazo || this.querySelector("player-register"))) this.mostrarSeleccionMazo();
+    const faltantes = necesitaProgresoInicial(player);
+    if (Object.keys(faltantes).length) this.migrarProgreso(player.id, faltantes);
+    if (!this.batallaActiva && (irAMazo || this.querySelector("player-register"))) this.mostrarVistaInicial();
+  }
+
+  async migrarProgreso(playerId, campos) {
+    try {
+      const actualizado = await patchPlayer(playerId, campos);
+      if (this.currentPlayer?.id === actualizado.id) {
+        this.currentPlayer = normalizarProgreso(actualizado);
+        this.actualizarEncabezado();
+      }
+    } catch {
+      // Los valores por defecto ya están en memoria; se reintentará en el próximo inicio de sesión
+    }
+  }
+
+  mostrarVistaInicial() {
+    if (!this.currentPlayer) return this.mostrarRegistro();
+    if (!this.currentPlayer.starterPackClaimed) return this.mostrarSobreInicial();
+    return this.mostrarSeleccionMazo();
+  }
+
+  mostrarPremios() {
+    if (!this.currentPlayer) return this.mostrarRegistro();
+    if (!this.currentPlayer.starterPackClaimed) return this.mostrarSobreInicial();
+    const vista = document.createElement("rewards-hub");
+    vista.player = this.currentPlayer;
+    this.querySelector("#app-content").replaceChildren(vista);
+    this.setVista("premios");
+  }
+
+  mostrarRanking() {
+    this.querySelector("#app-content").innerHTML = `<game-leaderboard></game-leaderboard>`;
+    this.setVista("ranking");
+  }
+
+  mostrarSobreInicial() {
+    const vista = document.createElement("starter-packs");
+    vista.player = this.currentPlayer;
+    this.querySelector("#app-content").replaceChildren(vista);
+    this.setVista("jugar");
   }
 
   cerrarSesion() {
@@ -160,11 +234,12 @@ export class GameApp extends HTMLElement {
   }
 
   actualizarNavAdmin() {
-    this.querySelector("#navLogout").hidden = !this.adminLogged;
+    this.actualizarNav();
   }
 
   mostrarAdmin() {
     this.querySelector("#app-content").innerHTML = `<admin-cards></admin-cards>`;
+    this.setVista("admin");
   }
 
   confirmarSalida() {
@@ -181,18 +256,22 @@ export class GameApp extends HTMLElement {
 
   actualizarEncabezado() {
     const p = this.currentPlayer;
-    this.querySelector("#navSwitchPlayer").hidden = !p;
+    this.actualizarNav();
     this.querySelector("#playerInfo").innerHTML = p
-      ? `Entrenador: ${escapar(p.nickname)} · ${p.points ?? 0} pts · ${p.wins ?? 0}V ${p.losses ?? 0}D`
+      ? `Entrenador: ${escapar(p.nickname)} · ${p.points ?? 0} pts · ${p.wins ?? 0}V ${p.losses ?? 0}D · ${icon("ticket")} ${p.spinsAvailable ?? 0}`
       : "";
   }
 
   mostrarSeleccionMazo() {
-    this.querySelector("#app-content").innerHTML = `<deck-selection></deck-selection>`;
+    const vista = document.createElement("deck-selection");
+    vista.player = this.currentPlayer;
+    this.querySelector("#app-content").replaceChildren(vista);
+    this.setVista("jugar");
   }
 
   mostrarRegistro() {
     this.querySelector("#app-content").innerHTML = `<player-register></player-register>`;
+    this.setVista("registro");
   }
 
   async guardarPartida({ won, playerDeck, machineDeck, startedAt, endedAt }) {
@@ -247,6 +326,9 @@ export class GameApp extends HTMLElement {
           losses: partidas.length - wins,
           gamesPlayed: partidas.length,
         };
+        const { bono, procesadas } = bonoPorPartidas(totales.gamesPlayed, actual.memoryGamesCounted);
+        totales.memoryGamesCounted = procesadas;
+        if (bono > 0) totales.memoryBonus = (actual.memoryBonus ?? 0) + bono;
         const cambia = Object.keys(totales).some((k) => actual[k] !== totales[k]);
         const jugador = cambia ? await patchPlayer(playerId, totales) : actual;
         if (this.currentPlayer?.id === jugador.id) {

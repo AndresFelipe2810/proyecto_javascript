@@ -1,0 +1,96 @@
+.progress-box { display: block; max-width: 900px; margin: 0 auto; text-align: center; }
+.progress-box h2 { margin: 0 0 8px; font-size: clamp(1.3rem, 4.5vw, 2rem); font-weight: 800; text-transform: uppercase; color: var(--accent); }
+.progress-help { margin: 0 0 16px; font-size: 0.9rem; }
+
+.pack-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.pack {
+  width: 150px; height: 210px; border: 3px solid var(--accent-dark); border-radius: 14px;
+  color: #fff; font-weight: 800; cursor: pointer; transition: transform 0.2s ease;
+  background: linear-gradient(160deg, #f5a623, #d9480f);
+}
+.pack.pack-water { background: linear-gradient(160deg, #4dabf7, #1864ab); }
+.pack.pack-grass { background: linear-gradient(160deg, #94d82d, #2b8a3e); }
+.pack:hover:not(:disabled) { transform: translateY(-6px) rotate(-2deg); }
+.pack:disabled { opacity: 0.6; cursor: default; }
+.pack-name { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); }
+
+.pack-result { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 16px 0; }
+.pack-result .tcg-card, .roulette-result .tcg-card { width: 170px; }
+
+.memory-board {
+  display: grid; grid-template-columns: repeat(var(--cols, 4), 1fr); gap: 10px; max-width: 520px; margin: 0 auto 16px;
+  perspective: 800px;
+}
+.memory-card {
+  position: relative; aspect-ratio: 3 / 4; padding: 0; border: 0; background: none; cursor: pointer;
+  transform-style: preserve-3d; transition: transform 0.5s ease;
+}
+.memory-card.is-flipped, .memory-card.is-matched { transform: rotateY(180deg); }
+.memory-card.is-matched .memory-front { border-color: #2f9e44; box-shadow: 0 0 0 3px rgba(47, 158, 68, 0.35); }
+.memory-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 10px; }
+.memory-chip { padding: 6px 12px; border-radius: 999px; border: 2px solid var(--accent-dark); background: var(--white); font-size: 0.85rem; font-weight: 700; }
+.memory-game #memoryPlay { min-height: 44px; min-width: 160px; padding: 10px 24px; border: 0; border-radius: 999px; background: var(--accent-dark); color: #fff; font-size: 1rem; font-weight: 800; }
+.memory-game #memoryPlay:disabled { opacity: 0.5; cursor: not-allowed; }
+.memory-game #memoryStatus { min-height: 1.4em; margin: 10px 0; font-size: 0.9rem; font-weight: 600; }
+.memory-card { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.memory-name { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.72rem; font-weight: 800; color: var(--text); }
+.rewards-hub { display: grid; gap: 24px; }
+.rewards-slot {
+  min-width: 0; padding: 20px; border-radius: 16px; background: var(--white);
+  border: 2px solid var(--accent-dark);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+.rewards-slot .progress-box { max-width: 100%; }
+.rewards-slot .progress-box h2 { margin-bottom: 6px; }
+.memory-face {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; backface-visibility: hidden; overflow: hidden;
+  border: 2px solid var(--accent-dark); background: var(--white);
+}
+.memory-back { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; }
+.memory-front { transform: rotateY(180deg); flex-direction: column; gap: 4px; padding: 6px; }
+.memory-front img { flex: 1; min-height: 0; width: 100%; object-fit: contain; }
+.memory-fallback svg { width: 40px; height: 40px; }
+
+.roulette-spins { font-size: 1rem; }
+.roulette-track {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; list-style: none;
+  margin: 12px 0 16px; padding: 0;
+}
+.roulette-cell {
+  padding: 14px 6px; border-radius: 10px; font-weight: 700; font-size: 0.8rem;
+  background: var(--white); border: 2px solid var(--accent-dark); opacity: 0.7;
+}
+.roulette-cell[data-type="carta"] { border-color: #f59f00; }
+.roulette-cell[data-type="tiro"] { border-color: var(--accent); }
+.roulette-cell.is-active { opacity: 1; transform: scale(1.08); box-shadow: 0 0 0 4px rgba(255, 212, 59, 0.9); }
+.roulette-result { display: flex; justify-content: center; margin: 12px 0; min-height: 10px; }
+
+.starter-packs button#packContinue, .memory-game button, .roulette button { margin-top: 12px; }
+
+.tcg-card.is-locked { position: relative; filter: grayscale(1); opacity: 0.55; cursor: not-allowed; }
+.tcg-card.is-locked .tcg-lock {
+  position: absolute; top: 8px; right: 8px; z-index: 2; display: grid; place-items: center;
+  width: 32px; height: 32px; border-radius: 50%; background: rgba(0, 0, 0, 0.7); color: #fff;
+}
+.tcg-card.is-locked .tcg-lock svg { width: 18px; height: 18px; }
+.tcg-card.is-locked .tcg-art { position: relative; }
+
+@media (max-width: 480px) {
+  .progress-box { min-width: 0; max-width: 100%; overflow-x: clip; }
+  .progress-box h2 { font-size: 1.2rem; }
+  .progress-help { font-size: 0.85rem; }
+  .pack-grid { gap: 10px; }
+  .pack { flex: 1 1 28%; max-width: 130px; width: auto; height: auto; aspect-ratio: 5 / 7; min-height: 44px; font-size: 0.8rem; }
+  .pack-result { gap: 8px; }
+  .pack-result .tcg-card, .roulette-result .tcg-card { width: min(100%, 160px); }
+  .rewards-hub { gap: 16px; }
+  .rewards-slot { padding: 14px; border-radius: 14px; }
+  .memory-board { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .memory-chip { font-size: 0.8rem; padding: 5px 10px; }
+  .memory-game #memoryPlay { width: 100%; min-height: 48px; font-size: 1.05rem; }
+  .memory-name { font-size: 0.7rem; }
+  .roulette-track { gap: 4px; margin: 10px 0 12px; }
+  .roulette-cell { padding: 10px 2px; font-size: 0.68rem; line-height: 1.2; overflow-wrap: anywhere; }
+  #packContinue, #memoryPlay, #spinBtn { width: 100%; min-height: 44px; }
+}

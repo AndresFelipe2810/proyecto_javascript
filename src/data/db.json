@@ -11,12 +11,29 @@
       "nickname": "AndrexxFP",
       "passwordHash": "01798450b14b72b6e739e098d77e9382e39eb5f94fa92720efb86bc3736b580e",
       "salt": "bc2e2022dbc7d6a4b61929a9da686c01",
-      "points": 300,
-      "wins": 6,
+      "points": 350,
+      "wins": 7,
       "losses": 0,
-      "gamesPlayed": 6,
+      "gamesPlayed": 7,
       "createdAt": "2026-11-20T15:29:48.067Z",
-      "id": "_PIzk9fU12M"
+      "id": "_PIzk9fU12M",
+      "unlockedCards": [
+        "card-009",
+        "card-007",
+        "card-015",
+        "card-011",
+        "card-006",
+        "card-013",
+        "card-003",
+        "card-017"
+      ],
+      "starterPackClaimed": true,
+      "spinsAvailable": 0,
+      "memoryDate": "2026-11-22",
+      "memoryPlaysToday": 2,
+      "memoryBonus": 0,
+      "memoryBonusAwarded": 2,
+      "memoryGamesCounted": 7
     },
     {
       "nickname": "AndrexxFP1",
@@ -50,6 +67,27 @@
       "gamesPlayed": 0,
       "createdAt": "2026-11-22T07:06:13.719Z",
       "id": "TU24PbGn-Ts"
+    },
+    {
+      "nickname": "PruebaX3",
+      "passwordHash": "087972ea2b2b9aadb92da78e5ac96ff6f55c048b12f1f15b2428b846adf58d54",
+      "salt": "a2c97f019fb695966184f04de07d9220",
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "gamesPlayed": 0,
+      "unlockedCards": [
+        "card-013",
+        "card-008",
+        "card-019",
+        "card-015",
+        "card-002",
+        "card-007"
+      ],
+      "starterPackClaimed": true,
+      "spinsAvailable": 0,
+      "createdAt": "2026-11-22T07:27:32.650Z",
+      "id": "0FKwPXfPKrQ"
     }
   ],
   "cards": [
@@ -1175,6 +1213,29 @@
       "startedAt": "2026-11-22T06:26:49.394Z",
       "endedAt": "2026-11-22T06:29:27.338Z",
       "id": "FKxKPW6dMwk"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-015",
+        "card-011",
+        "card-009",
+        "card-007",
+        "card-006"
+      ],
+      "machineDeck": [
+        "card-003",
+        "card-012",
+        "card-004",
+        "card-005",
+        "card-017"
+      ],
+      "startedAt": "2026-11-22T15:26:55.813Z",
+      "endedAt": "2026-11-22T15:28:54.178Z",
+      "id": "CQuPrzvYW9A"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
