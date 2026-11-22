@@ -12,8 +12,16 @@ import {
 } from "../../utils/battleEngine.js";
 import { shuffle } from "../../utils/random.js";
 import { escapar } from "../../utils/validators.js";
+import { SOUNDS, playSound, playCardSound, isMuted, toggleMute } from "../../utils/audio.js";
 
 const MACHINE_DELAY_MS = 900;
+const DEFEAT_MS = 700;
+const HIT_SOUND_DELAY_MS = 180;
+
+const prefersReducedMotion = () =>
+  typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const muteLabel = () => (isMuted() ? "🔇" : "🔊");
 
 export class BattleArena extends HTMLElement {
   constructor() {
@@ -32,6 +40,8 @@ export class BattleArena extends HTMLElement {
     this.machineTimer = null;
     this.startToken = 0;
     this.firstSide = null;
+    this.pendingFx = [];
+    this.defeatTimer = null;
 
     // Un solo listener delegado: sobrevive a los re-renders de innerHTML
     this.addEventListener("click", (e) => this.handleClick(e));
@@ -40,6 +50,7 @@ export class BattleArena extends HTMLElement {
   disconnectedCallback() {
     this.startToken++;
     clearTimeout(this.machineTimer);
+    clearTimeout(this.defeatTimer);
   }
 
   set deck(cards) {
@@ -50,6 +61,8 @@ export class BattleArena extends HTMLElement {
   async start() {
     const token = ++this.startToken;
     clearTimeout(this.machineTimer);
+    clearTimeout(this.defeatTimer);
+    this.pendingFx = [];
     this.finished = false;
     this.error = null;
     this.innerHTML = `<section class="battle-arena"><p>Preparando batalla...</p></section>`;
@@ -79,6 +92,7 @@ export class BattleArena extends HTMLElement {
       const playerStarts = Math.random() < 0.5;
       this.statusMessage = `${playerStarts ? "Tú" : "La máquina"} inicia la batalla.`;
       this.firstSide = playerStarts ? "player" : "machine";
+      this.pendingFx.push({ side: "player", cls: "anim-enter" }, { side: "machine", cls: "anim-enter" });
       this.setTurn(this.firstSide);
     } catch (err) {
       if (token !== this.startToken) return;
@@ -116,6 +130,15 @@ export class BattleArena extends HTMLElement {
       return;
     }
 
+    const muteBtn = e.target.closest("#muteBtn");
+    if (muteBtn) {
+      toggleMute();
+      muteBtn.textContent = muteLabel();
+      muteBtn.setAttribute("aria-pressed", String(isMuted()));
+      muteBtn.setAttribute("aria-label", isMuted() ? "Activar sonido" : "Silenciar sonido");
+      return;
+    }
+
     const btn = e.target.closest("[data-action]");
     if (!btn || this.finished || this.currentTurn !== "player") return;
 
@@ -145,22 +168,84 @@ export class BattleArena extends HTMLElement {
     actors[ai] = actor;
     targets[ti] = target;
 
-    let message = log;
-    if (isCardDefeated(target)) {
-      message += ` ¡${target.name} fue derrotado!`;
-      if (isPlayer) this.enemyIndex += 1;
-      else this.playerIndex += 1;
+    const defeated = isCardDefeated(target);
+    const targetSide = isPlayer ? "machine" : "player";
+    this.queueActionFx(side, targetSide, action, actor, target, defeated);
+
+    this.statusMessage = defeated ? `${log} ¡${target.name} fue derrotado!` : log;
+
+    if (defeated) {
+      this.currentTurn = null;
+      clearTimeout(this.machineTimer);
+      this.render();
+      this.defeatTimer = setTimeout(() => this.afterDefeat(side), DEFEAT_MS);
+      return;
     }
-    this.statusMessage = message;
+
+    this.advanceTurn(side);
+  }
+
+  afterDefeat(side) {
+    this.defeatTimer = null;
+    if (side === "player") this.enemyIndex += 1;
+    else this.playerIndex += 1;
 
     if (this.enemyIndex >= DECK_SIZE || this.playerIndex >= DECK_SIZE) {
       this.endBattle();
       return;
     }
 
+    this.pendingFx.push({ side: side === "player" ? "machine" : "player", cls: "anim-enter" });
+    playSound(SOUNDS.enter);
+    this.advanceTurn(side);
+  }
+
+  advanceTurn(side) {
     // Una ronda se completa cuando actúa el segundo participante del sorteo
     if (side !== this.firstSide) this.round += 1;
-    this.setTurn(isPlayer ? "machine" : "player");
+    this.setTurn(side === "player" ? "machine" : "player");
+  }
+
+  queueActionFx(side, targetSide, action, actor, target, defeated) {
+    if (action.type === "defense") {
+      this.pendingFx.push({ side, cls: "anim-defend" });
+      playCardSound(actor, "defense");
+      return;
+    }
+
+    this.pendingFx.push({ side, cls: action.type === "special" ? "anim-special" : "anim-attack" });
+    this.pendingFx.push({ side: targetSide, cls: defeated ? "anim-defeated" : "anim-hit" });
+    playCardSound(actor, action.type);
+    setTimeout(() => {
+      if (defeated) playCardSound(target, "defeated");
+      else playSound(SOUNDS.hit);
+    }, HIT_SOUND_DELAY_MS);
+  }
+
+  flushFx() {
+    const fx = this.pendingFx;
+    this.pendingFx = [];
+    if (prefersReducedMotion()) {
+      fx.filter((f) => f.cls === "anim-defeated").forEach((f) => this.playAnim(f.side, f.cls));
+      return;
+    }
+    fx.forEach((f) => this.playAnim(f.side, f.cls));
+  }
+
+  playAnim(side, cls) {
+    const el = this.querySelector(`.fighter[data-side="${side}"]`);
+    if (!el) return;
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+    if (cls === "anim-defeated") return;
+    el.addEventListener(
+      "animationend",
+      (e) => {
+        if (e.target === el) el.classList.remove(cls);
+      },
+      { once: true }
+    );
   }
 
   endBattle() {
@@ -169,6 +254,7 @@ export class BattleArena extends HTMLElement {
     clearTimeout(this.machineTimer);
 
     const won = this.enemyIndex >= DECK_SIZE;
+    playSound(won ? SOUNDS.victory : SOUNDS.defeat);
     this.render();
 
     this.dispatchEvent(
@@ -199,7 +285,7 @@ export class BattleArena extends HTMLElement {
     if (this.finished) {
       const won = this.enemyIndex >= DECK_SIZE;
       this.innerHTML = /* html */ `
-        <section class="battle-end ${won ? "is-win" : "is-loss"}">
+        <section class="battle-end ${won ? "is-win anim-win" : "is-loss anim-loss"}">
           <h2>${won ? "¡Ganaste la batalla!" : "La CPU ganó la batalla."}</h2>
           <p class="battle-status" role="status">${escapar(this.statusMessage)}</p>
           <button id="restartBtn" class="action-btn action-attack">Volver a seleccionar mazo</button>
@@ -230,18 +316,19 @@ export class BattleArena extends HTMLElement {
         <div class="battle-hud">
           <span class="pill pill-round">Ronda ${this.round}</span>
           <span class="pill pill-turn" data-turn="${myTurn ? "player" : "machine"}">${myTurn ? "Tu turno" : "Turno del rival"}</span>
+          <button id="muteBtn" class="mute-btn" type="button" aria-pressed="${isMuted()}" aria-label="${isMuted() ? "Activar sonido" : "Silenciar sonido"}">${muteLabel()}</button>
           <button id="abandonBtn" class="abandon-btn" type="button">Abandonar</button>
         </div>
         <p class="battle-status" role="status" aria-live="polite">${escapar(this.statusMessage)}</p>
 
         <div class="fighters">
-          <div class="fighter">
+          <div class="fighter" data-side="player">
             <p class="fighter-label">Tú ${this.playerIndex + 1}/${DECK_SIZE}</p>
             ${renderTcgCard(pCard, { compact: true, currentHp: pCard.currentHp })}
             <p class="fighter-status">${pCard.isDefending ? `<span class="pill pill-defending">🛡️ Defendiendo</span>` : ""}</p>
           </div>
 
-          <div class="fighter">
+          <div class="fighter" data-side="machine">
             <p class="fighter-label">Rival ${this.enemyIndex + 1}/${DECK_SIZE}</p>
             ${renderTcgCard(eCard, { compact: true, currentHp: eCard.currentHp })}
             <p class="fighter-status">${eCard.isDefending ? `<span class="pill pill-defending">🛡️ Defendiendo</span>` : ""}</p>
@@ -255,6 +342,7 @@ export class BattleArena extends HTMLElement {
       </section>
     `;
     activarFallbackImagenes(this);
+    this.flushFx();
   }
 }
 
