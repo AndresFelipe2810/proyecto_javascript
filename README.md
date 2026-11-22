@@ -1,119 +1,103 @@
- 🃏 Pokémon TCG Battle — Proyecto JavaScript
+# 🃏 Pokémon Card Battle Arena
 
-Aplicación web de batallas de cartas coleccionables (TCG) inspirada en Pokémon, construida con JavaScript modular, integración con **PokéAPI** y persistencia local mediante **JSON Server**. Permite gestionar usuarios, armar mazos personalizados, administrar cartas desde un panel de control y librar batallas por turnos con una interfaz responsiva.
+Juego web de batallas de cartas por turnos con temática **Pokémon**. Los jugadores se registran, desbloquean cartas con sobres, arman un mazo de 5 y combaten contra la máquina; un administrador gestiona el catálogo de cartas (CRUD).
 
----
+**Integrantes**
+- Andrés Felipe — [@AndresFelipe2810](https://github.com/AndresFelipe2810)
+- Nicolas Archila — [@Nicolas121705](https://github.com/Nicolas121705)
 
-## ✨ Funcionalidades Principales
-
-### 🔐 Autenticación y Roles
-- **Login y registro unificado:** soporte para jugadores regulares y rol de administrador.
-- **Seguridad en credenciales:** cifrado de contraseñas con **SHA-256 + salt**.
-- **Persistencia de sesión:** manejo de sesión activa mediante `localStorage`.
-
-### 🃏 Cartas TCG y PokéAPI
-- **Catálogo inicial:** 20 cartas configuradas en `data/db.json` utilizando el *Official Artwork* de **PokéAPI**.
-- **Resiliencia visual:** sistema de *fallback* automático si alguna imagen falla al cargar.
-- **Componente TCG reutilizable:** soporte para **11 tipos elementales** y tipografía fluida escalada con unidades de contenedor (`cqw`).
-- **CRUD de cartas (Admin):** creación, edición y eliminación de cartas con autocompletado de imágenes a través de `api/pokeApi.js`.
-
-### 🗂️ Constructor de Mazos
-- Selección de cartas con **orden numerado** y contador en tiempo real.
-- Diseño adaptable a **2 columnas** en pantallas de hasta `720px`.
-- Botón fijo inferior (*sticky*) **«¡Ir a la Batalla!»**, oculto hasta completar el mazo reglamentario.
-
-### ⚔️ Sistema de Batalla por Turnos
-- **Modo enfoque (`.is-battle`):** oculta la cabecera principal para maximizar el área de juego.
-- **HUD interactivo:** indicadores tipo píldora para **Ronda**, **Turno** (*«Turno del rival»*) y estado **Defendiendo**.
-- **Controles táctiles optimizados:** ataques organizados en cuadrícula `2×2` más una fila dedicada para **Defensa / Especial** (botones de al menos `48px` de altura y estados deshabilitados legibles).
-- **Opción de abandono:** botón **«Abandonar»** con diálogo de confirmación.
-
-### 🏆 Ranking
-- Tabla de clasificación para consultar el desempeño de los jugadores registrados.
+**Fecha de entrega:** 23 de noviembre de 2026, 06:00 p. m.
+**Enlace de publicación:** _pendiente_
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Tecnologías
 
-- **JavaScript (ES Modules)** — Lógica de aplicación, componentes y estado del juego.
-- **HTML5 & CSS3** — Diseño responsivo, CSS Grid/Flexbox y *Container Query Units* (`cqw`).
-- **PokéAPI** — Obtención de arte oficial y metadatos de Pokémon.
-- **JSON Server** — API REST simulada respaldada por `data/db.json`.
-- **Web Crypto API** — Hashing de contraseñas (`SHA-256` + `salt`).
-
----
-
-## 📁 Estructura del Proyecto
-
-```text
-proyecto_javascript/
-├── api/
-│   └── pokeApi.js              # Integración y autocompletado con PokéAPI
-├── components/
-│   ├── app/
-│   │   └── gameApp.js          # Orquestador principal y control de estado (.is-battle)
-│   ├── battle/
-│   │   ├── battle.js           # Lógica de turnos, HUD y acciones de combate
-│   │   └── battleStyles.css    # Estilos del modo enfoque y controles de batalla
-│   ├── cards/
-│   │   ├── tcgCard.js          # Componente reutilizable de carta TCG
-│   │   └── tcgCard.css         # Estilos de los 11 tipos y escalado con cqw
-│   └── deck/
-│       ├── deckSelector.js     # Selección numerada y validación del mazo
-│       └── deckStyles.css      # Grid responsivo y botón sticky
-├── data/
-│   └── db.json                 # Base de datos local (cartas y jugadores)
-├── styles/
-│   └── theme.css               # Variables globales y tema visual
-└── package.json                # Dependencias y scripts de ejecución/pruebas
-```
+- JavaScript Vanilla (ES Modules)
+- Web Components
+- Fetch API
+- Vite (servidor de desarrollo y build)
+- JSON Server (API REST sobre `src/data/db.json`)
+- Web Crypto API (SHA-256 + salt para contraseñas)
+- PokéAPI (imágenes oficiales de las cartas)
 
 ---
 
-## 🚀 Instalación y Ejecución
-
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/AndresFelipe2810/proyecto_javascript.git
-   cd proyecto_javascript
-   ```
-
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
-
-3. **Iniciar el servidor de datos (JSON Server):**
-   ```bash
-   npx json-server --watch data/db.json
-   ```
-   *(Ajusta el puerto o usa el script configurado en tu `package.json` si corresponde).*
-
-4. **Abrir la aplicación:**
-   Sirve el proyecto con tu servidor local preferido (por ejemplo, **Live Server** en VS Code o `npx serve`) y ábrelo en el navegador.
-
----
-
-## 🧪 Pruebas
-
-El proyecto cuenta con una batería de pruebas automatizadas (actualmente **11 pruebas pasando**):
+## 🚀 Instalación y ejecución
 
 ```bash
-npm test
+git clone https://github.com/AndresFelipe2810/proyecto_javascript.git
+cd proyecto_javascript
+npm install
+cp .env.example .env
+```
+
+En dos terminales:
+
+```bash
+npm run server   # JSON Server → http://localhost:3000
+npm run dev      # Vite → http://localhost:5173
+```
+
+Pruebas: `npm test` (31 pruebas).
+
+### Variables de entorno (`.env` / `.env.example`)
+
+| Variable | Valor de ejemplo | Uso |
+|---|---|---|
+| `VITE_API_MODE` | `development` | Selecciona la URL de la API (`development` / `production`) |
+| `VITE_API_DEV_URL` | `http://localhost:3000` | API en desarrollo |
+| `VITE_API_PROD_URL` | `https://api-produccion.example.com` | API en producción |
+| `VITE_ADMIN_NICKNAME` | `admin` | Nickname que activa el login de administrador |
+
+### 🔑 Credenciales de administrador (evaluación)
+
+- Usuario: `admin`
+- Contraseña: `cards2026`
+
+---
+
+## 📁 Estructura principal
+
+```text
+├── index.html
+├── public/sounds/            # 8 efectos de audio (.mp3)
+├── src/
+│   ├── app.js                # Punto de entrada
+│   ├── api/                  # Fetch: cartas, jugadores, batallas, admins, PokéAPI, config
+│   ├── components/
+│   │   ├── app/              # Orquestador (gameApp)
+│   │   ├── auth/             # Registro / login
+│   │   ├── battle/           # Batalla, HUD y estilos
+│   │   ├── cards/            # Carta TCG y CRUD de admin
+│   │   ├── deck/             # Selector de mazo
+│   │   ├── leaderboard/      # Ranking
+│   │   └── progress/         # Sobres, memoria y ruleta
+│   ├── utils/                # battleEngine, progression, audio, crypto, validators…
+│   ├── styles/               # Tema global
+│   └── data/db.json          # Cartas, jugadores, batallas y admin
+└── tests/                    # Pruebas con node:test
 ```
 
 ---
 
-## 📌 Estado Actual y Pendientes (Roadmap)
+## 🎮 Reglas del juego
 
-- [ ] **Pruebas visuales en móvil (`375px–430px`):** verificar vista de batalla sin *scroll* indeseado, botón *sticky* del mazo y panel de administración.
-- [ ] **Compatibilidad Safari/iOS:** validar renderizado de cartas y truncado (`…`) en nombres de ataques largos.
-- [ ] **Seguridad y cuentas *legacy*:** migrar jugadores antiguos sin hash y evitar exponer `hash` + `salt` en `GET /players`.
-- [ ] **Regla de abandono:** definir si abandonar una batalla debe contabilizarse como derrota en el ranking.
+**Combate**
+- Mazo de 5 cartas; cada carta tiene 250 HP, 4 ataques, una defensa y un ataque especial.
+- Daño = daño base × factor aleatorio (0.85–1.15). Ningún ataque elimina de un golpe.
+- **Defensa:** reduce el siguiente daño recibido un 50% y se consume.
+- **Especial:** bloqueado en el turno 1; se desbloquea desde el turno 2 y tiene enfriamiento de 3 turnos.
+- El HP no se recupera. Inicia un jugador al azar; gana quien deja sin cartas al rival.
+- Victoria: **+50 puntos**. Derrota: **+10 puntos**.
 
----
+**Sobres y progresión**
+- Cada jugador reclama un sobre inicial de 5 cartas.
+- Minijuego de memoria (hasta 2 partidas diarias) y ruleta para ganar más cartas/intentos.
+- El mazo solo puede armarse con **cartas desbloqueadas**.
 
-## 👤 Autor
+**Ranking**
+- Tabla por puntos, con Top 3 destacado.
 
-- **Andrés Felipe** — [@AndresFelipe2810](https://github.com/AndresFelipe2810)
-- **Nicolas Archila** - [@Nicolas121705](https://github.com/Nicolas121705)
+**CRUD (administrador)**
+- Crear, editar (PUT), activar/desactivar (PATCH) y eliminar cartas. Debe haber mínimo 10 cartas activas.

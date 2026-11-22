@@ -131,10 +131,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-electric.mp3",
-        "defense": "/sounds/defense-electric.mp3",
-        "special": "/sounds/special-electric.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -179,10 +179,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fire.mp3",
-        "defense": "/sounds/defense-fire.mp3",
-        "special": "/sounds/special-fire.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -227,10 +227,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-water.mp3",
-        "defense": "/sounds/defense-water.mp3",
-        "special": "/sounds/special-water.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -275,10 +275,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-grass.mp3",
-        "defense": "/sounds/defense-grass.mp3",
-        "special": "/sounds/special-grass.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -323,10 +323,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-psychic.mp3",
-        "defense": "/sounds/defense-psychic.mp3",
-        "special": "/sounds/special-psychic.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -371,10 +371,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-ghost.mp3",
-        "defense": "/sounds/defense-ghost.mp3",
-        "special": "/sounds/special-ghost.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -419,10 +419,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-water.mp3",
-        "defense": "/sounds/defense-water.mp3",
-        "special": "/sounds/special-water.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -467,10 +467,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-dragon.mp3",
-        "defense": "/sounds/defense-dragon.mp3",
-        "special": "/sounds/special-dragon.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -515,10 +515,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-normal.mp3",
-        "defense": "/sounds/defense-normal.mp3",
-        "special": "/sounds/special-normal.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -563,10 +563,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-psychic.mp3",
-        "defense": "/sounds/defense-psychic.mp3",
-        "special": "/sounds/special-psychic.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -611,10 +611,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fighting.mp3",
-        "defense": "/sounds/defense-fighting.mp3",
-        "special": "/sounds/special-fighting.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -659,10 +659,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fighting.mp3",
-        "defense": "/sounds/defense-fighting.mp3",
-        "special": "/sounds/special-fighting.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -707,10 +707,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-normal.mp3",
-        "defense": "/sounds/defense-normal.mp3",
-        "special": "/sounds/special-normal.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -755,10 +755,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-dark.mp3",
-        "defense": "/sounds/defense-dark.mp3",
-        "special": "/sounds/special-dark.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -803,10 +803,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-dragon.mp3",
-        "defense": "/sounds/defense-dragon.mp3",
-        "special": "/sounds/special-dragon.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -851,10 +851,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fire.mp3",
-        "defense": "/sounds/defense-fire.mp3",
-        "special": "/sounds/special-fire.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -899,10 +899,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-grass.mp3",
-        "defense": "/sounds/defense-grass.mp3",
-        "special": "/sounds/special-grass.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -947,10 +947,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-electric.mp3",
-        "defense": "/sounds/defense-electric.mp3",
-        "special": "/sounds/special-electric.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -995,10 +995,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-water.mp3",
-        "defense": "/sounds/defense-water.mp3",
-        "special": "/sounds/special-water.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"
@@ -1043,10 +1043,10 @@
         "cooldown": 3
       },
       "sounds": {
-        "attack": "/sounds/attack-fairy.mp3",
-        "defense": "/sounds/defense-fairy.mp3",
-        "special": "/sounds/special-fairy.mp3",
-        "defeated": "/sounds/defeated.mp3"
+        "attack": "/sounds/ataque.mp3",
+        "defense": "/sounds/defensa.mp3",
+        "special": "/sounds/especial.mp3",
+        "defeated": "/sounds/derrotada.mp3"
       },
       "active": true,
       "createdAt": "2026-08-18T00:00:00.000Z"

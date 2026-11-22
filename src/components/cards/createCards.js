@@ -2,10 +2,10 @@ import { postCard } from "../../api/cardsApi.js";
 import { escapar } from "../../utils/validators.js";
 
 const SONIDOS_BASE = {
-  attack: "/sounds/attack.mp3",
-  defense: "/sounds/defense.mp3",
-  special: "/sounds/special.mp3",
-  defeated: "/sounds/defeated.mp3",
+  attack: "/sounds/ataque.mp3",
+  defense: "/sounds/defensa.mp3",
+  special: "/sounds/especial.mp3",
+  defeated: "/sounds/derrotada.mp3",
 };
 
 export function formularioCarta(carta = {}) {

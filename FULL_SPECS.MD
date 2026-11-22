@@ -871,7 +871,7 @@ La entrega deberá incluir obligatoriamente:
 
 ### Fecha límite
 
-**20 de agosto de 2026 — 11:59 p. m.**
+**23 de noviembre de 2026 — 06:00 p. m.**
 
 Para la calificación se tomará como referencia el hash del último commit realizado antes de la fecha y hora límite.
 
