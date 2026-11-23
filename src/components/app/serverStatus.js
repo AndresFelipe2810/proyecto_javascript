@@ -1,4 +1,5 @@
 import { pingServer } from "../../api/healthApi.js";
+import { publicarEstadoServidor } from "../../api/serverState.js";
 
 const ESPERAS_MS = [2000, 4000, 6000, 8000, 10000];
 const TEXTOS = {
@@ -32,12 +33,29 @@ export class ServerStatus extends HTMLElement {
   }
 
   render() {
+    publicarEstadoServidor(this.estado);
+    const cargando = this.estado !== "online";
     const intento = this.intento ? ` (intento ${this.intento}/${ESPERAS_MS.length + 1})` : "";
+    const boton =
+      this.estado === "offline" || this.estado === "waking"
+        ? `<button id="wakeBtn" type="button" class="wake-btn" ${this.conectando ? "disabled" : ""}>${this.conectando ? "Conectando..." : "Conectar / Despertar servidor"}</button>`
+        : "";
+    const texto = `${TEXTOS[this.estado]}${this.estado === "waking" ? intento : ""}`;
     this.innerHTML = /* html */ `
       <span class="server-pill" data-state="${this.estado}" role="status">
-        <span class="server-dot" aria-hidden="true"></span>${TEXTOS[this.estado]}${this.estado === "waking" ? intento : ""}
+        <span class="server-dot" aria-hidden="true"></span>${this.estado === "online" ? texto : ""}
       </span>
-      ${this.estado === "offline" ? `<button id="wakeBtn" type="button" class="wake-btn">Conectar / Despertar servidor</button>` : ""}
+      ${
+        cargando
+          ? `<div class="server-overlay" role="alert" aria-live="polite">
+              <img class="server-art" src="${import.meta.env.BASE_URL}images/pikachu-desconexion.png" alt="" />
+              <h1>Pokémon Card Battle Arena</h1>
+              <span class="server-spinner" aria-hidden="true"></span>
+              <p>${texto}</p>
+              ${boton}
+            </div>`
+          : ""
+      }
     `;
   }
 

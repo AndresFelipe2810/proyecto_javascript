@@ -1,4 +1,5 @@
 import { getPlayerByNickname, postPlayer } from "../../api/playersApi.js";
+import { servidorListo } from "../../api/serverState.js";
 import { loginAdmin } from "../../api/adminsApi.js";
 import { ADMIN_NICKNAME } from "../../api/apiConfig.js";
 import { validarNickname, validarPassword } from "../../utils/validators.js";
@@ -55,6 +56,10 @@ export class PlayerRegister extends HTMLElement {
     `;
   }
 
+  disconnectedCallback() {
+    window.removeEventListener("server-state", this.alServidor);
+  }
+
   configurarEventos() {
     const form = this.querySelector("#registerForm");
     const input = this.querySelector("#nicknameInput");
@@ -73,7 +78,7 @@ export class PlayerRegister extends HTMLElement {
       pass.autocomplete = cfg.auto;
       if (!conClave) pass.value = "";
       boton.textContent = cfg.boton;
-      boton.disabled = modo === "legacy" || this.enviando;
+      this.sincronizarServidor?.();
       msg.textContent = cfg.ayuda;
     };
 
@@ -108,6 +113,16 @@ export class PlayerRegister extends HTMLElement {
       temporizador = setTimeout(detectarModo, 300);
     });
 
+    this.sincronizarServidor = () => {
+      const listo = servidorListo();
+      boton.disabled = this.enviando || !listo || this.modo === "legacy";
+      boton.title = listo ? "" : "Esperando al servidor...";
+    };
+    this.alServidor = () => this.sincronizarServidor();
+    window.addEventListener("server-state", this.alServidor);
+
+    this.sincronizarServidor();
+
     const iniciar = (mensaje) => {
       this.enviando = true;
       boton.disabled = true;
@@ -116,7 +131,7 @@ export class PlayerRegister extends HTMLElement {
 
     const terminar = () => {
       this.enviando = false;
-      boton.disabled = this.modo === "legacy";
+      this.sincronizarServidor();
     };
 
     form.addEventListener("submit", async (e) => {
