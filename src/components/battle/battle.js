@@ -17,7 +17,7 @@ import { escapar } from "../../utils/validators.js";
 import { icon } from "../../utils/icons.js";
 import { SOUNDS, playSound, playCardSound, isMuted, toggleMute } from "../../utils/audio.js";
 
-const MACHINE_DELAY_MS = 900;
+const TURN_DELAY_MS = 900;
 const DEFEAT_MS = 700;
 const HIT_SOUND_DELAY_MS = 180;
 
@@ -40,7 +40,9 @@ export class BattleArena extends HTMLElement {
     this.startedAt = null;
     this.finished = false;
     this.error = null;
-    this.machineTimer = null;
+    this.turnTimer = null;
+    this.autoMode = false;
+    this.usedAuto = false;
     this.startToken = 0;
     this.firstSide = null;
     this.pendingFx = [];
@@ -52,7 +54,7 @@ export class BattleArena extends HTMLElement {
 
   disconnectedCallback() {
     this.startToken++;
-    clearTimeout(this.machineTimer);
+    clearTimeout(this.turnTimer);
     clearTimeout(this.defeatTimer);
   }
 
@@ -63,11 +65,12 @@ export class BattleArena extends HTMLElement {
 
   async start() {
     const token = ++this.startToken;
-    clearTimeout(this.machineTimer);
+    clearTimeout(this.turnTimer);
     clearTimeout(this.defeatTimer);
     this.pendingFx = [];
     this.finished = false;
     this.error = null;
+    this.usedAuto = this.autoMode;
     this.innerHTML = `<section class="battle-arena"><p>Preparando batalla...</p></section>`;
 
     try {
@@ -105,7 +108,7 @@ export class BattleArena extends HTMLElement {
   }
 
   setTurn(side) {
-    clearTimeout(this.machineTimer);
+    clearTimeout(this.turnTimer);
     this.currentTurn = side;
 
     // El cooldown del especial avanza al inicio de cada turno propio de la carta
@@ -117,8 +120,8 @@ export class BattleArena extends HTMLElement {
 
     this.render();
 
-    if (side === "machine") {
-      this.machineTimer = setTimeout(() => this.machineAct(), MACHINE_DELAY_MS);
+    if (side === "machine" || this.autoMode) {
+      this.turnTimer = setTimeout(() => this.autoAct(), TURN_DELAY_MS);
     }
   }
 
@@ -142,8 +145,14 @@ export class BattleArena extends HTMLElement {
       return;
     }
 
+    const modeBtn = e.target.closest("[data-battle-mode]");
+    if (modeBtn) {
+      this.setMode(modeBtn.dataset.battleMode === "automatic");
+      return;
+    }
+
     const btn = e.target.closest("[data-action]");
-    if (!btn || this.finished || this.currentTurn !== "player") return;
+    if (!btn || this.autoMode || this.finished || this.currentTurn !== "player") return;
 
     const actions = getActions(this.playerDeck[this.playerIndex]);
     const action = actions[Number(btn.dataset.action)];
@@ -152,12 +161,28 @@ export class BattleArena extends HTMLElement {
     this.performAction("player", action);
   }
 
-  machineAct() {
-    this.machineTimer = null;
-    if (this.finished || this.currentTurn !== "machine") return;
+  setMode(auto) {
+    if (this.finished || this.autoMode === auto) return;
+    this.autoMode = auto;
+    if (auto) this.usedAuto = true;
 
-    const action = chooseMachineAction(this.enemyDeck[this.enemyIndex]);
-    this.performAction("machine", action);
+    // Solo cambia mi turno: el de la máquina ya está programado. No usa setTurn para no bajar el cooldown
+    if (this.currentTurn === "player") {
+      clearTimeout(this.turnTimer);
+      if (auto) this.turnTimer = setTimeout(() => this.autoAct(), TURN_DELAY_MS);
+    }
+
+    this.render();
+  }
+
+  // Juega el turno actual sin botones: siempre la máquina, y también el jugador en modo automático
+  autoAct() {
+    this.turnTimer = null;
+    if (this.finished || !this.currentTurn) return;
+
+    const side = this.currentTurn;
+    const card = side === "player" ? this.playerDeck[this.playerIndex] : this.enemyDeck[this.enemyIndex];
+    this.performAction(side, chooseMachineAction(card));
   }
 
   performAction(side, action) {
@@ -167,19 +192,19 @@ export class BattleArena extends HTMLElement {
     const ai = isPlayer ? this.playerIndex : this.enemyIndex;
     const ti = isPlayer ? this.enemyIndex : this.playerIndex;
 
-    const { actor, target, log } = resolveAction(actors[ai], targets[ti], action);
+    const { actor, target, log, dodged, isCritical } = resolveAction(actors[ai], targets[ti], action);
     actors[ai] = actor;
     targets[ti] = target;
 
     const defeated = isCardDefeated(target);
     const targetSide = isPlayer ? "machine" : "player";
-    this.queueActionFx(side, targetSide, action, actor, target, defeated);
+    this.queueActionFx(side, targetSide, action, actor, target, defeated, dodged, isCritical);
 
     this.statusMessage = defeated ? `${log} ¡${target.name} fue derrotado!` : log;
 
     if (defeated) {
       this.currentTurn = null;
-      clearTimeout(this.machineTimer);
+      clearTimeout(this.turnTimer);
       this.render();
       this.defeatTimer = setTimeout(() => this.afterDefeat(side), DEFEAT_MS);
       return;
@@ -209,7 +234,7 @@ export class BattleArena extends HTMLElement {
     this.setTurn(side === "player" ? "machine" : "player");
   }
 
-  queueActionFx(side, targetSide, action, actor, target, defeated) {
+  queueActionFx(side, targetSide, action, actor, target, defeated, dodged, isCritical) {
     if (action.type === "defense") {
       this.pendingFx.push({ side, cls: "anim-defend" });
       playCardSound(actor, "defense");
@@ -217,8 +242,14 @@ export class BattleArena extends HTMLElement {
     }
 
     this.pendingFx.push({ side, cls: action.type === "special" ? "anim-special" : "anim-attack" });
-    this.pendingFx.push({ side: targetSide, cls: defeated ? "anim-defeated" : "anim-hit" });
+    let targetCls = "anim-hit";
+    if (isCritical) targetCls = "anim-critical";
+    if (dodged) targetCls = "anim-dodge";
+    if (defeated) targetCls = "anim-defeated";
+    this.pendingFx.push({ side: targetSide, cls: targetCls });
     playCardSound(actor, action.type);
+
+    if (dodged) return;
     setTimeout(() => {
       if (defeated) playCardSound(target, "defeated");
       else playSound(SOUNDS.hit);
@@ -254,7 +285,7 @@ export class BattleArena extends HTMLElement {
   endBattle() {
     this.finished = true;
     this.currentTurn = null;
-    clearTimeout(this.machineTimer);
+    clearTimeout(this.turnTimer);
 
     const won = this.enemyIndex >= DECK_SIZE;
     playSound(won ? SOUNDS.victory : SOUNDS.defeat);
@@ -264,6 +295,7 @@ export class BattleArena extends HTMLElement {
       new CustomEvent("battle-finished", {
         detail: {
           won,
+          mode: this.usedAuto ? "automatic" : "cpu",
           playerDeck: this.deckSource.map((c) => c.id),
           machineDeck: this.enemyDeck.map((c) => c.id),
           startedAt: this.startedAt,
@@ -310,13 +342,18 @@ export class BattleArena extends HTMLElement {
           <button id="abandonBtn" class="abandon-btn" type="button">Abandonar</button>
         </div>
         <p class="battle-status" role="status" aria-live="polite">${escapar(this.statusMessage)}</p>
+        ${this.autoMode ? `<p class="auto-notice">Batalla controlada automáticamente</p>` : ""}
 
         <div class="fighters">
           ${renderFighter("player", `Tú ${this.playerIndex + 1}/${DECK_SIZE}`, pCard)}
           ${renderFighter("machine", `Rival ${this.enemyIndex + 1}/${DECK_SIZE}`, eCard)}
         </div>
 
-        ${renderActionButtons(pCard, myTurn)}
+        <div class="mode-toggle">
+          <button class="mode-toggle-btn" type="button" data-battle-mode="manual" aria-pressed="${!this.autoMode}">Manual</button>
+          <button class="mode-toggle-btn" type="button" data-battle-mode="automatic" aria-pressed="${this.autoMode}">Automático</button>
+        </div>
+        ${renderActionButtons(pCard, myTurn && !this.autoMode)}
       </section>
     `;
     activarFallbackImagenes(this);

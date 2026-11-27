@@ -72,6 +72,36 @@
 
 :is(battle-arena, online-battle) .abandon-btn:hover { background: rgba(102, 192, 148, 0.18); }
 
+/* Modo manual / automático */
+:is(battle-arena, online-battle) .mode-toggle { display: flex; justify-content: center; gap: 8px; }
+
+:is(battle-arena, online-battle) .mode-toggle-btn {
+  min-height: 36px;
+  padding: 4px 12px;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+:is(battle-arena, online-battle) .mode-toggle-btn[aria-pressed="true"] { background: var(--accent-dark); color: var(--white); }
+:is(battle-arena, online-battle) .mode-toggle-btn:focus-visible { outline: 3px solid #f2c230; outline-offset: 2px; }
+
+:is(battle-arena, online-battle) .auto-notice {
+  margin: 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #f2c230;
+  color: #4a3a00;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-align: center;
+}
+
 /* Mensajes */
 :is(battle-arena, online-battle) .battle-status {
   margin: 0;
@@ -227,6 +257,8 @@
 :is(battle-arena, online-battle) .fighter.anim-special { animation: fx-special 0.65s ease-out; }
 :is(battle-arena, online-battle) .fighter.anim-defeated { animation: fx-defeated 0.7s ease-in 0.18s forwards; }
 :is(battle-arena, online-battle) .fighter.anim-enter { animation: fx-enter 0.5s ease-out; }
+:is(battle-arena, online-battle) .fighter.anim-critical { animation: fx-critical 0.6s ease-out 0.18s; }
+:is(battle-arena, online-battle) .fighter.anim-dodge { animation: fx-dodge 0.5s ease-out 0.18s; }
 :is(battle-arena, online-battle) .battle-end.anim-win { animation: fx-win 0.8s ease-out; }
 :is(battle-arena, online-battle) .battle-end.anim-loss { animation: fx-loss 0.8s ease-out; }
 
@@ -240,6 +272,17 @@
   40% { transform: translateX(6px); }
   60% { transform: translateX(-4px); filter: brightness(1.3); }
   80% { transform: translateX(3px); }
+}
+
+@keyframes fx-critical {
+  0%, 100% { transform: none; filter: none; }
+  25% { transform: scale(1.12) rotate(-5deg); filter: brightness(1.8) drop-shadow(0 0 18px #e3321f); }
+  50% { transform: scale(0.94) rotate(5deg); }
+  75% { transform: scale(1.06) rotate(-3deg); filter: drop-shadow(0 0 12px #e3321f); }
+}
+
+@keyframes fx-dodge {
+  40%, 60% { transform: translateX(calc(var(--lunge) * -1.5)) rotate(8deg); opacity: 0.4; }
 }
 
 @keyframes fx-defend {

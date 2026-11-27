@@ -101,7 +101,8 @@ test("aplicarAccion rechaza el turno ajeno y acciones bloqueadas", () => {
   assert.equal(aplicarAccion(state, "p1", 5, NOW), null);
 });
 
-test("aplicarAccion daña, alterna turno, sube seq y no muta el original", () => {
+test("aplicarAccion daña, alterna turno, sube seq y no muta el original", (t) => {
+  t.mock.method(Math, "random", () => 0.5);
   const state = batalla();
   const next = aplicarAccion(state, "p1", 3, NOW + 10);
   assert.ok(cartaActiva(next, "p2").currentHp < 250);
@@ -121,7 +122,8 @@ test("la ronda avanza cuando actúa el segundo jugador", () => {
   assert.equal(state.round, 2);
 });
 
-test("carta derrotada da paso a la siguiente y el vencedor no se cura", () => {
+test("carta derrotada da paso a la siguiente y el vencedor no se cura", (t) => {
+  t.mock.method(Math, "random", () => 0.5);
   const state = batalla();
   state.p1.cards[0].currentHp = 74;
   state.p2.cards[0].currentHp = 1;
@@ -132,7 +134,8 @@ test("carta derrotada da paso a la siguiente y el vencedor no se cura", () => {
   assert.equal(cartaActiva(next, "p1").currentHp, 74);
 });
 
-test("derrotar la última carta termina con ganador", () => {
+test("derrotar la última carta termina con ganador", (t) => {
+  t.mock.method(Math, "random", () => 0.5);
   const state = batalla();
   state.p2.index = 4;
   state.p2.cards[4].currentHp = 1;

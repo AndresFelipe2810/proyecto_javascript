@@ -4,6 +4,9 @@ export const DECK_SIZE = 5;
 export const MIN_ACTIVE_CARDS = 10;
 export const SPECIAL_COOLDOWN = 3;
 export const DEFENSE_REDUCTION = 0.5;
+export const CRITICAL_CHANCE = 0.12;
+export const CRITICAL_MULTIPLIER = 1.5;
+export const DODGE_CHANCE = 0.08;
 
 export const POINTS_WIN = 50;
 export const POINTS_LOSS = 10;
@@ -18,18 +21,32 @@ export function createBattleCard(card) {
   };
 }
 
-// Factor aleatorio entre 0.85 y 1.15 sobre el daño base
+// Factor aleatorio entre 0.85 y 1.15 sobre el daño base (sin redondear)
 export function rollDamage(baseDamage) {
   const factor = 0.85 + Math.random() * 0.3;
-  return Math.round(baseDamage * factor);
+  return baseDamage * factor;
 }
 
-export function calculateDamage(baseDamage, isDefending = false, damageReduction = DEFENSE_REDUCTION) {
-  if (!isDefending) return baseDamage;
+// Orden obligatorio: factor, esquive, crítico, defensa y redondeo
+export function calcularGolpe(baseDamage, target) {
+  let damage = rollDamage(baseDamage);
 
-  // Aplica reducción porcentual manteniendo al menos 1 punto de daño
-  const reduced = Math.round(baseDamage * (1 - damageReduction));
-  return Math.max(1, reduced);
+  const dodged = Math.random() < DODGE_CHANCE;
+  if (dodged) {
+    return { damage: 0, dodged: true, isCritical: false };
+  }
+
+  const isCritical = Math.random() < CRITICAL_CHANCE;
+  if (isCritical) {
+    damage = damage * CRITICAL_MULTIPLIER;
+  }
+
+  if (target.isDefending) {
+    const reduction = target.defense?.damageReduction ?? DEFENSE_REDUCTION;
+    damage = damage * (1 - reduction);
+  }
+
+  return { damage: Math.round(damage), dodged: false, isCritical };
 }
 
 export function applyDamage(card, damage) {
@@ -96,20 +113,18 @@ export function resolveAction(actor, target, action) {
     return { actor: nextActor, target, damage: 0, log: `${actor.name} se pone a la defensiva.` };
   }
 
-  const reduction = target.defense?.damageReduction ?? DEFENSE_REDUCTION;
-  const damage = calculateDamage(rollDamage(action.baseDamage), target.isDefending, reduction);
+  const { damage, dodged, isCritical } = calcularGolpe(action.baseDamage, target);
   const nextTarget = applyDamage(target, damage);
 
   if (action.type === "special") {
     nextActor.specialCooldown = actor.special?.cooldown ?? SPECIAL_COOLDOWN;
   }
 
-  return {
-    actor: nextActor,
-    target: nextTarget,
-    damage,
-    log: `${actor.name} usó ${action.name} e hizo ${damage} de daño.`,
-  };
+  let log = `${actor.name} usó ${action.name} e hizo ${damage} de daño.`;
+  if (dodged) log = `${actor.name} usó ${action.name}. ¡ATAQUE ESQUIVADO!`;
+  if (isCritical) log = `¡GOLPE CRÍTICO! ${log}`;
+
+  return { actor: nextActor, target: nextTarget, damage, dodged, isCritical, log };
 }
 
 // Elige una acción válida (nunca bloqueada). Prioriza el especial disponible y evita re-defenderse.

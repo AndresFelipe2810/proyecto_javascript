@@ -11,10 +11,10 @@
       "nickname": "AndrexxFP",
       "passwordHash": "01798450b14b72b6e739e098d77e9382e39eb5f94fa92720efb86bc3736b580e",
       "salt": "bc2e2022dbc7d6a4b61929a9da686c01",
-      "points": 370,
-      "wins": 7,
-      "losses": 2,
-      "gamesPlayed": 9,
+      "points": 690,
+      "wins": 13,
+      "losses": 4,
+      "gamesPlayed": 17,
       "createdAt": "2026-11-20T15:29:48.067Z",
       "id": "_PIzk9fU12M",
       "unlockedCards": [
@@ -31,9 +31,9 @@
       "spinsAvailable": 0,
       "memoryDate": "2026-11-22",
       "memoryPlaysToday": 2,
-      "memoryBonus": 0,
+      "memoryBonus": 3,
       "memoryBonusAwarded": 2,
-      "memoryGamesCounted": 7
+      "memoryGamesCounted": 16
     },
     {
       "nickname": "AndrexxFP1",
@@ -1323,6 +1323,198 @@
       "mode": "online",
       "matchId": "CUE1eGrN6lI",
       "id": "dHTHc_DPkEQ"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-003",
+        "card-006",
+        "card-007",
+        "card-011",
+        "card-009"
+      ],
+      "machineDeck": [
+        "card-005",
+        "card-015",
+        "card-004",
+        "card-016",
+        "card-020"
+      ],
+      "startedAt": "2026-11-27T21:27:42.161Z",
+      "endedAt": "2026-11-27T21:29:16.848Z",
+      "mode": "cpu",
+      "id": "imYQYuTD8pg"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-003",
+        "card-007",
+        "card-015",
+        "card-009",
+        "card-011"
+      ],
+      "machineDeck": [
+        "card-002",
+        "card-017",
+        "card-004",
+        "card-013",
+        "card-008"
+      ],
+      "startedAt": "2026-11-27T21:35:50.851Z",
+      "endedAt": "2026-11-27T21:37:19.534Z",
+      "mode": "cpu",
+      "id": "sRfwkY6_h4o"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-003",
+        "card-007",
+        "card-006",
+        "card-011",
+        "card-015"
+      ],
+      "machineDeck": [
+        "card-005",
+        "card-001",
+        "card-004",
+        "card-019",
+        "card-014"
+      ],
+      "startedAt": "2026-11-27T21:44:19.132Z",
+      "endedAt": "2026-11-27T21:45:57.195Z",
+      "mode": "cpu",
+      "id": "EiA2gluwBAk"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-011",
+        "card-007",
+        "card-006",
+        "card-003",
+        "card-015"
+      ],
+      "machineDeck": [
+        "card-010",
+        "card-005",
+        "card-013",
+        "card-009",
+        "card-018"
+      ],
+      "startedAt": "2026-11-27T21:49:47.042Z",
+      "endedAt": "2026-11-27T21:50:52.843Z",
+      "mode": "cpu",
+      "id": "F40WyzZerTU"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-003",
+        "card-007",
+        "card-006",
+        "card-011",
+        "card-015"
+      ],
+      "machineDeck": [
+        "card-019",
+        "card-014",
+        "card-001",
+        "card-013",
+        "card-002"
+      ],
+      "startedAt": "2026-11-27T21:52:57.957Z",
+      "endedAt": "2026-11-27T21:54:26.211Z",
+      "mode": "cpu",
+      "id": "Orz9JdyzQ_c"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "loss",
+      "pointsAwarded": 10,
+      "playerDeck": [
+        "card-006",
+        "card-007",
+        "card-003",
+        "card-011",
+        "card-015"
+      ],
+      "machineDeck": [
+        "card-020",
+        "card-013",
+        "card-001",
+        "card-019",
+        "card-014"
+      ],
+      "startedAt": "2026-11-27T21:58:46.381Z",
+      "endedAt": "2026-11-27T21:59:55.803Z",
+      "mode": "automatic",
+      "id": "DqPA6JM6V7E"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-003",
+        "card-007",
+        "card-006",
+        "card-015",
+        "card-013"
+      ],
+      "machineDeck": [
+        "card-014",
+        "card-020",
+        "card-012",
+        "card-017",
+        "card-016"
+      ],
+      "startedAt": "2026-11-27T22:01:52.387Z",
+      "endedAt": "2026-11-27T22:11:10.821Z",
+      "mode": "automatic",
+      "id": "q2T7bUwt2Go"
+    },
+    {
+      "playerId": "_PIzk9fU12M",
+      "playerNickname": "AndrexxFP",
+      "result": "win",
+      "pointsAwarded": 50,
+      "playerDeck": [
+        "card-003",
+        "card-006",
+        "card-007",
+        "card-009",
+        "card-011"
+      ],
+      "machineDeck": [
+        "card-002",
+        "card-005",
+        "card-016",
+        "card-012",
+        "card-008"
+      ],
+      "startedAt": "2026-11-27T22:26:43.063Z",
+      "endedAt": "2026-11-27T22:28:02.415Z",
+      "mode": "automatic",
+      "id": "z9899qQTwUA"
     }
   ],
   "matches": [

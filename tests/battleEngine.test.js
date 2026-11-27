@@ -38,7 +38,8 @@ test("cooldown de 3 turnos propios tras usar el especial", () => {
   assert.equal(special(card).enabled, true);
 });
 
-test("defensa reduce 50% el siguiente ataque y luego desaparece", () => {
+test("defensa reduce 50% el siguiente ataque y luego desaparece", (t) => {
+  t.mock.method(Math, "random", () => 0.5);
   const attacker = createBattleCard(base);
   const defender = { ...createBattleCard(base), isDefending: true };
   const { target, damage } = resolveAction(attacker, defender, getActions(attacker)[3]);
@@ -46,12 +47,13 @@ test("defensa reduce 50% el siguiente ataque y luego desaparece", () => {
   assert.equal(target.isDefending, false);
 });
 
-test("daño nunca derrota de un golpe y la vida no baja de 0", () => {
+test("daño nunca derrota de un golpe y la vida no baja de 0", (t) => {
   const attacker = { ...createBattleCard(base), turnsPlayed: 5 };
   for (let i = 0; i < 200; i++) {
     const { target } = resolveAction(attacker, createBattleCard(base), special(attacker));
     assert.ok(target.currentHp > 0);
   }
+  t.mock.method(Math, "random", () => 0.5);
   const weak = { ...createBattleCard(base), currentHp: 5 };
   assert.equal(resolveAction(attacker, weak, getActions(attacker)[3]).target.currentHp, 0);
 });
@@ -64,4 +66,76 @@ test("la máquina nunca elige acciones bloqueadas", () => {
 test("puntos por victoria y derrota", () => {
   assert.deepEqual(scoreBattle(true), { result: "win", pointsAwarded: 50 });
   assert.deepEqual(scoreBattle(false), { result: "loss", pointsAwarded: 10 });
+});
+
+// Math.random fijo: 0.5 = golpe normal, 0.01 = esquivado, 0.1 = crítico (factor 0.88)
+const atacar = (index, defender = createBattleCard(base)) => {
+  const attacker = createBattleCard(base);
+  return resolveAction(attacker, defender, getActions(attacker)[index]);
+};
+
+test("ataque esquivado: no quita vida y consume la defensa", (t) => {
+  t.mock.method(Math, "random", () => 0.01);
+  const res = atacar(3, { ...createBattleCard(base), isDefending: true });
+  assert.equal(res.dodged, true);
+  assert.equal(res.isCritical, false);
+  assert.equal(res.damage, 0);
+  assert.equal(res.target.currentHp, 250);
+  assert.equal(res.target.isDefending, false);
+  assert.match(res.log, /¡ATAQUE ESQUIVADO!/);
+});
+
+test("golpe crítico: daño x1.5 y redondeo solo al final", (t) => {
+  t.mock.method(Math, "random", () => 0.1);
+  const res = atacar(1);
+  assert.equal(res.isCritical, true);
+  assert.equal(res.damage, 40); // 30 x 0.88 x 1.5 = 39.6
+  assert.equal(res.target.currentHp, 210);
+  assert.match(res.log, /¡GOLPE CRÍTICO!/);
+});
+
+test("la defensa reduce 50% también un golpe crítico", (t) => {
+  t.mock.method(Math, "random", () => 0.1);
+  const res = atacar(3, { ...createBattleCard(base), isDefending: true });
+  assert.equal(res.damage, 33); // 50 x 0.88 x 1.5 x 0.5
+});
+
+test("golpe normal: ni esquivado ni crítico", (t) => {
+  t.mock.method(Math, "random", () => 0.5);
+  const res = atacar(3);
+  assert.equal(res.dodged, false);
+  assert.equal(res.isCritical, false);
+  assert.equal(res.damage, 50);
+});
+
+// Carta en su segundo turno: ya puede usar el especial
+const usarEspecial = (defender = createBattleCard(base)) => {
+  const attacker = { ...createBattleCard(base), turnsPlayed: 1 };
+  return resolveAction(attacker, defender, special(attacker));
+};
+
+test("el especial puede esquivarse y aun así entra en cooldown", (t) => {
+  t.mock.method(Math, "random", () => 0.01);
+  const res = usarEspecial();
+  assert.equal(res.dodged, true);
+  assert.equal(res.target.currentHp, 250);
+  assert.equal(res.actor.specialCooldown, 3);
+});
+
+test("el especial puede ser crítico", (t) => {
+  t.mock.method(Math, "random", () => 0.1);
+  const res = usarEspecial();
+  assert.equal(res.isCritical, true);
+  assert.equal(res.damage, 86); // 65 x 0.88 x 1.5 = 85.8
+});
+
+test("la defensa reduce también un especial crítico", (t) => {
+  t.mock.method(Math, "random", () => 0.1);
+  const res = usarEspecial({ ...createBattleCard(base), isDefending: true });
+  assert.equal(res.damage, 43); // 65 x 0.88 x 1.5 x 0.5 = 42.9
+});
+
+test("la selección automática no usa el especial en cooldown", () => {
+  const card = { ...createBattleCard(base), turnsPlayed: 5, specialCooldown: 2 };
+  for (let i = 0; i < 200; i++) assert.notEqual(chooseMachineAction(card).type, "special");
 });
